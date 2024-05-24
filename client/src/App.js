@@ -5,6 +5,9 @@ import { Route, Routes } from 'react-router-dom';
 import {BrowserRouter} from 'react-router-dom';
 
 import Home from "./components/Home"
+import Signup from "./components/Signup";
+import Login from "./components/Login";
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -18,7 +21,12 @@ export default function App() {
         <Route path="/recruiter/:recruiterId" element={
           <Recruiter />
         } /> */}
-        {/* <Route path="/contact" component={Contact} /> */}
+        <Route path="/signup" element={
+        <Signup />
+      } />
+      <Route path="/login" element={
+        <Login />
+      } />
     </Routes>
       
     </BrowserRouter>

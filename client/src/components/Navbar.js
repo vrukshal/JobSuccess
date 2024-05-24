@@ -1,5 +1,6 @@
 import React from 'react'
 import './css/Navbar.css'
+import NavbarOption from './NavbarOption'
 function Navbar() {
   return (
     <div>
@@ -11,8 +12,11 @@ function Navbar() {
             <li><a href="#">Career tips</a></li>
         </ul>
         <div class="auth-buttons">
-            <a href="#" class="login-btn">Log in</a>
-            <a href="#" class="signup-btn">Sign up</a>
+
+            <NavbarOption class="login-btn" text="Log in"  href="login"/>
+            <NavbarOption class="signup-btn" text="Sign up" href="signup"/>
+            {/* <a href="#" class="login-btn">Log in</a>
+            <a href="#" class="signup-btn">Sign up</a> */}
         </div>
     </div>
     </div>

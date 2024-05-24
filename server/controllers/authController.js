@@ -5,13 +5,16 @@ const { getAuth } = require("firebase/auth")
 const { GoogleAuthProvider, signInWithPopup } = require("firebase/auth");
 
 async function signupWithEmailAndPassword(req,res) {
-    const { email, password } = req.body;
+    const { firstName, lastName, userType, email, password } = req.body;
     const userCredential = await createUserWithEmailAndPassword(auth, email, password)
     const user = userCredential.user;
     // Now add user data to Firestore
     user_data = {
         created_at: new Date(parseInt(user.metadata.createdAt)).toISOString(),
         email: user.email,
+        firstName: firstName,
+        lastName: lastName,
+        userType: userType,
         passwordHash: user.reloadUserInfo.passwordHash,
         updated_at: new Date().toISOString(),
         user_id: user.uid
@@ -53,22 +56,22 @@ async function loginWithEmailAndPassword(req, res){
 }
 
 async function signinWithGoogle(req,res){
-    const { idToken } = req.body;
-    const provider = new GoogleAuthProvider();
-    provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-    provider.setCustomParameters({
-        'login_hint': 'user@example.com'
-      });
-    const auth = getAuth();
+    // const { idToken } = req.body;
+    const provider = await new GoogleAuthProvider();
+    // provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+    // provider.setCustomParameters({
+    //     'login_hint': 'user@example.com'
+    //   });
+    // const auth = getAuth();
+    console.log("INSIDE SIGN IN WITH GOOGLE");
     auth.languageCode = 'it';
-
-
   try {
     // const credential = auth.GoogleAuthProvider.credential(idToken);
     // const userRecord = await auth.signInWithCredential(credential);
     // const token = await userRecord.user.getIdToken();
-    signInWithPopup(auth, provider)
+    const rres = await signInWithPopup(auth, provider)
   .then((result) => {
+    console.log("a");
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const token = credential.accessToken;
     const user = result.user;
