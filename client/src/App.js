@@ -7,7 +7,7 @@ import {BrowserRouter} from 'react-router-dom';
 import Home from "./components/Home"
 import Signup from "./components/Signup";
 import Login from "./components/Login";
-
+import Profile from "./components/Profile";
 export default function App() {
   return (
     <BrowserRouter>
@@ -26,6 +26,9 @@ export default function App() {
       } />
       <Route path="/login" element={
         <Login />
+      } />
+      <Route path="/profile" element={
+        <Profile />
       } />
     </Routes>
       

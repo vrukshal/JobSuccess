@@ -1,6 +1,9 @@
 // import { useState } from 'react';
 import React from 'react';
 import './css/Signup.css';
+import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
+import { auth } from '../config/firebase';
+import { browserPopupRedirectResolver } from "firebase/auth";
 
 
 function Signup() {
@@ -10,7 +13,7 @@ function Signup() {
     const [firstName, setFirstName] = React.useState("");
     const [lastName, setLastName] = React.useState("");
     const [userType, setUserType] = React.useState("");
-
+    
     const handleSubmit = async (e) => {
         console.log("Creating user profile...")
         e.preventDefault();
@@ -20,7 +23,7 @@ function Signup() {
               headers: {
                 'Content-Type': 'application/json',
               },
-              body: JSON.stringify({ firstName, lastName, userType, email, password }),
+              body: JSON.stringify({ firstName, lastName, email, password }),
             });
             const data = await response.json();
             console.log('User data:', data);
@@ -32,12 +35,23 @@ function Signup() {
     const signInwithGoogle = async (e) => {
         console.log("Signing in with Google...")
         e.preventDefault();
+        
         try {
+
+            const provider = new GoogleAuthProvider();
+            const result = await signInWithPopup(auth, provider, browserPopupRedirectResolver);
+            const user = result.user;
+            const idtoken = await user.getIdToken();
+            console.log(idtoken);
             const response = await fetch('http://localhost:3001/api/auth/google', {
-              method: 'POST',
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ token: idtoken }),
             });
             const data = await response.json();
-            console.log('User data:', data);
+            console.log('User data:', data.name);
           } catch (error) {
             console.error('Error logging in:', error);
           }
@@ -59,10 +73,10 @@ function Signup() {
           <input type="firstname" id="firstname" name="firstname" onChange={(e) => setFirstName(e.target.value)} required />
           <label htmlFor="lastname">Last Name</label>
           <input type="lastname" id="lastname" name="lastname" onChange={(e) => setLastName(e.target.value)} required />
-          <select name="usertype" id="usertype" onChange={(e) => setUserType(e.target.value)}>
+          {/* <select name="usertype" id="usertype" onChange={(e) => setUserType(e.target.value)}>
             <option value="student">Student</option>
             <option value="recruiter">Recruiter</option>
-          </select>
+          </select> */}
           <label htmlFor="email">Email address</label>
           <input type="email" id="email" name="email" onChange={(e) => setEmail(e.target.value)} required />
           <label htmlFor="password">Password</label>
