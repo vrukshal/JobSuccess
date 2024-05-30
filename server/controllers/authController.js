@@ -25,7 +25,7 @@ async function signupWithEmailAndPassword(req,res) {
         res.status(400).send({ error: error.message });
     });
 }
-
+ 
 // created_at: new Date(parseInt(user.metadata.createdAt)).toISOString(),
 // async function addToFirestore(userId, userData) {
 //     await setDoc(doc(db, "Users", userId), userData);

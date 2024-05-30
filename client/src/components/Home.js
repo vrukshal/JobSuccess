@@ -1,11 +1,12 @@
 import React from 'react'
-import {useEffect} from 'react';
-import ReactDOM from "react-dom";
-import {useDispatch, useSelector} from "react-redux";
-import { login, logout, selectUser } from "../features/userSlice";
+// import {useEffect} from 'react';
+// import ReactDOM from "react-dom";
+// import {useDispatch, useSelector} from "react-redux";
+// import { login, logout, selectUser } from "../features/userSlice";
 // import { auth } from "../../../server/config/firebase";
 // import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Navbar from './Navbar';
+import JobList from './JobsList';
 function Home() {
 
     // const user = useSelector(selectUser)
@@ -33,6 +34,7 @@ function Home() {
   return (
     <div className="home">
       <Navbar />
+      <JobList/>
     </div>
   )
 }

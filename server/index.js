@@ -6,13 +6,15 @@ const swaggerUi = require('swagger-ui-express');
 // const applicantRoutes = require('./routes/applicantRoutes');
 // const recruiterRoutes = require('./routes/recruiterRoutes');
 const authRoutes = require('./routes/authRoutes');
-// const jobRoutes = require('./routes/jobRoutes');
+const jobRoutes = require('./routes/jobRoutes');
+const cors = require('cors');
 
 const {db, auth} = require('./config/firebase');
 
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 
 // Middleware
 // app.use(express.json());
@@ -58,10 +60,11 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 // app.use('/recruiterRoutes',recruiterRoutes);
 app.use('/',authRoutes);
 // app.use('/jobs',jobRoutes);
+app.use('/',jobRoutes);
 
 
 // Start the server
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
+const port = process.env.PORT || 4000;
+app.listen(4000, () => {
   console.log(`Server started on port ${port}`);
 });
