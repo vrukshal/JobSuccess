@@ -74,15 +74,19 @@ body {
   }
   
   .login-right button {
+    width: 50%;
+    height: 50px;
     padding: 10px;
-    font-size: 16px;
-    background-color: #0033a0;
+    background-color: #19047b;
     color: white;
     border: none;
+    border-radius: 50px;
+    font-size: 1em;
     cursor: pointer;
+    align-self: center;
   }
   
   .login-right button:hover {
-    background-color: #002080;
+    background-color: #0f0341;
   }
   

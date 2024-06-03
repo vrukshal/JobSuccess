@@ -1,9 +1,12 @@
 // import { useState } from 'react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import './css/Signup.css';
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
 import { auth } from '../config/firebase';
 import { browserPopupRedirectResolver } from "firebase/auth";
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../actions/authActions';
 
 
 function Signup() {
@@ -13,7 +16,18 @@ function Signup() {
     const [firstName, setFirstName] = React.useState("");
     const [lastName, setLastName] = React.useState("");
     const [userType, setUserType] = React.useState("");
-    
+    const user = useSelector((state) => state.auth.user);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    useEffect(() => {
+      const checkAuth = () => {
+        if (user) {
+          navigate('/profile');
+        }
+      };
+  
+      checkAuth();
+    }, [user]);
     const handleSubmit = async (e) => {
         console.log("Creating user profile...")
         e.preventDefault();
@@ -27,6 +41,11 @@ function Signup() {
             });
             const data = await response.json();
             console.log('User data:', data);
+            dispatch(setUser(data));
+            onAuthStateChanged(auth, async (userAuth) => {
+              if (userAuth) {
+                console.log("auth changed in signup");
+        }});
           } catch (error) {
             console.error('Error logging in:', error);
           }
@@ -52,6 +71,7 @@ function Signup() {
             });
             const data = await response.json();
             console.log('User data:', data.name);
+            dispatch(setUser(data));
           } catch (error) {
             console.error('Error logging in:', error);
           }
@@ -73,10 +93,6 @@ function Signup() {
           <input type="firstname" id="firstname" name="firstname" onChange={(e) => setFirstName(e.target.value)} required />
           <label htmlFor="lastname">Last Name</label>
           <input type="lastname" id="lastname" name="lastname" onChange={(e) => setLastName(e.target.value)} required />
-          {/* <select name="usertype" id="usertype" onChange={(e) => setUserType(e.target.value)}>
-            <option value="student">Student</option>
-            <option value="recruiter">Recruiter</option>
-          </select> */}
           <label htmlFor="email">Email address</label>
           <input type="email" id="email" name="email" onChange={(e) => setEmail(e.target.value)} required />
           <label htmlFor="password">Password</label>
