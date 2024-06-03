@@ -5,8 +5,11 @@ import React from 'react'
 // import { login, logout, selectUser } from "../features/userSlice";
 // import { auth } from "../../../server/config/firebase";
 // import { getAuth, onAuthStateChanged } from "firebase/auth";
-import Navbar from './Navbar';
+
 import JobList from './JobsList';
+import JobsNavbar from './JobsNavBar';
+import JobsSidebar from './JobsSideBar';
+import "./css/Home.css"
 function Home() {
 
     // const user = useSelector(selectUser)
@@ -30,13 +33,26 @@ function Home() {
     //     }
     //   })
     // }, []);
-
-  return (
-    <div className="home">
-      <Navbar />
-      <JobList/>
-    </div>
-  )
+    const [selectedTab, setSelectedTab] = React.useState('jobs');
+    const [selectedType, setSelectedType] = React.useState('full-time');
+  
+    return (
+      <div className="home">
+      
+        <JobsNavbar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+        <div className="content">
+          <JobsSidebar selectedType={selectedType} setSelectedType={setSelectedType} />
+          <main className="main-feed">
+            {selectedTab === 'jobs' ? (
+              <JobList jobType={selectedType} />
+            ) : (
+              <div>Saved Jobs</div>
+            )}
+          </main>
+        </div>
+      </div>
+    );
+  
 }
 
 export default Home;
