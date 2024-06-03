@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import './css/Profile.css';
 
 function Profile() {
+  const user = useSelector((state) => state.auth.user);
   const [userType, setUserType] = useState('');
   const [formVisible, setFormVisible] = useState(false);
   const [date, setDate] = useState('');
@@ -14,13 +17,60 @@ function Profile() {
   const [size, setSize] = useState('');
   const [industry, setIndustry] = useState('');
   const [role, setRole] = useState('');
-  
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    }
+    else{
+      console.log(user);
+    }
+  }, [user, navigate]);
+
   const handleContinue = () => {
     if (userType) {
       setFormVisible(true);
     }
   };
-  // 
+
+  const handleStudentSubmit = async (e) => {
+    e.preventDefault();
+    if (!user) return; // Ensure user is authenticated
+
+    const applicantInfo = {
+      date: date,
+      school: school,
+      degree: degree,
+      education: education,
+      experience: experience,
+      uid: user.uid,
+    };
+
+    console.log(applicantInfo);
+    try {
+      const response = await fetch('http://localhost:3001/api/applicant', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(applicantInfo),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      console.log('Profile created:', data);
+      // Redirect or show success message
+    } catch (error) {
+      console.error('Error creating profile:', error);
+      // Show error message
+    }
+  };
+
   return (
     <div className="profile-container">
       <div className="image-section1">
@@ -28,7 +78,6 @@ function Profile() {
       </div>
       <div className="form-section1">
         <header className="profile-header">
-          {/* <img src="/mnt/data/image.png" alt="JobSuccess Logo" className="profile-logo" /> */}
           <h1>JobSuccess</h1>
         </header>
         <div className="form-content">
@@ -78,7 +127,7 @@ function Profile() {
                     Experience
                     <input type="text" name="experience" value={experience} onChange={(e) => setExperience(e.target.value)}/>
                   </label>
-                  <button type="submit" className="submit-button">
+                  <button type="submit" className="submit-button" onClick={handleStudentSubmit}>
                     Submit
                   </button>
                 </form>

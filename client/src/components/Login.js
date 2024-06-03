@@ -1,11 +1,25 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "./css/Login.css"
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../actions/authActions';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
 
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
-
+    const user = useSelector((state) => state.auth.user);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    useEffect(() => {
+      const checkAuth = () => {
+        if (user) {
+          navigate('/profile');
+        }
+      };
+      checkAuth();
+    }, [user]);
+    
     const loginUser = async (e) => {
         // e.preventDefault();
         console.log("Logging in...")
@@ -21,6 +35,7 @@ function Login() {
             const data = await response.json();
             console.log("------ Successfully logged in -----");
             console.log('User data:', data);
+            dispatch(setUser(data));
           } catch (error) {
             console.error('Error logging in:', error);
           }
@@ -45,7 +60,7 @@ function Login() {
             <input type="email" placeholder="email@example.edu" onChange={(e) => setEmail(e.target.value)}/>
             <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
 
-            <button onClick={loginUser}>Next</button>
+            <button onClick={loginUser}>Log in</button>
           </div>
           <p>Not a user?{" "}
                 <a href='/signup'>Sign up now</a>

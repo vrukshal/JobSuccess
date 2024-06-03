@@ -5,7 +5,7 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const cors = require("cors");
 
-// const applicantRoutes = require('./routes/applicantRoutes');
+const applicantRoutes = require('./routes/applicantRoutes');
 // const recruiterRoutes = require('./routes/recruiterRoutes');
 const authRoutes = require('./routes/authRoutes');
 // const jobRoutes = require('./routes/jobRoutes');
@@ -49,7 +49,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 // app.use('/applicantRoutes', applicantRoutes);
 // app.use('/recruiterRoutes',recruiterRoutes);
 app.use('/',authRoutes);
-// app.use('/jobs',jobRoutes);
+app.use('/',applicantRoutes);
 
 
 // Start the server

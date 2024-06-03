@@ -1,34 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
-import { doc, getDoc } from "firebase/firestore";
-import { db, auth } from '../config/firebase';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { doc, getDoc } from "firebase/firestore";
+import { db } from '../config/firebase';
+import { listenForAuthChange } from '../actions/authActions';
 
 import Navbar from './Navbar';
-import Signup from '../components/Signup';
-import Profile from '../components/Profile';
-import MainPage from '../components/MainPage';
 
 function Home() {
-  const [user, setUser] = useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.auth.user);
+  const loading = useSelector((state) => state.auth.loading);
   const [profileComplete, setProfileComplete] = useState(false);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (userAuth) => {
-      if (userAuth) {
-        setUser(userAuth);
-        const isComplete = await userProfileIsCompleted(userAuth);
-        setProfileComplete(isComplete);
-      } else {
-        setUser(null);
-        setProfileComplete(false);
-      }
-      setLoading(false);
-    });
+    dispatch(listenForAuthChange());
+  }, [dispatch]);
 
-    return () => unsubscribe();
-  }, []);
+  useEffect(() => {
+    if (!loading) {
+      if (user) {
+        if(userProfileIsCompleted(user)){
+          setProfileComplete(true);
+          if (profileComplete) {
+            navigate('/mainpage');
+          } else {
+            navigate('/profile');
+          }
+        };
+      } else {
+        navigate('/login');
+      }
+    }
+  }, [user, loading, navigate]);
 
   async function userProfileIsCompleted(userData) {
     const uid = userData.uid;
@@ -45,8 +50,7 @@ function Home() {
 
   return (
     <div className='home'>
-      <Navbar />
-      {!user ? <Signup /> : (profileComplete ? <MainPage /> : <Profile />)}
+      {user ? <Navbar /> : <div></div>}
     </div>
   );
 }
