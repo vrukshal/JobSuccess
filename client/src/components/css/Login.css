@@ -1,0 +1,88 @@
+/* App.css */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .login-container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .login-left {
+    background-color: #0033a0;
+    background-image: url("https://images.unsplash.com/photo-1535905557558-afc4877a26fc?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    color: white;
+    padding: 50px;
+    flex: 1;
+  }
+  
+  .login-left h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+  
+  .login-left h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  
+  .login-left ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .login-left ul li {
+    margin-bottom: 20px;
+  }
+  
+  .login-left a {
+    color: #f7c300;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .login-right {
+    padding: 50px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .login-right h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  
+  .login-right h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .login-right p {
+    margin-bottom: 10px;
+  }
+  
+  .login-right select,
+  .login-right input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  
+  .login-right button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #0033a0;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .login-right button:hover {
+    background-color: #002080;
+  }
+  

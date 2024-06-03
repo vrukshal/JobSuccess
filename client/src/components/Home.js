@@ -1,58 +1,54 @@
-import React from 'react'
-// import {useEffect} from 'react';
-// import ReactDOM from "react-dom";
-// import {useDispatch, useSelector} from "react-redux";
-// import { login, logout, selectUser } from "../features/userSlice";
-// import { auth } from "../../../server/config/firebase";
-// import { getAuth, onAuthStateChanged } from "firebase/auth";
+import React, { useEffect, useState } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc } from "firebase/firestore";
+import { db, auth } from '../config/firebase';
+import { useNavigate } from 'react-router-dom';
 
-import JobList from './JobsList';
-import JobsNavbar from './JobsNavBar';
-import JobsSidebar from './JobsSideBar';
-import "./css/Home.css"
+import Navbar from './Navbar';
+import Signup from '../components/Signup';
+import Profile from '../components/Profile';
+import MainPage from '../components/MainPage';
+
 function Home() {
+  const [user, setUser] = useState(null);
+  const [profileComplete, setProfileComplete] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-    // const user = useSelector(selectUser)
-    // const dispatch = useDispatch();
-    // // const auth = getAuth();
-    // useEffect(() => {
-    //   onAuthStateChanged(auth, (userAuth) => {
-    //     if(userAuth){
-    //       dispatch(
-    //         login({
-    //           email: userAuth.email,
-    //           uid: userAuth.uid,
-    //           displayName: userAuth.displayName,
-    //           firstName: userAuth.firstName,
-    //           lastName: userAuth.lastName,
-    //         })
-    //       )
-    //     }
-    //     else{
-    //       dispatch(logout());
-    //     }
-    //   })
-    // }, []);
-    const [selectedTab, setSelectedTab] = React.useState('jobs');
-    const [selectedType, setSelectedType] = React.useState('full-time');
-  
-    return (
-      <div className="home">
-      
-        <JobsNavbar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-        <div className="content">
-          <JobsSidebar selectedType={selectedType} setSelectedType={setSelectedType} />
-          <main className="main-feed">
-            {selectedTab === 'jobs' ? (
-              <JobList jobType={selectedType} />
-            ) : (
-              <div>Saved Jobs</div>
-            )}
-          </main>
-        </div>
-      </div>
-    );
-  
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (userAuth) => {
+      if (userAuth) {
+        setUser(userAuth);
+        const isComplete = await userProfileIsCompleted(userAuth);
+        setProfileComplete(isComplete);
+      } else {
+        setUser(null);
+        setProfileComplete(false);
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  async function userProfileIsCompleted(userData) {
+    const uid = userData.uid;
+    const checkApplicant = doc(db, "StudentProfiles", uid);
+    const checkRecruiter = doc(db, "EmployerProfiles", uid);
+    const applicantSnap = await getDoc(checkApplicant);
+    const recruiterSnap = await getDoc(checkRecruiter);
+    return applicantSnap.exists() || recruiterSnap.exists();
+  }
+
+  if (loading) {
+    return <div>Loading...</div>; // Or a loading spinner
+  }
+
+  return (
+    <div className='home'>
+      <Navbar />
+      {!user ? <Signup /> : (profileComplete ? <MainPage /> : <Profile />)}
+    </div>
+  );
 }
 
 export default Home;

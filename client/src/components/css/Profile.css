@@ -1,0 +1,134 @@
+.profile-container {
+    display: flex;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+  }
+  
+  .image-section1 {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .profile-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .form-section1 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background-color: #f8f8f8;
+  }
+  
+  .profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .profile-logo {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+  }
+  
+  .form-content {
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .selection-section {
+    width: 100%;
+    text-align: left;
+  }
+  
+  .selection-section h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  .selection-section p {
+    margin-bottom: 20px;
+  }
+  
+  .type-form {
+    width: 100%;
+  }
+  
+  .type-form label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .type-form select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    margin-bottom: 20px;
+  }
+  
+  .continue-button {
+    width: 50%;
+    height: 50px;
+    padding: 10px;
+    background-color: #19047b;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1em;
+    cursor: pointer;
+  }
+  
+  .continue-button:hover {
+    background-color: #0f0341;
+  }
+  
+  .details-form-section {
+    width: 100%;
+  }
+  
+  .details-form {
+    width: 100%;
+  }
+  
+  .details-form h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+  }
+  
+  .details-form label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .details-form input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    margin-bottom: 20px;
+  }
+  
+  .submit-button {
+    width: 50%;
+    height: 50px;
+    padding: 10px;
+    background-color: #19047b;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1em;
+    cursor: pointer;
+    align-self: center;
+  }
+  
+  .submit-button:hover {
+    background-color: #0f0341;
+  }
+  
