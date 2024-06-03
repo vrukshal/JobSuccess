@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../config/firebase';
 import { listenForAuthChange } from '../actions/authActions';
-
+import MainPage from './MainPage';
 import Navbar from './Navbar';
 
 function Home() {
@@ -50,7 +50,7 @@ function Home() {
 
   return (
     <div className='home'>
-      {user ? <Navbar /> : <div></div>}
+      {user ? <Navbar /> : <div> <MainPage/> </div>}
     </div>
   );
 }
