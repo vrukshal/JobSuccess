@@ -1,0 +1,38 @@
+/* JobsList.css */
+.jobs-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .job-card {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .job-card h2 {
+    margin: 0 0 10px;
+  }
+  
+  .job-card p {
+    margin: 5px 0;
+  }
+  
+  /* JobsList.css */
+  .jobs-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .job-card {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .job-card h2 {
+    margin: 0 0 10px;
+  }
+  
+  .job-card p {
+    margin: 5px 0;
+  }
+  

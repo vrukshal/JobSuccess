@@ -8,7 +8,7 @@ const cors = require("cors");
 const applicantRoutes = require('./routes/applicantRoutes');
 // const recruiterRoutes = require('./routes/recruiterRoutes');
 const authRoutes = require('./routes/authRoutes');
-// const jobRoutes = require('./routes/jobRoutes');
+const jobRoutes = require('./routes/jobRoutes');
 
 const {db, auth} = require('./config/firebase');
 
@@ -50,6 +50,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 // app.use('/recruiterRoutes',recruiterRoutes);
 app.use('/',authRoutes);
 app.use('/',applicantRoutes);
+app.use('/',jobRoutes);
 
 
 // Start the server
