@@ -28,7 +28,7 @@ export const listenForAuthChange = () => (dispatch) => {
   dispatch(setLoading(true));
   onAuthStateChanged(auth, (userAuth) => {
     if (userAuth) {
-      console.log("AUTH CHANGeD authactions")
+      // console.log("AUTH CHANGeD authactions")
       dispatch(setUser(userAuth));
     } else {
       dispatch(setUser(null));

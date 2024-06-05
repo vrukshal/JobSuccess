@@ -1,0 +1,14 @@
+.icon-sidebar{
+    display: flex;
+    flex-direction: row;
+    object-fit: contain;
+    margin: 10px;
+    height: 25px !important;
+    width: 25px !important;
+}
+
+.sidebar-item{
+    display: flex;
+    align-items: center;
+    
+}
