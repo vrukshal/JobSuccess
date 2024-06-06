@@ -12,7 +12,7 @@ function Home() {
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
   const loading = useSelector((state) => state.auth.loading);
-  const [profileComplete, setProfileComplete] = useState(false);
+  const [profileComplete, setProfileComplete] = useState(true);
 
   useEffect(() => {
     dispatch(listenForAuthChange());

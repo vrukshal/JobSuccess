@@ -1,0 +1,18 @@
+/* Sidebar.css */
+.sidebar {
+    width: 200px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sidebar button {
+    margin-bottom: 10px;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .sidebar .active {
+    font-weight: bold;
+  }
+  
