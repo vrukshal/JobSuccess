@@ -10,6 +10,7 @@ import Login from './components/Login';
 import Profile from './components/Profile';
 import MainPage from './components/MainPage';
 import Signup from './components/Signup';
+import NotFound from './components/PageNotFound';
 
 export default function App() {
   return (
@@ -21,6 +22,8 @@ export default function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/mainpage" element={<MainPage />} />
+          <Route path="*" element={<NotFound />} />
+
           {/* <Route path="/messaging" element={<Messaging />} />
           <Route path="/messaging/:receiverId" element={<Messaging />} /> */}
         </Routes>
