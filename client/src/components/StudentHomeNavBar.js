@@ -4,9 +4,9 @@ import './css/StudentHomeNavBar.css';
 
 const Navbar = ({ selectedTab, setSelectedTab }) => {
   return (
-    <div className="navbar">
+    <div className="student-navbar">
       <h1> Jobs </h1>
-      <div className="navbar-options">
+      <div className="student-navbar-options">
         <button
           className={selectedTab === 'jobs' ? 'active' : ''}
           onClick={() => setSelectedTab('jobs')}
