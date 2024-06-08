@@ -9,16 +9,22 @@ import PersonIcon from '@mui/icons-material/Person';
 import {Avatar} from "@mui/material"
 import './css/RecruiterNavbar.css';
 import RecruiterNavbarOption from './RecruiterNavbarOption';
+import { useSelector } from 'react-redux';
 
 const RecruiterNavbar = () => {
+    const user = useSelector((state) => state.auth.user);
   const handleProfileClick = () => {
     document.getElementById('profileDropdown').classList.toggle('show');
   };
 
+  console.log(user);
+  const profileURL = "/rec/"+user.uid;
+  console.log(profileURL);
+
   return (
     <div className="navbar">
       <ul>
-        <RecruiterNavbarOption icon={AccountBoxIcon} text='Profile'/>
+        <RecruiterNavbarOption icon={AccountBoxIcon} text='Profile' onClickUrl={profileURL}/>
         <RecruiterNavbarOption icon={WorkIcon} text='Job Posts'/>
         <RecruiterNavbarOption icon={GroupsIcon} text='Meetings'/>
         <RecruiterNavbarOption icon={InventoryIcon} text='Documents'/>

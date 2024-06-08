@@ -11,7 +11,7 @@ import Profile from './components/Profile';
 import StudentMainPage from './components/StudentMainPage';
 import RecruiterMainPage from './components/RecruiterMainPage'
 import Signup from './components/Signup';
-
+import MainApp from './components/ProfilePage/MainApp'
 export default function App() {
   return (
     <Provider store={store}>
@@ -23,6 +23,7 @@ export default function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/stu" element={<StudentMainPage />} />
           <Route path="/rec" element={<RecruiterMainPage />} />
+          <Route path="/rec/:userId" element={<MainApp />} />
           {/* <Route path="/messaging" element={<Messaging />} />
           <Route path="/messaging/:receiverId" element={<Messaging />} /> */}
         </Routes>
