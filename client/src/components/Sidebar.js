@@ -2,20 +2,34 @@
 import React from 'react';
 import './css/Sidebar.css';
 
-const Sidebar = ({ selectedType, setSelectedType }) => {
+const Sidebar = ({ currentPage, setCurrentPage }) => {
   return (
     <div className="sidebar">
       <button
-        className={selectedType === 'part-time' ? 'active' : ''}
-        onClick={() => setSelectedType('part-time')}
+        className={currentPage === 'Jobs' ? 'active' : ''}
+        onClick={() => setCurrentPage('Jobs')}
       >
-        Part-Time
+        Jobs
       </button>
       <button
-        className={selectedType === 'full-time' ? 'active' : ''}
-        onClick={() => setSelectedType('full-time')}
+        className={currentPage === 'Events' ? 'active' : ''}
+        onClick={() => setCurrentPage('Events')}
       >
-        Full-Time
+        Events
+      </button>
+
+      <button
+        className={currentPage === 'Employers' ? 'active' : ''}
+        onClick={() => setCurrentPage('Employers')}
+      >
+        Employers
+      </button>
+
+      <button
+        className={currentPage === 'Notifications' ? 'active' : ''}
+        onClick={() => setCurrentPage('Notifications')}
+      >
+        Notifications
       </button>
     </div>
   );

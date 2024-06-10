@@ -1,0 +1,21 @@
+.job-type-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: 2px solid #ccc;
+  border-radius: 25px;
+  background-color: #fff;
+  margin-right: 10px;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.job-type-button:hover {
+  border-color: #007bff;
+}
+
+.job-type-button.selected {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
