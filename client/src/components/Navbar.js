@@ -4,7 +4,7 @@ import NavbarOption from './NavbarOption'
 function Navbar() {
   return (
     <div>
-      <div class="navbar">
+      <div class="recruiter-navbar">
         <div class="logo">JobSuccess</div>
         <ul class="nav-links">
             <li><a href="#">Overview</a></li>

@@ -147,7 +147,7 @@ router.post('/api/auth/login', authController.loginWithEmailAndPassword);
  *                 auth_time:
  *                   type: integer
  *                   example: 1599522070
- *                 user_id:
+ *                 uid:
  *                   type: string
  *                   example: abcdef123456
  *                 sub:

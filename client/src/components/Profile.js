@@ -38,7 +38,7 @@ function Profile() {
   const handleStudentSubmit = async (e) => {
     e.preventDefault();
     if (!user) return; // Ensure user is authenticated
-
+    
     const applicantInfo = {
       date: date,
       school: school,
@@ -64,6 +64,7 @@ function Profile() {
 
       const data = await response.json();
       console.log('Profile created:', data);
+      navigate('/stu');
       // Redirect or show success message
     } catch (error) {
       console.error('Error creating profile:', error);
@@ -71,6 +72,43 @@ function Profile() {
     }
   };
 
+  const handleRecruiterSubmit = async (e) => {
+    e.preventDefault();
+    if (!user) return; // Ensure user is authenticated
+
+    const recruiterInfo = {
+      experience: experience,
+      company: company,
+      address: address,
+      size: size,
+      industry: industry,
+      role: role,
+      uid: user.uid,
+    };
+
+    console.log(recruiterInfo);
+    try {
+      const response = await fetch('http://localhost:3001/api/recruiter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(recruiterInfo),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      console.log('Profile created:', data);
+      navigate('/rec');
+    } catch (error) {
+      console.error('Error creating profile:', error);
+      // Show error message
+    }
+  };
+    
   return (
     <div className="profile-container">
       <div className="image-section1">
@@ -154,7 +192,7 @@ function Profile() {
                     Role in Company
                     <input type="text" name="role" value={role} onChange={(e) => setRole(e.target.value)}/>
                   </label>
-                  <button type="submit" className="submit-button">
+                  <button type="submit" className="submit-button" onClick={handleRecruiterSubmit}>
                     Submit
                   </button>
                 </form>

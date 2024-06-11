@@ -1,0 +1,27 @@
+.main-content {
+    margin-left: 220px;
+    padding: 20px;
+  }
+  
+  .main-content h1 {
+    font-size: 36px;
+  }
+  
+  .actions {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+  }
+  
+  .action-item {
+    background-color: #ddd;
+    padding: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .action-item:hover {
+    background-color: #ccc;
+  }
+  

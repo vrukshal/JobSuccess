@@ -2,7 +2,7 @@
 import React from 'react';
 import './css/StudentHomeNavBar.css';
 
-const Navbar = ({ selectedTab, setSelectedTab }) => {
+const StudentHomeNavBar = ({ selectedTab, setSelectedTab }) => {
   return (
     <div className="student-navbar">
       <h1> Jobs </h1>
@@ -24,4 +24,4 @@ const Navbar = ({ selectedTab, setSelectedTab }) => {
   );
 };
 
-export default Navbar;
+export default StudentHomeNavBar;

@@ -16,7 +16,7 @@ async function signupWithEmailAndPassword(req,res) {
         lastName: lastName,
         passwordHash: user.reloadUserInfo.passwordHash,
         updated_at: new Date().toISOString(),
-        user_id: user.uid
+        uid: user.uid
     }
     await setDoc(doc(db, "Users", user.uid), user_data)
     .then(() => {

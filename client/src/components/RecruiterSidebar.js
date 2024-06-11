@@ -3,10 +3,10 @@ import EventNoteRoundedIcon from '@mui/icons-material/EventNoteRounded';
 import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import InboxIcon from '@mui/icons-material/Inbox';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
-import './css/Sidebar.css';
+import './css/RecruiterSidebar.css';
 import SidebarIcon from './SidebarIcon';
 
-const Sidebar = () => {
+const RecruiterSidebar = () => {
   return (
     <div className="sidebar">
       <ul>
@@ -23,4 +23,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default RecruiterSidebar;

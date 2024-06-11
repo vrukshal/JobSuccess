@@ -1,17 +1,17 @@
 import React from 'react'
 import JobsList from './JobsList'
-import Sidebar from './Sidebar';
-import Navbar from './StudentHomeNavBar'
-import "./css/MainPage.css"
+import Sidebar from './JobsSideBar';
+import StudentHomeNavBar from './StudentHomeNavBar'
+import "./css/StudentMainPage.css"
 
-function MainPage() {
+function StudentMainPage() {
  
   const [selectedTab, setSelectedTab] = React.useState('jobs');
   const [selectedType, setSelectedType] = React.useState('full-time');
 
   return (
     <div className="home">
-      <Navbar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+      <StudentHomeNavBar selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
       <hr/>
       <div className="content">
         
@@ -29,4 +29,4 @@ function MainPage() {
   );
 }
 
-export default MainPage
+export default StudentMainPage
