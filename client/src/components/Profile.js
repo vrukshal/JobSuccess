@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import './css/Profile.css';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../config/firebase';
 
 function Profile() {
   const user = useSelector((state) => state.auth.user);
@@ -21,14 +23,49 @@ function Profile() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) {
-      navigate('/login');
-    }
-    else{
-      console.log(user);
-    }
+    const checkUserProfile = async () => {
+      if (!user) {
+        navigate('/login');
+      } else {
+        try {
+          const res = await userProfileIsCompleted(user);
+          // setProfileComplete(res);
+          if (res) {
+            console.log(res);
+            if (res === "applicant") {
+              console.log("profile COMPLETED");
+              navigate('/stu');
+            } else if (res === "recruiter") {
+              navigate('/rec');
+            } else {
+              navigate('/profile');
+            }
+          }
+          console.log(user);
+        } catch (error) {
+          console.error("Error checking user profile: ", error);
+          // Handle the error appropriately here
+        }
+      }
+    };
+
+    checkUserProfile();
   }, [user, navigate]);
 
+  async function userProfileIsCompleted(userData) {
+    const uid = userData.uid;
+    const checkApplicant = doc(db, "StudentProfiles", uid);
+    const checkRecruiter = doc(db, "EmployerProfiles", uid);
+    const applicantSnap = await getDoc(checkApplicant);
+    const recruiterSnap = await getDoc(checkRecruiter);
+    if(applicantSnap.exists()){
+      return "applicant";
+    }
+    if(recruiterSnap.exists()){
+      return "recruiter";
+    }
+    return false;
+  }
   const handleContinue = () => {
     if (userType) {
       setFormVisible(true);

@@ -1,40 +1,86 @@
 .MainApp {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-  }
-  
-  .profile-header {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .profile-overview, .contact-information, .jobs-section, .public-staff-list, .students-section {
-    margin-bottom: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .profile-overview h2, .contact-information h3, .jobs-section h3, .public-staff-list h3, .students-section h3 {
-    margin-top: 0;
-  }
-  
-  .student {
-    border-top: 1px solid #ccc;
-    padding-top: 10px;
-    margin-top: 10px;
-  }
-  
-  button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
+  font-family: Arial, sans-serif;
+  margin-left: 20px;
+  width: 100%;
+  display: flex;
+}
+
+.mainapp-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  column-gap: 1px;  /* Reduced column gap */
+  width: 50%;
+  padding: 0;
+  margin-top: 10px;
+  /* align-items: start; */
+  justify-content: space-around;
+}
+
+body {
+  background-color: rgba(238, 238, 238, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.profile-header {
+  display: grid;
+  grid-template-columns: auto;
+  align-items: center;
+  margin-right: 2px;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  width: 30%;
+}
+
+.profile-header h1 {
+  font-size: 2em;
+  width: 20px;
+  margin: 0;
+}
+
+.profile-header .info {
+  /* text-align: left; */
+}
+
+.profile-header .info p {
+  margin: 0;
+  color: #666; /* Lighter color shade */
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  align-self: flex-start; /* Align the button with the start of the header */
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.profile-overview, .contact-information, .jobs-section, .public-staff-list, .students-section {
+  height: auto;
+  word-wrap: normal;
+  width: 70%;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: rgb(250, 249, 249);
+}
+
+.profile-overview h2, .contact-information h3, .jobs-section h3, .public-staff-list h3, .students-section h3 {
+  margin-top: 0;
+}
+
+.student {
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+  margin-top: 10px;
+}

@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../config/firebase';
 import { listenForAuthChange } from '../actions/authActions';
+import Loader from "./loader";
+
+
 import StudentMainPage from './StudentMainPage';
 import Navbar from './Navbar';
 
@@ -65,7 +68,14 @@ function Home() {
   }
 
   if (loading) {
-    return <div>Loading...</div>; // Or a loading spinner
+    return <div
+    style={{
+        width: "100px",
+        margin: "auto",
+    }}
+>
+    Loading..
+</div>; // Or a loading spinner
   }
 
   return (

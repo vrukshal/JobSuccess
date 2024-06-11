@@ -18,7 +18,6 @@ function MainApp() {
   const { userId } = useParams();
   console.log("User id : ",userId);
   useEffect(() => {
-     // Replace with actual userId
     dispatch(fetchRecruiterData(userId));
   }, [dispatch]);
 
@@ -33,14 +32,16 @@ function MainApp() {
   return (
     <div className="MainApp">
       {recruiter && (
-        <>
+          <>
           <ProfileHeader recruiter={recruiter} />
+          <div className='mainapp-grid'>  
           <ProfileOverview recruiter={recruiter} />
           <ContactInformation recruiter={recruiter} />
           <JobsSection recruiter={recruiter} />
           <PublicStaffList recruiter={recruiter} />
           <StudentsSection recruiter={recruiter} />
-        </>
+          </div>
+          </>
       )}
     </div>
   );

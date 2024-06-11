@@ -36,6 +36,7 @@ function Login() {
             console.log("------ Successfully logged in -----");
             console.log('User data:', data);
             dispatch(setUser(data));
+            debugger
           } catch (error) {
             console.error('Error logging in:', error);
           }
