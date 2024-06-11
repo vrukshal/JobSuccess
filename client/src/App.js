@@ -12,6 +12,7 @@ import StudentMainPage from './components/StudentMainPage';
 import RecruiterMainPage from './components/RecruiterMainPage';
 import MainApp from './components/ProfilePage/MainApp';
 import Signup from './components/Signup';
+import NotFound from './components/PageNotFound';
 
 export default function App() {
   return (
@@ -22,6 +23,9 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/mainpage" element={<MainPage />} />
+          <Route path="*" element={<NotFound />} />
+
           <Route path="/stu" element={<StudentMainPage />} />
           <Route path="/rec" element={<RecruiterMainPage />} />
           <Route path="/rec/:userId" element={<MainApp />} />

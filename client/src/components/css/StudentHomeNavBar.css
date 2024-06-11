@@ -1,27 +1,50 @@
-/* Navbar.css */
 .student-navbar {
-    width: 100%;
-    display: flex; 
-    justify-content:left;
-    padding: 10px;
-    align-items: start;
-    margin-left: 15%;
-  }
-  
-  .student-navbar-options button {
-    margin: 0 10px;
-    padding: 10px 20px;
-    cursor: pointer;
-   
-  }
+  display: flex;
+  justify-content: center;
+  background-color: #f8f9fa;
+  padding: 10px 20px;
+  border-bottom: 1px solid #dee2e6;
+}
 
-  .student-navbar  h1 {
-    margin: 0 10px;
-    padding: 5px 20px;
-  }
+.student-navbar-inner {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px; /* Adjust max-width as needed */
+}
 
-  .student-navbar-options .active {
-    font-weight: bold;
-    border-bottom: 2px solid #000;
-  }
-  
+.student-navbar-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.student-navbar-options {
+  display: flex;
+  gap: 10px;
+}
+
+.student-navbar button {
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  color: #495057;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.student-navbar button:hover {
+  background-color: #e9ecef;
+}
+
+.student-navbar button.student-active {
+  background-color: #007bff;
+  color: #ffffff;
+  border-color: #007bff;
+}
+
+.student-navbar button.student-active:hover {
+  background-color: #0056b3;
+}

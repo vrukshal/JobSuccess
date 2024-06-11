@@ -6,19 +6,35 @@ import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import './css/Sidebar.css';
 import SidebarIcon from './SidebarIcon';
 
-const Sidebar = () => {
+const Sidebar = ({ currentPage, setCurrentPage }) => {
   return (
     <div className="sidebar">
-      <ul>
-        <SidebarIcon icon={EventNoteRoundedIcon} text="Events"/>
-        <SidebarIcon icon={LocalLibraryIcon} text="Students"/>
-        <SidebarIcon icon={InboxIcon} text="Inbox"/>
-        <SidebarIcon icon={BusinessCenterIcon} text="Career Center"/>
-        {/* <li><div className='li-item'>Events <EventNoteRoundedIcon /></div></li> */}
-        {/* <li>Students <LocalLibraryIcon /></li>
-        <li>Inbox <InboxIcon /></li>
-        <li>Career Center <BusinessCenterIcon /></li> */}
-      </ul>
+      <button
+        className={currentPage === 'Jobs' ? 'active' : ''}
+        onClick={() => setCurrentPage('Jobs')}
+      >
+        Jobs
+      </button>
+      <button
+        className={currentPage === 'Events' ? 'active' : ''}
+        onClick={() => setCurrentPage('Events')}
+      >
+        Events
+      </button>
+
+      <button
+        className={currentPage === 'Employers' ? 'active' : ''}
+        onClick={() => setCurrentPage('Employers')}
+      >
+        Employers
+      </button>
+
+      <button
+        className={currentPage === 'Notifications' ? 'active' : ''}
+        onClick={() => setCurrentPage('Notifications')}
+      >
+        Notifications
+      </button>
     </div>
   );
 };

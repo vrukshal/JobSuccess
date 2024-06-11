@@ -1,4 +1,45 @@
-.content{
+.Mainhome {
     display: flex;
-    flex-direction: row;
+    height: 100vh; /* Full viewport height */
+}
+
+.sidebar {
+    width: 15%; /* Sidebar takes up 20% of the width */
+    height: 100%; /* Full height */
+    position: fixed; /* Fixes sidebar in place */
+}
+
+.content {
+    margin-left: 20%; /* Offset by sidebar width */
+    width: 85%; /* Remaining width */
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.filter-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f8f9fa; /* Light background for visibility */
+}
+
+.hr1, .hr2, .hr3 {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 10px 0;
+}
+
+.main-feed {
+    flex: 1; /* Takes up remaining space */
+    padding: 20px;
+    overflow-y: auto; /* Scrollable if content overflows */
+    padding: 20px; /* Match padding with navbar for alignment */
+
 }
