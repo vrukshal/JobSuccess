@@ -23,10 +23,10 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/mainpage" element={<MainPage />} />
+          <Route path="/mainpage" element={<StudentMainPage />} />
           <Route path="*" element={<NotFound />} />
 
-          <Route path="/stu" element={<StudentMainPage />} />
+          {/* <Route path="/stu" element={<StudentMainPage />} /> */}
           <Route path="/rec" element={<RecruiterMainPage />} />
           <Route path="/rec/:userId" element={<MainApp />} />
           {/* <Route path="/messaging" element={<Messaging />} />

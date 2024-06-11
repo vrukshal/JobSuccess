@@ -5,7 +5,7 @@ import Navbar from './StudentHomeNavBar';
 import SearchBar from './SearchBar';
 import LocationFilter from './LocationFilter';
 import JobTypeFilter from './JobTypeFilter';
-import './css/MainPage.css';
+import './css/StudentMainPage.css';
 
 function MainPage() {
   const [currentPage, setCurrentPage] = React.useState('Jobs');
