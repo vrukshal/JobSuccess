@@ -20,15 +20,16 @@ const RecruiterNavbar = () => {
 
   console.log(user);
   const profileURL = "/rec/"+user.uid;
+  const docURL = "/rec/files";
   console.log(profileURL);
 
   return (
     <div className="navbar">
       <ul>
         <RecruiterNavbarOption icon={AccountBoxIcon} text='Profile' onClickUrl={profileURL}/>
-        <RecruiterNavbarOption icon={WorkIcon} text='Job Posts'/>
+        <RecruiterNavbarOption icon={WorkIcon} text='Job Posts' />
         <RecruiterNavbarOption icon={GroupsIcon} text='Meetings'/>
-        <RecruiterNavbarOption icon={InventoryIcon} text='Documents'/>
+        <RecruiterNavbarOption icon={InventoryIcon} text='Documents' onClickUrl={docURL}/>
         <RecruiterNavbarOption icon={ReviewsIcon} text='Reviews'/>
 
         {/* <li><div className='navbar-option'><div className='icon-container'><AccountBoxIcon fontSize='large'/></div> Profile</div></li>

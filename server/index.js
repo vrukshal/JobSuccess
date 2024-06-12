@@ -17,10 +17,10 @@ const corsOptions ={
   credentials:true,            //access-control-allow-credentials:true
   optionSuccessStatus:200,
 }
-
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 // Middleware
 // app.use(express.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
