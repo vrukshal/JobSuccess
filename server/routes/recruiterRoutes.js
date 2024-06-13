@@ -7,5 +7,6 @@ const upload = multer();
 
 router.post('/api/recruiter/', recruiterController.createNewRecruiter);
 router.post('/api/recruiter/fileupload',upload.single('file'),recruiterController.uploadNewFile);
+router.get('/api/recruiter/files',recruiterController.getFiles);
 
 module.exports = router;

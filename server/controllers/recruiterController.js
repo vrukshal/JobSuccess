@@ -1,9 +1,12 @@
 const dotenv = require('dotenv');
 dotenv.config();
 const { auth, db } = require('../config/firebase');
-const { setDoc, doc } = require('firebase/firestore');
+const { setDoc, doc, updateDoc, arrayUnion, getDoc } = require('firebase/firestore');
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
+const { useDispatch, useSelector } = require('react-redux');
+const { admin } = require('../config/firebase-admin');
+
 
 async function createNewRecruiter(req, res) {
     const recruiterInfo = req.body;
@@ -18,11 +21,12 @@ async function createNewRecruiter(req, res) {
 }
 
 async function uploadNewFile(req, res) {
+    console.log(req.body);
     const filename = req.body.filename;
     const filetype = req.body.filetype;
+    const recruiterUid = req.body.uid;
+
     const file = req.file; // Use req.file for the uploaded file
-    console.log(process.env.ACCESS_KEY);
-    console.log(filename, filetype);
 
     const s3client = new S3Client({
         region: "us-east-2",
@@ -45,6 +49,13 @@ async function uploadNewFile(req, res) {
         await s3client.send(command);
         const fileUrl = `https://${process.env.BUCKET_NAME}.s3.us-east-2.amazonaws.com/files/${filename}`;
         console.log('File uploaded successfully!');
+        const collectionRef = doc(db, "EmployerProfiles", recruiterUid);
+        await updateDoc(collectionRef,{
+            files: arrayUnion({
+               bucketPath: fileUrl,
+               uploadedAt: new Date().toISOString()
+            })
+        }).then(console.log("Updated", fileUrl));
         res.status(200).json({ message: 'File uploaded successfully!', fileUrl });
     } catch (error) {
         console.error('Error uploading file:', error);
@@ -52,4 +63,24 @@ async function uploadNewFile(req, res) {
     }
 }
 
-module.exports = { createNewRecruiter, uploadNewFile };
+async function getFiles(req,res){
+    const recruiterUid = req.query.recruiterUid; 
+    console.log(recruiterUid);
+    try {
+        const collectionRef = doc(db, "EmployerProfiles", recruiterUid);
+        await getDoc(collectionRef)
+        .then((docSnap) => {
+            const files = docSnap.data().files; 
+            res.status(200).json(files);
+        })
+        .catch((error) => {
+            res.status(404).json({ message: error.message });
+        });
+        // console.log(docSnap);
+    } catch (error) {
+        console.error('Error fetching files:', error);
+        res.status(500).json({ error: 'Error fetching files.' });
+    }
+}
+
+module.exports = { createNewRecruiter, uploadNewFile, getFiles };
