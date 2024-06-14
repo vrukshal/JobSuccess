@@ -60,6 +60,7 @@ function Signup() {
             const provider = new GoogleAuthProvider();
             const result = await signInWithPopup(auth, provider, browserPopupRedirectResolver);
             const user = result.user;
+            // console.log(result);
             const idtoken = await user.getIdToken();
             console.log(idtoken);
             const response = await fetch('http://localhost:3001/api/auth/google', {
