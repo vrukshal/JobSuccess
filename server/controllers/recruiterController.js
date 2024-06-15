@@ -2,7 +2,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 const { auth, db } = require('../config/firebase');
 const { setDoc, doc, updateDoc, arrayUnion, getDoc } = require('firebase/firestore');
-const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+const { S3Client, PutObjectCommand, GetObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 const { useDispatch, useSelector } = require('react-redux');
 const { admin } = require('../config/firebase-admin');
@@ -38,7 +38,7 @@ async function uploadNewFile(req, res) {
 
     const command = new PutObjectCommand({
         Bucket: process.env.BUCKET_NAME,
-        Key: `files/${filename}`,
+        Key: `${recruiterUid}/files/${filename}`,
         ContentType: filetype,
         Body: file.buffer // Use the file buffer here
     });
@@ -47,7 +47,7 @@ async function uploadNewFile(req, res) {
 
     try {
         await s3client.send(command);
-        const fileUrl = `https://${process.env.BUCKET_NAME}.s3.us-east-2.amazonaws.com/files/${filename}`;
+        const fileUrl = `https://${process.env.BUCKET_NAME}.s3.us-east-2.amazonaws.com/${recruiterUid}/files/${filename}`;
         console.log('File uploaded successfully!');
         const collectionRef = doc(db, "EmployerProfiles", recruiterUid);
         await updateDoc(collectionRef,{
@@ -83,4 +83,57 @@ async function getFiles(req,res){
     }
 }
 
-module.exports = { createNewRecruiter, uploadNewFile, getFiles };
+async function getFileDownloadUrl(req, res) {
+    const { filename } = req.query; // Get the filename from the query parameters
+    console.log(filename);
+
+    const s3client = new S3Client({
+        region: "us-east-2",
+        credentials: {
+            accessKeyId: process.env.ACCESS_KEY,
+            secretAccessKey: process.env.SECRET_ACCESS_KEY
+        }
+    });
+
+    const command = new GetObjectCommand({
+        Bucket: process.env.BUCKET_NAME,
+        Key: `files/${filename}`
+    });
+
+    try {
+        const downloadUrl = await getSignedUrl(s3client, command, { expiresIn: 3600 }); // URL valid for 1 hour
+        console.log('Generated download URL:', downloadUrl);
+        res.status(200).json({ downloadUrl });
+    } catch (error) {
+        console.error('Error generating download URL:', error);
+        res.status(500).json({ error: 'Error generating download URL.' });
+    }
+}
+
+async function getFileViewUrl(req, res) {
+    const { filename } = req.query; // Get the filename from the query parameters
+    console.log(filename);
+
+    const s3client = new S3Client({
+        region: "us-east-2",
+        credentials: {
+            accessKeyId: process.env.ACCESS_KEY,
+            secretAccessKey: process.env.SECRET_ACCESS_KEY
+        }
+    });
+
+    const command = new GetObjectCommand({
+        Bucket: process.env.BUCKET_NAME,
+        Key: `files/${filename}`
+    });
+
+    try {
+        const viewUrl = await getSignedUrl(s3client, command, { expiresIn: 3600 }); // URL valid for 1 hour
+        console.log('Generated view URL:', viewUrl);
+        res.status(200).json({ viewUrl });
+    } catch (error) {
+        console.error('Error generating view URL:', error);
+        res.status(500).json({ error: 'Error generating view URL.' });
+    }
+}
+module.exports = { createNewRecruiter, uploadNewFile, getFiles, getFileDownloadUrl, getFileViewUrl };

@@ -1,14 +1,32 @@
-.sidebar {
-  width: 200px;
+.recruiter-sidebar {
+  width: 230px;
   height: 100vh;
-  background-color: #f4f4f4;
+  background-color: #ffffff;
   padding: 20px;
   position: fixed;
+  z-index: 100;
+  border-right: 1px solid rgb(199, 199, 199);
 }
 
-.sidebar ul {
+.recruiter-sidebar ul {
   list-style: none;
   padding: 0;
+}
+
+.sidebar-item{
+  cursor: pointer;
+  font-size: large;
+  margin: 5px;
+  margin-top: 10px;
+  padding-right: 10px;
+  border-radius: 5px;
+}
+
+.sidebar-item:hover{
+  background-color: whitesmoke;
+}
+.recruiter-sidebar-items{
+  margin-top: 70px;
 }
 
 .sidebar li {

@@ -8,17 +8,13 @@ import SidebarIcon from './SidebarIcon';
 
 const RecruiterSidebar = () => {
   return (
-    <div className="sidebar">
-      <ul>
+    <div className="recruiter-sidebar">
+      <div class="recruiter-sidebar-items">
         <SidebarIcon icon={EventNoteRoundedIcon} text="Events"/>
         <SidebarIcon icon={LocalLibraryIcon} text="Students"/>
         <SidebarIcon icon={InboxIcon} text="Inbox"/>
         <SidebarIcon icon={BusinessCenterIcon} text="Career Center"/>
-        {/* <li><div className='li-item'>Events <EventNoteRoundedIcon /></div></li> */}
-        {/* <li>Students <LocalLibraryIcon /></li>
-        <li>Inbox <InboxIcon /></li>
-        <li>Career Center <BusinessCenterIcon /></li> */}
-      </ul>
+      </div>
     </div>
   );
 };

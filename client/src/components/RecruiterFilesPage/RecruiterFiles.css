@@ -1,0 +1,35 @@
+.recruiter-files-content{
+    margin-left: 240px;
+    z-index: 100;
+}
+
+.upload-file{
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    flex: 1;
+}
+
+.upload-file input{
+    width: 50%;
+    height: fit-content;
+    margin: 13px;
+}
+
+.upload-file button{
+    margin: 12px;
+    padding-bottom: auto;
+    height: 40px;
+}
+
+.table-content{
+    margin: 30px;
+}
+
+.table-content table{
+    
+    border-radius: 5px;
+    border: 1px solid rgb(200, 200, 200);
+}
