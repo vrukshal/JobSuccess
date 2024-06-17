@@ -1,5 +1,5 @@
 const { db } = require('../config/firebase');
-const { collection, getDocs, query, where } = require('firebase/firestore');
+const { collection, getDocs, query, where, addDoc } = require('firebase/firestore');
 
 async function getFullTimeJobs(req, res) {
     try {
@@ -47,6 +47,20 @@ async function getFullTimeJobs(req, res) {
 // }
 
 
+async function createNewJobPost(req, res){
+    try {
+        const jobData = req.body;
+        jobData.posted_at = new Date().toISOString();
+        const newJobRef = collection(db, "Jobs");
+        await addDoc(newJobRef, jobData);
+        res.status(200).json({ success: true, id: newJobRef.id, jobData: jobData });
+      } catch (error) {
+        console.error('Error creating job post:', error);
+        res.status(500).json({ success: false, error: 'Failed to create job post' });
+      }
+}
+
+
 
 async function getPartTimeJobs(req, res) {
     try {
@@ -91,4 +105,4 @@ async function getPartTimeJobs(req, res) {
 //     }
 // }
 
-module.exports = {getFullTimeJobs,getPartTimeJobs}
+module.exports = {getFullTimeJobs, getPartTimeJobs, createNewJobPost}

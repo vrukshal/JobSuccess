@@ -14,6 +14,8 @@ import MainApp from './components/ProfilePage/MainApp';
 import Signup from './components/Signup';
 import NotFound from './components/PageNotFound';
 import RecruiterFiles from './components/RecruiterFilesPage/RecruiterFiles';
+import JobPostsMainPage from './components/JobPostsPage/JobPostsMainPage';
+import NewJobPost from './components/JobPostsPage/NewJobPost';
 
 export default function App() {
   return (
@@ -31,6 +33,8 @@ export default function App() {
           <Route path="/rec" element={<RecruiterMainPage />} />
           <Route path="/rec/:userId" element={<MainApp />} />
           <Route path="/rec/files" element={<RecruiterFiles />} />
+          <Route path="/rec/postings" element={<JobPostsMainPage /> } />
+          <Route path="/rec/postings/newjobpost" element={<NewJobPost /> } />
           {/* <Route path="/messaging" element={<Messaging />} />
           <Route path="/messaging/:receiverId" element={<Messaging />} /> */}
         </Routes>

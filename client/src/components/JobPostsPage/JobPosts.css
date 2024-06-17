@@ -1,0 +1,37 @@
+.job-posts-container {
+    margin: 0px 20px 20px 240px;
+    padding: 20px;
+  }
+  
+  .job-posts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .job-posts-header h1 {
+    margin: 0;
+  }
+  
+  .job-posts-header div {
+    display: flex;
+    align-items: center;
+  }
+  
+  .job-posts-header input {
+    margin-right: 10px;
+    width: 200px;
+  }
+  
+  .tabs {
+    margin-bottom: 20px;
+  }
+  
+  .tabs .btn {
+    margin-right: 5px;
+  }
+  
+  .jobposts-search-bar button{
+    margin: 10px;
+  }
