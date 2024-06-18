@@ -9,12 +9,16 @@ import PublicStaffList from './PublicStaffList';
 import StudentsSection from './StudentsSection';
 import "./MainApp.css";
 import { useParams } from 'react-router-dom';
-
+import Cookies from 'js-cookie';
+import RecruiterSidebar from '../RecruiterSidebar';
+import RecruiterNavbar from '../RecruiterNavbar';
 function MainApp() {
   const dispatch = useDispatch();
   const recruiter = useSelector((state) => state.recruiter.data);
   const recruiterStatus = useSelector((state) => state.recruiter.status);
   const recruiterError = useSelector((state) => state.recruiter.error);
+  const recruiterCookie = JSON.parse(Cookies.get('recruiter'));
+  console.log("Rec cookie:",recruiterCookie);
   const { userId } = useParams();
   console.log("User id : ",userId);
   useEffect(() => {
@@ -31,17 +35,19 @@ function MainApp() {
   console.log(recruiter);
   return (
     <div className="MainApp">
-      {recruiter && (
-          <>
-          <ProfileHeader recruiter={recruiter} />
+      {recruiterCookie && (
+          <div>
+          <RecruiterSidebar />
+          <RecruiterNavbar />
+          <ProfileHeader recruiter={recruiterCookie} />
           <div className='mainapp-grid'>  
-          <ProfileOverview recruiter={recruiter} />
-          <ContactInformation recruiter={recruiter} />
-          <JobsSection recruiter={recruiter} />
-          <PublicStaffList recruiter={recruiter} />
-          <StudentsSection recruiter={recruiter} />
+          <ProfileOverview recruiter={recruiterCookie} />
+          <ContactInformation recruiter={recruiterCookie} />
+          <JobsSection recruiter={recruiterCookie} />
+          <PublicStaffList recruiter={recruiterCookie} />
+          <StudentsSection recruiter={recruiterCookie} />
           </div>
-          </>
+          </div>
       )}
     </div>
   );

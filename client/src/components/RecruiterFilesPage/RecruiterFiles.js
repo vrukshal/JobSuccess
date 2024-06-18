@@ -4,28 +4,27 @@ import axios from 'axios';
 import RecruiterNavbar from '../RecruiterNavbar';
 import RecruiterSidebar from '../RecruiterSidebar';
 import './RecruiterFiles.css';
-
+import Cookies from 'js-cookie';
 function RecruiterFiles() {
     const [file, setFile] = React.useState(null);
-    const recruiter = useSelector((state) => state.recruiter.data);
-    const user = useSelector((state) => state.auth.user);
+    const recruiter = JSON.parse(Cookies.get('recruiter'));
+    // const user = useSelector((state) => state.auth.user);
     const [userFiles, setUserFiles] = React.useState([]);
 
     React.useEffect(() => {
         const fetchFiles = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/api/recruiter/files?recruiterUid=${user.uid}`);
+                const response = await axios.get(`http://localhost:3001/api/recruiter/files?recruiterUid=${recruiter.uid}`);
                 console.log(response);
                 setUserFiles(response.data);
             } catch (error) {
                 console.error('Error fetching files:', error);
             }
         };
-
         fetchFiles();
     }, []);
 
-    console.log(user);
+    // console.log(user);
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
     };
@@ -37,7 +36,7 @@ function RecruiterFiles() {
             formData.append('filename', file.name);
             formData.append('filetype', file.type);
             formData.append('file', file);
-            formData.append('uid', user.uid);
+            formData.append('uid', recruiter.uid);
             const response = await fetch('http://localhost:3001/api/recruiter/fileupload', {
                 method: 'POST',
                 body: formData,

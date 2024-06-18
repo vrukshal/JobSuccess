@@ -3,6 +3,7 @@ import "./css/Login.css"
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../actions/authActions';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 function Login() {
 
@@ -11,18 +12,21 @@ function Login() {
     const user = useSelector((state) => state.auth.user);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
     useEffect(() => {
-      const checkAuth = () => {
-        if (user) {
-          navigate('/profile');
-        }
-      };
-      checkAuth();
-    }, [user]);
+        const checkAuth = () => {
+            const storedUser = Cookies.get('user');
+            if (storedUser) {
+                dispatch(setUser(JSON.parse(storedUser)));
+            }
+            if (user) {
+                navigate('/profile');
+            }
+        };
+        checkAuth();
+    }, [user, dispatch, navigate]);
     
     const loginUser = async (e) => {
-        // e.preventDefault();
-        console.log("Logging in...")
         e.preventDefault();
         try {
             const response = await fetch('http://localhost:3001/api/auth/login', {
@@ -33,14 +37,13 @@ function Login() {
               body: JSON.stringify({ email, password }),
             });
             const data = await response.json();
-            console.log("------ Successfully logged in -----");
-            console.log('User data:', data);
             dispatch(setUser(data));
-            debugger
+            Cookies.set('user', JSON.stringify(data)); // Save user data in cookies
           } catch (error) {
             console.error('Error logging in:', error);
           }
     }
+
     return (
       <div className="login-container">
         <div className="login-left">
@@ -60,7 +63,6 @@ function Login() {
             <p>Please sign in with your email.</p>
             <input type="email" placeholder="email@example.edu" onChange={(e) => setEmail(e.target.value)}/>
             <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
-
             <button onClick={loginUser}>Log in</button>
           </div>
           <p>Not a user?{" "}
@@ -71,4 +73,4 @@ function Login() {
     );
   }
 
-export default Login
+export default Login;

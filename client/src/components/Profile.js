@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import './css/Profile.css';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
+import { fetchRecruiterData } from '../actions/recruiterActions';
+import Cookies from 'js-cookie';
 
 function Profile() {
   const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
   const [userType, setUserType] = useState('');
   const [formVisible, setFormVisible] = useState(false);
   const [date, setDate] = useState('');
@@ -21,36 +24,33 @@ function Profile() {
   const [role, setRole] = useState('');
 
   const navigate = useNavigate();
-
+  console.log(user);
   useEffect(() => {
     const checkUserProfile = async () => {
       if (!user) {
         navigate('/login');
       } else {
         try {
-          const res = await userProfileIsCompleted(user);
-          // setProfileComplete(res);
+          const [res, snap] = await userProfileIsCompleted(user);
           if (res) {
-            console.log(res);
             if (res === "applicant") {
-              console.log("profile COMPLETED");
+              Cookies.set('student', JSON.stringify(snap));
               navigate('/stu');
             } else if (res === "recruiter") {
+              Cookies.set('recruiter', JSON.stringify(snap));
               navigate('/rec');
-            } else {
-              navigate('/profile');
             }
+          } else {
+            navigate('/profile');
           }
-          console.log(user);
         } catch (error) {
           console.error("Error checking user profile: ", error);
-          // Handle the error appropriately here
         }
       }
     };
 
     checkUserProfile();
-  }, [user, navigate]);
+  }, [user]);
 
   async function userProfileIsCompleted(userData) {
     const uid = userData.uid;
@@ -59,12 +59,12 @@ function Profile() {
     const applicantSnap = await getDoc(checkApplicant);
     const recruiterSnap = await getDoc(checkRecruiter);
     if(applicantSnap.exists()){
-      return "applicant";
+      return ["applicant", applicantSnap.data()];
     }
     if(recruiterSnap.exists()){
-      return "recruiter";
+      return ["recruiter", recruiterSnap.data()];
     }
-    return false;
+    return [false, null];
   }
   const handleContinue = () => {
     if (userType) {
@@ -101,6 +101,7 @@ function Profile() {
 
       const data = await response.json();
       console.log('Profile created:', data);
+      Cookies.set('student', JSON.stringify(data));
       navigate('/stu');
       // Redirect or show success message
     } catch (error) {
@@ -139,6 +140,11 @@ function Profile() {
 
       const data = await response.json();
       console.log('Profile created:', data);
+      // dispatch(setUser(data));
+      dispatch(fetchRecruiterData(recruiterInfo.uid));
+      Cookies.set('recruiter', JSON.stringify(data));
+      const recruiterCookie = Cookies.get('recruiter');
+      console.log(recruiterCookie);
       navigate('/rec');
     } catch (error) {
       console.error('Error creating profile:', error);
