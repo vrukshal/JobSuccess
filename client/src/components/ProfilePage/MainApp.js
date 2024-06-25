@@ -39,13 +39,15 @@ function MainApp() {
           <div>
           <RecruiterSidebar />
           <RecruiterNavbar />
-          <ProfileHeader recruiter={recruiterCookie} />
-          <div className='mainapp-grid'>  
-          <ProfileOverview recruiter={recruiterCookie} />
-          <ContactInformation recruiter={recruiterCookie} />
-          <JobsSection recruiter={recruiterCookie} />
-          <PublicStaffList recruiter={recruiterCookie} />
-          <StudentsSection recruiter={recruiterCookie} />
+          <div className='mainapp-grid'> 
+            <div className='container'>
+              <ProfileHeader recruiter={recruiterCookie} />
+            </div>
+            <ProfileOverview recruiter={recruiterCookie} />
+            <ContactInformation recruiter={recruiterCookie} />
+            <JobsSection recruiter={recruiterCookie} />
+            <PublicStaffList recruiter={recruiterCookie} />
+            <StudentsSection recruiter={recruiterCookie} />
           </div>
           </div>
       )}

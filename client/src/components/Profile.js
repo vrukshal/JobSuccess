@@ -12,19 +12,36 @@ function Profile() {
   const dispatch = useDispatch();
   const [userType, setUserType] = useState('');
   const [formVisible, setFormVisible] = useState(false);
-  const [date, setDate] = useState('');
-  const [school, setSchool] = useState('');
-  const [degree, setDegree] = useState('');
-  const [education, setEducation] = useState('');
-  const [experience, setExperience] = useState('');
-  const [company, setCompany] = useState('');
-  const [address, setAddress] = useState('');
-  const [size, setSize] = useState('');
-  const [industry, setIndustry] = useState('');
-  const [role, setRole] = useState('');
+  const [step, setStep] = useState(1);
+  const [sizeVal, setSizeVal] = useState(1);
+  const [studentFormData, setStudentFormData] = useState({
+    date: '',
+    school: '',
+    degree: '',
+    education: '',
+    experience: ''
+  });
+
+  const [recruiterFormData, setRecruiterFormData] = useState({
+    name: '',
+    experience: '',
+    company: '',
+    address: '',
+    size: '',
+    industry: '',
+    role: '',
+    description: '',
+    logo: '',
+    email: '',
+    website: '',
+    location: '',
+    phone: '',
+    uid: user.uid
+  });
 
   const navigate = useNavigate();
   console.log(user);
+
   useEffect(() => {
     const checkUserProfile = async () => {
       if (!user) {
@@ -52,6 +69,42 @@ function Profile() {
     checkUserProfile();
   }, [user]);
 
+  const nextStep = () => {
+    setStep(step + 1);
+  };
+
+  const prevStep = () => {
+    setStep(step - 1);
+  };
+
+  const handleSizeChange = (e) => {
+    setSizeVal(e.target.value)
+    const range = {
+      1: 100,
+      2: 1000,
+      3: 10000,
+      4: 25000,
+      5: 50000,
+      6: 100000,
+      7: 200000
+    }
+    setRecruiterFormData({
+      ...recruiterFormData,
+      size: range[parseInt(e.target.value)]
+    });
+    console.log(recruiterFormData);
+  };
+
+  const getSizeLabel = (size) => {
+    if (size <= 100) return '1-100';
+    if (size <= 1000) return '100-1000';
+    if (size <= 10000) return '1000-10000';
+    if (size <= 25000) return '10000-25000';
+    if (size <= 50000) return '25000-50000';
+    if (size <= 100000) return '50000-100000';
+    return '100000-200000';
+  };
+
   async function userProfileIsCompleted(userData) {
     const uid = userData.uid;
     const checkApplicant = doc(db, "StudentProfiles", uid);
@@ -66,22 +119,35 @@ function Profile() {
     }
     return [false, null];
   }
+
   const handleContinue = () => {
     if (userType) {
       setFormVisible(true);
     }
   };
 
+  const handleStudentChange = (e) => {
+    const { name, value } = e.target;
+    setStudentFormData({
+      ...studentFormData,
+      [name]: value
+    });
+  };
+
+  const handleRecruiterChange = (e) => {
+    const { name, value } = e.target;
+    setRecruiterFormData({
+      ...recruiterFormData,
+      [name]: value
+    });
+  };
+
   const handleStudentSubmit = async (e) => {
     e.preventDefault();
     if (!user) return; // Ensure user is authenticated
-    
+
     const applicantInfo = {
-      date: date,
-      school: school,
-      degree: degree,
-      education: education,
-      experience: experience,
+      ...studentFormData,
       uid: user.uid,
     };
 
@@ -114,13 +180,24 @@ function Profile() {
     e.preventDefault();
     if (!user) return; // Ensure user is authenticated
 
+    const formData = new FormData();
+    formData.append('filename', recruiterFormData.logo.name);
+    formData.append('filetype', recruiterFormData.logo.type);
+    formData.append('folderName', "logo");
+    formData.append('file', recruiterFormData.logo);
+    formData.append('uid', recruiterFormData.uid);
+
+    console.log(formData);
+    const response = await fetch('http://localhost:3001/api/recruiter/fileupload', {
+        method: 'POST',
+        body: formData,
+    });
+
+    const data = await response.json();
+
     const recruiterInfo = {
-      experience: experience,
-      company: company,
-      address: address,
-      size: size,
-      industry: industry,
-      role: role,
+      ...recruiterFormData,
+      logo: data.fileUrl,
       uid: user.uid,
     };
 
@@ -151,7 +228,13 @@ function Profile() {
       // Show error message
     }
   };
-    
+
+  const handleFileChange = (e) => {
+    setRecruiterFormData({
+      ...recruiterFormData,
+      logo: e.target.files[0]
+    });
+};
   return (
     <div className="profile-container">
       <div className="image-section1">
@@ -186,59 +269,111 @@ function Profile() {
           ) : (
             <div className="details-form-section">
               {userType === 'student' ? (
-                <form className="details-form">
+                <form className="details-form" onSubmit={handleStudentSubmit}>
                   <h2>Student Details</h2>
                   <label>
                     Birthdate
-                    <input type="date" name="birthdate" value={date} onChange={(e) => setDate(e.target.value)}/>
+                    <input type="date" name="date" value={studentFormData.date} onChange={handleStudentChange}/>
                   </label>
                   <label>
                     School
-                    <input type="text" name="school" value={school} onChange={(e) => setSchool(e.target.value)}/>
+                    <input type="text" name="school" value={studentFormData.school} onChange={handleStudentChange}/>
                   </label>
                   <label>
                     Degree
-                    <input type="text" name="degree" value={degree} onChange={(e) => setDegree(e.target.value)}/>
+                    <input type="text" name="degree" value={studentFormData.degree} onChange={handleStudentChange}/>
                   </label>
                   <label>
                     Education
-                    <input type="text" name="education" value={education} onChange={(e) => setEducation(e.target.value)}/>
+                    <input type="text" name="education" value={studentFormData.education} onChange={handleStudentChange}/>
                   </label>
                   <label>
                     Experience
-                    <input type="text" name="experience" value={experience} onChange={(e) => setExperience(e.target.value)}/>
+                    <input type="text" name="experience" value={studentFormData.experience} onChange={handleStudentChange}/>
                   </label>
-                  <button type="submit" className="submit-button" onClick={handleStudentSubmit}>
+                  <button type="submit" className="submit-button">
                     Submit
                   </button>
                 </form>
               ) : (
-                <form className="details-form">
-                  <h2>Recruiter Details</h2>
-                  <label>
-                    Company Name
-                    <input type="text" name="company" value={company} onChange={(e) => setCompany(e.target.value)}/>
-                  </label>
-                  <label>
-                    Company Address
-                    <input type="text" name="address" value={address} onChange={(e) => setAddress(e.target.value)}/>
-                  </label>
-                  <label>
-                    Company Size
-                    <input type="number" name="size" value={size} onChange={(e) => setSize(e.target.value)}/>
-                  </label>
-                  <label>
-                    Industry
-                    <input type="text" name="industry" value={industry} onChange={(e) => setIndustry(e.target.value)}/>
-                  </label>
-                  <label>
-                    Role in Company
-                    <input type="text" name="role" value={role} onChange={(e) => setRole(e.target.value)}/>
-                  </label>
-                  <button type="submit" className="submit-button" onClick={handleRecruiterSubmit}>
-                    Submit
-                  </button>
-                </form>
+                <>
+                  {step === 1 && (
+                    <form className="form-group">
+                      <h2>Recruiter Details</h2>
+                      <label>
+                        Name
+                        <input type="text" name="name" value={recruiterFormData.name} onChange={handleRecruiterChange}/>
+                      </label>
+                      <label>
+                        Brief Introduction
+                        <input type="text" name="description" value={recruiterFormData.description} onChange={handleRecruiterChange}/>
+                      </label>
+                      <label>
+                        Role in Company
+                        <input type="text" name="role" value={recruiterFormData.role} onChange={handleRecruiterChange}/>
+                      </label>
+                      <label>
+                        Years worked with the company
+                        <input type="text" name="experience" value={recruiterFormData.experience} onChange={handleRecruiterChange}/>
+                      </label>
+                      <button type="button" className="submit-button" onClick={nextStep}>
+                        Next
+                      </button>
+                    </form>
+                  )}
+                  {step === 2 && (
+                    <form className="form-group" onSubmit={handleRecruiterSubmit}>
+                      <h2>Company Details</h2>
+                      <label>
+                        Company Name
+                        <input type="text" name="company" value={recruiterFormData.company} onChange={handleRecruiterChange}/>
+                      </label>
+                      <label>
+                        Description
+                        <input type="text" name="description" value={recruiterFormData.description} onChange={handleRecruiterChange}/>
+                      </label>
+                      <label>
+                        Size
+                        <input className="slider" type="range" min="1" max="7" step="1" value={sizeVal} onChange={handleSizeChange} />
+                        <span>{getSizeLabel(recruiterFormData.size)} employees</span>
+                      </label>
+                      <label>
+                        Address
+                        <input type="text" name="address" value={recruiterFormData.address} onChange={handleRecruiterChange}/>
+                      </label>
+                      <label>
+                        Industry
+                        <input type="text" name="industry" value={recruiterFormData.industry} onChange={handleRecruiterChange}/>
+                      </label>
+                      <label>
+                        Logo URL
+                        <input type='file' className="form-control" onChange={handleFileChange} />
+                        </label>
+                      <label>
+                        Email
+                        <input type="email" className="form-control" name="email" value={recruiterFormData.email} onChange={handleRecruiterChange}/>
+                      </label>
+                      <label>
+                        Website
+                        <input type="text" name="website" value={recruiterFormData.website} onChange={handleRecruiterChange}/>
+                      </label>
+                      <label>
+                        Location
+                        <input type="text" name="location" value={recruiterFormData.location} onChange={handleRecruiterChange}/>
+                      </label>
+                      <label>
+                        Phone Number
+                        <input type="tel" className="form-control" name="phone" value={recruiterFormData.phone} onChange={handleRecruiterChange}/>
+                      </label>
+                      <button type="button" className="back-button" onClick={prevStep}>
+                        Back
+                      </button>
+                      <button type="submit" className="submit-button">
+                        Submit
+                      </button>
+                    </form>
+                  )}
+                </>
               )}
             </div>
           )}

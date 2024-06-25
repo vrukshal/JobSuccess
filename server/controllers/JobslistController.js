@@ -6,11 +6,11 @@ async function getFullTimeJobs(req, res) {
         const jobsCollection = collection(db, "Jobs");
 
         // Initialize query with full-time job type constraint
-        let constraints = [where("job_type", "==", "full-time")];
+        let constraints = [where("employmentType", "==", "full-time")];
 
         // Loop through query parameters and add constraints
         for (const [key, value] of Object.entries(req.query)) {
-            if (key !== "job_type") { // Ensure we don't overwrite the job_type constraint
+            if (key !== "employmentType") { // Ensure we don't overwrite the job_type constraint
                 constraints.push(where(key, "==", value));
             }
         }
@@ -30,7 +30,20 @@ async function getFullTimeJobs(req, res) {
 }
 
 
+async function getJobsByRecruiterUid(req,res){
+    try {
+        const { recruiterUid } = req.query;
+        const q = query(collection(db, "Jobs"), where("recruiterUid", "==", recruiterUid));
 
+        const querySnapshot = await getDocs(q);
+        const jobsList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+        res.status(200).json(jobsList);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Error retrieving full-time jobs");
+    }
+}
 
 // async function getFullTimeJobs(req,res){
 //     try{
@@ -67,11 +80,11 @@ async function getPartTimeJobs(req, res) {
         const jobsCollection = collection(db, "Jobs");
 
         // Initialize query with full-time job type constraint
-        let constraints = [where("job_type", "==", "part-time")];
+        let constraints = [where("employmentType", "==", "part-time")];
 
         // Loop through query parameters and add constraints
         for (const [key, value] of Object.entries(req.query)) {
-            if (key !== "job_type") { // Ensure we don't overwrite the job_type constraint
+            if (key !== "employmentType") { // Ensure we don't overwrite the job_type constraint
                 constraints.push(where(key, "==", value));
             }
         }
@@ -105,4 +118,4 @@ async function getPartTimeJobs(req, res) {
 //     }
 // }
 
-module.exports = {getFullTimeJobs, getPartTimeJobs, createNewJobPost}
+module.exports = {getFullTimeJobs, getPartTimeJobs, createNewJobPost, getJobsByRecruiterUid}

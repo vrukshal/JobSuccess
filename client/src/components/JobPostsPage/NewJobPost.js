@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './NewJobPost.css';
 import { Navigate, useNavigate } from 'react-router-dom';
-
+import Cookies from 'js-cookie';
 const NewJobPost = () => {
+  const recruiterCookie = JSON.parse(Cookies.get('recruiter'));
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     jobTitle: '',
@@ -13,17 +14,25 @@ const NewJobPost = () => {
     location: '',
     jobDescription: '',
     salary: '',
-    applyLink: ''
+    applyLink: '',
+    recruiterUid: recruiterCookie.uid,
+    recruiterInfo: recruiterCookie
   });
 
   const [countries, setCountries] = useState([]);
   const navigate = useNavigate();
+
   useEffect(() => {
-    fetch('https://api.first.org/data/v1/countries')
+    fetch('https://countriesnow.space/api/v0.1/countries')
       .then(response => response.json())
       .then(data => {
-        const countryList = Object.values(data.data).map(country => country.country);
-        setCountries(countryList);
+        if (!data.error) {
+          const countryList = data.data.map(country => country.country);
+          setCountries(countryList);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching countries:', error);
       });
   }, []);
 

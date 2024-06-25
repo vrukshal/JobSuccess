@@ -1,19 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './JobPosts.css';
 import { IoPerson } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
-
+import axios from 'axios';
+import Cookies from 'js-cookie';
 const JobPosts = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('All');
+  const [jobs, setJobs] = useState([]);
   const navigate = useNavigate();
-  const jobs = [
-    { id: 667, job: 'Cupcake Counter', applicants: 2, schools: 1, created: '10/25/2017', type: 'Job', status: 'Active' },
-    { id: 1674, job: 'Cupcake Decorator', applicants: 1, schools: 1, created: '9/4/2018', type: 'Job', status: 'Active' },
-    { id: 753, job: 'Cupcake Decorator', applicants: 2, schools: 1, created: '11/14/2017', type: 'Job', status: 'Expired' },
-    { id: 1520, job: 'Cupcake Decorator', applicants: 0, schools: 5, created: '4/27/2018', type: 'Job', status: 'Declined' },
-    { id: 1700, job: 'Winter Internship', applicants: 5, schools: 1, created: '9/24/2018', type: 'Internship', status: 'Not Posted' },
-  ];
+  const recruiterCookie = JSON.parse(Cookies.get('recruiter'));
+  useEffect(() => {
+    axios.get(`http://localhost:3001/api/jobs?recruiterUid=${recruiterCookie.uid}`)
+      .then(response => {
+        const fetchedJobs = response.data.map(job => ({
+          id: job.id,
+          job: job.jobTitle,
+          applicants: job.recruiterInfo.files?.length, // Assuming the number of files is the number of applicants
+          schools: 1, // This information is not available in the API response, setting a default value
+          created: new Date(job.posted_at).toLocaleDateString(),
+          type: job.jobType.charAt(0).toUpperCase() + job.jobType.slice(1),
+          status: 'Active' // Default status as 'Active', modify based on your logic
+        }));
+        setJobs(fetchedJobs);
+      })
+      .catch(error => {
+        console.error('Error fetching jobs:', error);
+      });
+      console.log(jobs);
+  }, []);
 
   const filteredJobs = jobs.filter(job =>
     (activeTab === 'All' || job.status === activeTab) &&

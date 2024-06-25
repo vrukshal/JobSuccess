@@ -24,6 +24,7 @@ async function uploadNewFile(req, res) {
     console.log(req.body);
     const filename = req.body.filename;
     const filetype = req.body.filetype;
+    const folderName = req.body.folderName;
     const recruiterUid = req.body.uid;
 
     const file = req.file; // Use req.file for the uploaded file
@@ -38,7 +39,7 @@ async function uploadNewFile(req, res) {
 
     const command = new PutObjectCommand({
         Bucket: process.env.BUCKET_NAME,
-        Key: `${recruiterUid}/files/${filename}`,
+        Key: `${recruiterUid}/${folderName}/${filename}`,
         ContentType: filetype,
         Body: file.buffer // Use the file buffer here
     });
@@ -47,16 +48,21 @@ async function uploadNewFile(req, res) {
 
     try {
         await s3client.send(command);
-        const fileUrl = `https://${process.env.BUCKET_NAME}.s3.us-east-2.amazonaws.com/${recruiterUid}/files/${filename}`;
+        const fileUrl = `https://${process.env.BUCKET_NAME}.s3.us-east-2.amazonaws.com/${recruiterUid}/${folderName}/${filename}`;
         console.log('File uploaded successfully!');
         const collectionRef = doc(db, "EmployerProfiles", recruiterUid);
-        await updateDoc(collectionRef,{
+        if(folderName === "logo"){
+            res.status(200).json({ message: 'File uploaded successfully!', fileUrl });
+        }
+        else{
+            await updateDoc(collectionRef,{
             files: arrayUnion({
                bucketPath: fileUrl,
                uploadedAt: new Date().toISOString()
             })
         }).then(console.log("Updated", fileUrl));
         res.status(200).json({ message: 'File uploaded successfully!', fileUrl });
+    }
     } catch (error) {
         console.error('Error uploading file:', error);
         res.status(500).json({ error: 'Error uploading file.' });
@@ -84,8 +90,9 @@ async function getFiles(req,res){
 }
 
 async function getFileDownloadUrl(req, res) {
-    const { filename } = req.query; // Get the filename from the query parameters
-    console.log(filename);
+    const { filename, folderName, recruiterUid } = req.query;
+     // Get the filename from the query parameters
+    console.log(filename, folderName, recruiterUid);
 
     const s3client = new S3Client({
         region: "us-east-2",
@@ -97,7 +104,7 @@ async function getFileDownloadUrl(req, res) {
 
     const command = new GetObjectCommand({
         Bucket: process.env.BUCKET_NAME,
-        Key: `files/${filename}`
+        Key: `${recruiterUid}/${folderName}/${filename}`
     });
 
     try {
@@ -111,7 +118,7 @@ async function getFileDownloadUrl(req, res) {
 }
 
 async function getFileViewUrl(req, res) {
-    const { filename } = req.query; // Get the filename from the query parameters
+    const { filename, folderName } = req.query; // Get the filename from the query parameters
     console.log(filename);
 
     const s3client = new S3Client({
@@ -124,7 +131,7 @@ async function getFileViewUrl(req, res) {
 
     const command = new GetObjectCommand({
         Bucket: process.env.BUCKET_NAME,
-        Key: `files/${filename}`
+        Key: `${folderName}/${filename}`
     });
 
     try {
@@ -136,4 +143,6 @@ async function getFileViewUrl(req, res) {
         res.status(500).json({ error: 'Error generating view URL.' });
     }
 }
+
+
 module.exports = { createNewRecruiter, uploadNewFile, getFiles, getFileDownloadUrl, getFileViewUrl };

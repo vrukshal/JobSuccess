@@ -17,7 +17,8 @@ import { useNavigate } from 'react-router-dom';
 const RecruiterNavbar = () => {
     const navigate = useNavigate();
     const recruiterCookie = JSON.parse(Cookies.get('recruiter'));
-
+    const userCookie = JSON.parse(Cookies.get('user'));
+    console.log("USER:",userCookie.email);
     const handleProfileClick = () => {
         document.getElementById('profileDropdown').classList.toggle('show');
     };
@@ -34,6 +35,7 @@ const RecruiterNavbar = () => {
                 console.log("User signed out");
                 Cookies.remove('user');
                 Cookies.remove('recruiter');
+                Cookies.remove('student');
                 navigate('/login');
             })
             .catch((err) => console.error(err));
@@ -50,7 +52,7 @@ const RecruiterNavbar = () => {
             </ul>
             <div className="navbar-icons">
                 <div className="notification-icon"><div className='icon-container'><NotificationsActiveIcon fontSize='large' style={{ color: 'white' }} /></div></div>
-                <div className="profile-icon" onClick={handleProfileClick}><div className='icon-container'><PersonIcon fontSize='large' style={{ color: 'white' }} /></div></div>
+                <div className="profile-icon" onClick={handleProfileClick}><div className='icon-container'><Avatar src={userCookie.picture} fontSize='large' style={{ color: 'white' }}> {userCookie?.email[0].toUpperCase()}</Avatar></div></div>
                 <div id="profileDropdown" className="dropdown-content">
                     <a href="#notification-preferences">Notification Preferences</a>
                     <a href="#settings">Settings</a>

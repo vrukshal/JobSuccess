@@ -23,6 +23,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: auto;
     padding: 40px;
     background-color: #f8f8f8;
   }
@@ -30,7 +31,7 @@
   .profile-header {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin: 20px;
   }
   
   .profile-logo {
@@ -132,3 +133,51 @@
     background-color: #0f0341;
   }
   
+  .recruiter-form{
+    margin: 20px;
+  }
+
+  h1{
+    margin: 20px;
+  }
+
+  .slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 3px; /* Specified height */
+    background: #ffffff; /* Grey background */
+    border-radius: 2px;
+    border: 1px solid rgb(202, 202, 202);
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+  }
+  
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%; 
+    background: #290163;
+    cursor: pointer;
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #022872;
+    cursor: pointer;
+  }
+
+  label{
+    font-size: large;
+    margin: 10px;
+  }
+
+  span{
+    align-content: center;
+  }

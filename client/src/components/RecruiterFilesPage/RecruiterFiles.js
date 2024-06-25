@@ -35,6 +35,7 @@ function RecruiterFiles() {
             console.log(recruiter);
             formData.append('filename', file.name);
             formData.append('filetype', file.type);
+            formData.append('folderName', "files");
             formData.append('file', file);
             formData.append('uid', recruiter.uid);
             const response = await fetch('http://localhost:3001/api/recruiter/fileupload', {
@@ -57,7 +58,8 @@ function RecruiterFiles() {
 
     const handleDownload = async (filename) => {
         try {
-            const response = await axios.get(`http://localhost:3001/api/recruiter/download-url?filename=${filename}`);
+            const folderName = "files";
+            const response = await axios.get(`http://localhost:3001/api/recruiter/get-signed-url?filename=${filename}&folderName=${folderName}&recruiterUid=${recruiter.uid}`);
             const { downloadUrl } = response.data;
             window.location.href = downloadUrl; // Trigger the download
         } catch (error) {
@@ -67,9 +69,10 @@ function RecruiterFiles() {
 
     const handleView = async (filename) => {
         try {
-            const response = await axios.get(`http://localhost:3001/api/recruiter/view-url?filename=${filename}`);
-            const { viewUrl } = response.data;
-            window.open(viewUrl, '_blank'); // Open the file in a new tab
+            const folderName = "files";
+            const response = await axios.get(`http://localhost:3001/api/recruiter/get-signed-url?filename=${filename}&folderName=${folderName}&recruiterUid=${recruiter.uid}`);
+            const { downloadUrl } = response.data;
+            window.open(downloadUrl, '_blank'); // Open the file in a new tab
         } catch (error) {
             console.error('Error fetching view URL:', error);
         }
