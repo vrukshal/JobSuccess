@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './NewJobPost.css';
 import { Navigate, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { jobTitles } from '../jobTitles';
+
 const NewJobPost = () => {
   const recruiterCookie = JSON.parse(Cookies.get('recruiter'));
   const [step, setStep] = useState(1);
@@ -20,6 +22,7 @@ const NewJobPost = () => {
   });
 
   const [countries, setCountries] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,6 +42,18 @@ const NewJobPost = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+
+    if (name === 'jobTitle') {
+      const filteredSuggestions = jobTitles.filter(title => 
+        title.toLowerCase().includes(value.toLowerCase())
+      );
+      setSuggestions(filteredSuggestions);
+    }
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    setFormData({ ...formData, jobTitle: suggestion });
+    setSuggestions([]);
   };
 
   const nextStep = () => {
@@ -81,7 +96,25 @@ const NewJobPost = () => {
           <form>
             <div className="form-group">
               <label>Job Title</label>
-              <input type="text" name="jobTitle" className="form-control" value={formData.jobTitle} onChange={handleChange} />
+              <input 
+                type="text" 
+                name="jobTitle" 
+                className="form-control" 
+                value={formData.jobTitle} 
+                onChange={handleChange} 
+              />
+              {suggestions.length > 0 && (
+                <ul className="suggestions-list">
+                  {suggestions.map((suggestion, index) => (
+                    <li 
+                      key={index} 
+                      onClick={() => handleSuggestionClick(suggestion)}
+                    >
+                      {suggestion}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
             <div className="form-group">
               <label>Job Type</label>

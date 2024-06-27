@@ -18,8 +18,6 @@ function Login() {
             const storedUser = Cookies.get('user');
             if (storedUser) {
                 dispatch(setUser(JSON.parse(storedUser)));
-            }
-            if (user) {
                 navigate('/profile');
             }
         };

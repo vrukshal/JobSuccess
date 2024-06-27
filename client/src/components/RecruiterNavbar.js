@@ -26,7 +26,7 @@ const RecruiterNavbar = () => {
     const profileURL = "/rec/" + recruiterCookie.uid;
     const docURL = "/rec/files";
     const jobPostingsURL = "/rec/postings";
-    console.log(profileURL);
+    console.log(userCookie.picture);
 
     const logoutUser = async () => {
         console.log("Logging out ");

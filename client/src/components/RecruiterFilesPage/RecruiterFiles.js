@@ -5,6 +5,8 @@ import RecruiterNavbar from '../RecruiterNavbar';
 import RecruiterSidebar from '../RecruiterSidebar';
 import './RecruiterFiles.css';
 import Cookies from 'js-cookie';
+import { db } from '../../config/firebase'
+import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
 function RecruiterFiles() {
     const [file, setFile] = React.useState(null);
     const recruiter = JSON.parse(Cookies.get('recruiter'));
@@ -42,15 +44,23 @@ function RecruiterFiles() {
                 method: 'POST',
                 body: formData,
             });
+            const uploadFiledata = await response.json()
+            const collectionRef = doc(db, "EmployerProfiles", recruiter.uid);
 
-            const data = await response.json();
+            await updateDoc(collectionRef,{
+                files: arrayUnion({
+                   bucketPath: uploadFiledata.fileUrl,
+                   uploadedAt: new Date().toISOString()
+                })
+            }).then(console.log("Updated", uploadFiledata.fileUrl));
+
             const newFile = {
-                bucketPath: data.fileUrl,
+                bucketPath: uploadFiledata.fileUrl,
                 uploadedAt: new Date().toISOString()
             };
             setUserFiles([...userFiles, newFile]); // Append the new file to the list
             setFile(null); // Clear the file input
-            console.log(data);
+            console.log(uploadFiledata);
         } catch (err) {
             console.log(err.message);
         }

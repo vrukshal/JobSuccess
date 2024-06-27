@@ -50,26 +50,27 @@ function Signup() {
     }
 
     const signInwithGoogle = async (e) => {
-        e.preventDefault();
-        try {
-            const provider = new GoogleAuthProvider();
-            const result = await signInWithPopup(auth, provider);
-            const user = result.user;
-            const idToken = await user.getIdToken();
-            const response = await fetch('http://localhost:3001/api/auth/google', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ token: idToken }),
-            });
-            const data = await response.json();
-            dispatch(setUser(data));
-            Cookies.set('user', JSON.stringify(data)); // Save user data in cookies
-          } catch (error) {
-            console.error('Error logging in with Google:', error);
-          }
-    }
+      e.preventDefault();
+      try {
+          const provider = new GoogleAuthProvider();
+          const result = await signInWithPopup(auth, provider);
+          const user = result.user;
+          const idToken = await user.getIdToken();
+          const response = await fetch('http://localhost:3001/api/auth/google', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ token: idToken }),
+          });
+          const data = await response.json();
+          dispatch(setUser(data));
+          Cookies.set('user', JSON.stringify(data)); // Save user data in cookies
+      } catch (error) {
+          console.error('Error logging in with Google:', error);
+          alert('Error logging in with Google. Please try again.');
+      }
+  }
 
     return (
       <div className="signup-main-content">

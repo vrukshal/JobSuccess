@@ -16,6 +16,8 @@ import NotFound from './components/PageNotFound';
 import RecruiterFiles from './components/RecruiterFilesPage/RecruiterFiles';
 import JobPostsMainPage from './components/JobPostsPage/JobPostsMainPage';
 import NewJobPost from './components/JobPostsPage/NewJobPost';
+import StudentProfilePage from './components/StudentProfilePage/StudentProfilePage';
+import StudentHomePage from './components/StudentHomePage/StudentHomePage';
 
 export default function App() {
   return (
@@ -26,7 +28,9 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/stu" element={<StudentMainPage />} />
+          <Route path="/stu" element={<StudentHomePage />} />
+          <Route path="/stu/jobs" element={<StudentMainPage />} />
+          <Route path="/stu/profile" element={<StudentProfilePage />} />
           <Route path="*" element={<NotFound />} />
 
           {/* <Route path="/stu" element={<StudentMainPage />} /> */}

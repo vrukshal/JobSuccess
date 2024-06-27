@@ -1,0 +1,96 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.student-profile-container {
+    max-width: 100%;
+    margin: 20px 240px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    
+}
+
+
+.header {
+    position: relative;
+    height: 150px;
+    /* background-color: #8b8b8b; */
+    background-image: url("https://images.unsplash.com/photo-1503924087716-07cbd5f49b21?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    object-fit: fill;
+}
+
+.background {
+    width: 100%;
+    height: 100%;
+    /* background: linear-gradient(90deg, #8b8b8b 0%, #dcdcdc 100%); */
+    object-fit: cover;
+}
+
+
+.profile-picture {
+    position: absolute;
+    bottom: -50px;
+    left: 20px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+}
+
+.profile-info {
+    padding: 60px 20px 20px;
+    text-align: left;
+    margin: 20px 20px;
+}
+
+.img-cover{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.img-cover > img{
+    margin-left: -20px;
+    width: 100%;
+    height: 50%;
+    border-radius: 10px;
+    object-fit: cover;
+
+}
+.profile-info h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.profile-info .pronouns {
+    font-size: 14px;
+    color: #666;
+}
+
+.profile-info p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.location {
+    font-size: 14px;
+}
+
+.connections {
+    font-size: 14px;
+    color: #0073b1;
+    font-weight: bold;
+}
+
+.education {
+    margin-top: 10px;
+}
+
+.education img {
+    width: 30px;
+    margin: 0 5px;
+}

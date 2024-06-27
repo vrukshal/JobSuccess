@@ -4,37 +4,70 @@ import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import InboxIcon from '@mui/icons-material/Inbox';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import './css/Sidebar.css';
-import SidebarIcon from './SidebarIcon';
+import WorkIcon from '@mui/icons-material/Work';
+import PersonIcon from '@mui/icons-material/Person';
+import EventIcon from '@mui/icons-material/Event';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import { GrUserManager } from "react-icons/gr";
 
+import SidebarIcon from './SidebarIcon';
+import { useNavigate } from 'react-router-dom';
+
+const jobsUrl = "/stu/jobs";
+const profileUrl = "/stu/profile";
+const eventsUrl = "/stu/events";
+const employersUrl = "/stu/employers";
 const Sidebar = ({ currentPage, setCurrentPage }) => {
+
+  const navigate = useNavigate();
+    function NavigateToURL(url){
+        console.log(url);
+        navigate(url);
+    }
+
   return (
     <div className="sidebar">
-      <button
+      <div
         className={currentPage === 'Jobs' ? 'active' : ''}
-        onClick={() => setCurrentPage('Jobs')}
+        onClick={() => NavigateToURL(jobsUrl)}
       >
-        Jobs
-      </button>
-      <button
+        <WorkIcon />
+         <text>Jobs</text>
+         
+      </div>
+      <div
+        className={currentPage === 'Profile' ? 'active' : ''}
+        onClick={() => NavigateToURL(profileUrl)}
+      >
+        <PersonIcon />
+        <text>Profile</text>
+        
+      </div>
+      <div
         className={currentPage === 'Events' ? 'active' : ''}
-        onClick={() => setCurrentPage('Events')}
+        onClick={() => NavigateToURL(eventsUrl)}
       >
-        Events
-      </button>
+        <EventIcon />
+        <text>Events</text>
+        
+      </div>
 
-      <button
+      <div
         className={currentPage === 'Employers' ? 'active' : ''}
-        onClick={() => setCurrentPage('Employers')}
+        onClick={() => NavigateToURL(employersUrl)}
       >
-        Employers
-      </button>
+        <GrUserManager />
+        <text>Employers</text>
+      </div>
 
-      <button
+      <div
         className={currentPage === 'Notifications' ? 'active' : ''}
         onClick={() => setCurrentPage('Notifications')}
       >
-        Notifications
-      </button>
+        <NotificationsIcon />
+        <text>Notifications</text>
+        
+      </div>
     </div>
   );
 };

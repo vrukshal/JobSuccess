@@ -6,6 +6,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { fetchRecruiterData } from '../actions/recruiterActions';
 import Cookies from 'js-cookie';
+import { jobTitles } from './jobTitles'
 
 function Profile() {
   const user = useSelector((state) => state.auth.user);
@@ -15,11 +16,16 @@ function Profile() {
   const [step, setStep] = useState(1);
   const [sizeVal, setSizeVal] = useState(1);
   const [studentFormData, setStudentFormData] = useState({
+    firstName: '',
+    lastName: '',
     date: '',
-    school: '',
-    degree: '',
-    education: '',
-    experience: ''
+    email: '',
+    phoneNumber: '',
+    linkedInUrl: '',
+    photoUrl: '',
+    currentRole: '',
+    currentCompany: '',
+    location: ''
   });
 
   const [recruiterFormData, setRecruiterFormData] = useState({
@@ -39,8 +45,25 @@ function Profile() {
     uid: user.uid
   });
 
+  const [suggestions, setSuggestions] = useState([]);
+
   const navigate = useNavigate();
   console.log(user);
+  const [countries, setCountries] = useState([]);
+
+  useEffect(() => {
+    fetch('https://countriesnow.space/api/v0.1/countries')
+      .then(response => response.json())
+      .then(data => {
+        if (!data.error) {
+          const countryList = data.data.map(country => country.country);
+          setCountries(countryList);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching countries:', error);
+      });
+  }, []);
 
   useEffect(() => {
     const checkUserProfile = async () => {
@@ -132,6 +155,13 @@ function Profile() {
       ...studentFormData,
       [name]: value
     });
+
+    if (name === 'currentRole') {
+      const filteredSuggestions = jobTitles.filter(title =>
+        title.toLowerCase().includes(value.toLowerCase())
+      );
+      setSuggestions(filteredSuggestions);
+    }
   };
 
   const handleRecruiterChange = (e) => {
@@ -140,14 +170,54 @@ function Profile() {
       ...recruiterFormData,
       [name]: value
     });
+
+    // Handle job title suggestions
+    if (name === 'role') {
+      const filteredSuggestions = jobTitles.filter(title =>
+        title.toLowerCase().includes(value.toLowerCase())
+      );
+      setSuggestions(filteredSuggestions);
+    }
+  };
+
+  const handleRecruiterSuggestionClick = (suggestion) => {
+    setRecruiterFormData({
+      ...recruiterFormData,
+      role: suggestion
+    });
+    setSuggestions([]);
+  };
+
+  const handleStudentSuggestionClick = (suggestion) => {
+    setStudentFormData({
+      ...studentFormData,
+      currentRole: suggestion
+    });
+    setSuggestions([]);
   };
 
   const handleStudentSubmit = async (e) => {
     e.preventDefault();
     if (!user) return; // Ensure user is authenticated
 
+    const formData = new FormData();
+    formData.append('filename', studentFormData.photoUrl.name);
+    formData.append('filetype', studentFormData.photoUrl.type);
+    formData.append('folderName', "photos");
+    formData.append('file', studentFormData.photoUrl);
+    formData.append('uid', studentFormData.uid);
+
+    console.log(formData);
+    const response = await fetch('http://localhost:3001/api/applicant/fileupload', {
+        method: 'POST',
+        body: formData,
+    });
+
+    const data = await response.json();
+
     const applicantInfo = {
       ...studentFormData,
+      photoUrl: data.fileUrl,
       uid: user.uid,
     };
 
@@ -234,7 +304,16 @@ function Profile() {
       ...recruiterFormData,
       logo: e.target.files[0]
     });
-};
+  };
+
+
+  const handleStudentPhotoChange = (e) => {
+    setStudentFormData({
+      ...studentFormData,
+      photoUrl: e.target.files[0]
+    });
+  }
+
   return (
     <div className="profile-container">
       <div className="image-section1">
@@ -272,25 +351,56 @@ function Profile() {
                 <form className="details-form" onSubmit={handleStudentSubmit}>
                   <h2>Student Details</h2>
                   <label>
+                    First Name
+                    <input type="text" name="firstName" value={studentFormData.firstName} onChange={handleStudentChange}/>
+                  </label>
+                  <label>
+                    Last Name
+                    <input type="text" name="lastName" value={studentFormData.lastName} onChange={handleStudentChange}/>
+                  </label>
+                  <label>
                     Birthdate
                     <input type="date" name="date" value={studentFormData.date} onChange={handleStudentChange}/>
                   </label>
                   <label>
-                    School
-                    <input type="text" name="school" value={studentFormData.school} onChange={handleStudentChange}/>
-                  </label>
-                  <label>
-                    Degree
-                    <input type="text" name="degree" value={studentFormData.degree} onChange={handleStudentChange}/>
-                  </label>
-                  <label>
-                    Education
-                    <input type="text" name="education" value={studentFormData.education} onChange={handleStudentChange}/>
-                  </label>
-                  <label>
-                    Experience
-                    <input type="text" name="experience" value={studentFormData.experience} onChange={handleStudentChange}/>
-                  </label>
+                        Upload Photo
+                        <input type='file' className="form-control" onChange={handleStudentPhotoChange} />
+                        </label>
+                      <label>
+                        Email
+                        <input type="email" className="form-control" name="email" value={studentFormData.email} onChange={handleStudentChange}/>
+                      </label>
+                      <label>
+                        LinkedIn URL
+                        <input type="text" name="linkedInUrl" value={studentFormData.linkedInUrl} onChange={handleStudentChange}/>
+                      </label>
+
+                      <label>
+                        Current Role
+                        <input type="text" name="currentRole" value={studentFormData.currentRole} onChange={handleStudentChange}/>
+                      </label>
+                      {suggestions.length > 0 && (
+                          <ul className="suggestions">
+                            {suggestions.map((suggestion, index) => (
+                              <li key={index} onClick={() => handleStudentSuggestionClick(suggestion)}>
+                                {suggestion}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      <label>
+                        Current Company/University
+                        <input type="text" name="currentCompany" value={studentFormData.currentCompany} onChange={handleStudentChange}/>
+                      </label>
+
+                      <label>Location</label>
+                      <select name="location" className="form-control" value={studentFormData.location} onChange={handleStudentChange}>
+                        <option value="">Select a country</option>
+                        {countries.map((country, index) => (
+                          <option key={index} value={country}>{country}</option>
+                        ))}
+                      </select>
+
                   <button type="submit" className="submit-button">
                     Submit
                   </button>
@@ -311,6 +421,16 @@ function Profile() {
                       <label>
                         Role in Company
                         <input type="text" name="role" value={recruiterFormData.role} onChange={handleRecruiterChange}/>
+                        {/* Display suggestions */}
+                        {suggestions.length > 0 && (
+                          <ul className="suggestions">
+                            {suggestions.map((suggestion, index) => (
+                              <li key={index} onClick={() => handleRecruiterSuggestionClick(suggestion)}>
+                                {suggestion}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
                       </label>
                       <label>
                         Years worked with the company
@@ -327,10 +447,6 @@ function Profile() {
                       <label>
                         Company Name
                         <input type="text" name="company" value={recruiterFormData.company} onChange={handleRecruiterChange}/>
-                      </label>
-                      <label>
-                        Description
-                        <input type="text" name="description" value={recruiterFormData.description} onChange={handleRecruiterChange}/>
                       </label>
                       <label>
                         Size
@@ -357,10 +473,13 @@ function Profile() {
                         Website
                         <input type="text" name="website" value={recruiterFormData.website} onChange={handleRecruiterChange}/>
                       </label>
-                      <label>
-                        Location
-                        <input type="text" name="location" value={recruiterFormData.location} onChange={handleRecruiterChange}/>
-                      </label>
+                      <label>Location</label>
+                      <select name="location" className="form-control" value={recruiterFormData.location} onChange={handleRecruiterChange}>
+                        <option value="">Select a country</option>
+                        {countries.map((country, index) => (
+                          <option key={index} value={country}>{country}</option>
+                        ))}
+                      </select>
                       <label>
                         Phone Number
                         <input type="tel" className="form-control" name="phone" value={recruiterFormData.phone} onChange={handleRecruiterChange}/>
