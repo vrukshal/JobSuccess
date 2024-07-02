@@ -17,8 +17,8 @@ import RecruiterFiles from './components/RecruiterFilesPage/RecruiterFiles';
 import JobPostsMainPage from './components/JobPostsPage/JobPostsMainPage';
 import NewJobPost from './components/JobPostsPage/NewJobPost';
 import StudentProfilePage from './components/StudentProfilePage/StudentProfilePage';
+import StudentJobsPage from './components/StudentJobsPage.js/StudentJobsPage';
 import StudentHomePage from './components/StudentHomePage/StudentHomePage';
-
 export default function App() {
   return (
     <Provider store={store}>
@@ -29,7 +29,7 @@ export default function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/stu" element={<StudentHomePage />} />
-          <Route path="/stu/jobs" element={<StudentMainPage />} />
+          <Route path="/stu/jobs" element={<StudentJobsPage />} />
           <Route path="/stu/profile" element={<StudentProfilePage />} />
           <Route path="*" element={<NotFound />} />
 

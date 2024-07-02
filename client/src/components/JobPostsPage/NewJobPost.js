@@ -119,8 +119,8 @@ const NewJobPost = () => {
             <div className="form-group">
               <label>Job Type</label>
               <div>
-                <input type="radio" name="jobType" value="job" checked={formData.jobType === 'job'} onChange={handleChange} /> Job
-                <input type="radio" name="jobType" value="internship" checked={formData.jobType === 'internship'} onChange={handleChange} /> Internship
+                <input type="radio" name="jobType" value="Job" checked={formData.jobType === 'Job'} onChange={handleChange} /> Job
+                <input type="radio" name="jobType" value="Internship" checked={formData.jobType === 'Internship'} onChange={handleChange} /> Internship
                 {/* Add more options here */}
               </div>
             </div>

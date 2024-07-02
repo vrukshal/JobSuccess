@@ -214,7 +214,7 @@ function Profile() {
     });
 
     const data = await response.json();
-
+    
     const applicantInfo = {
       ...studentFormData,
       photoUrl: data.fileUrl,

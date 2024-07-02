@@ -1,0 +1,17 @@
+.job-list-container {
+    display: flex;
+    height: calc(100vh - 60px); /* Adjust based on navbar height */
+  }
+  
+  .job-list-sidebar {
+    width: 30%;
+    border-right: 1px solid #ccc;
+    /* padding: 10px; */
+    overflow-y: scroll;
+  }
+  
+  .job-details {
+    width: 70%;
+    padding: 20px;
+  }
+  

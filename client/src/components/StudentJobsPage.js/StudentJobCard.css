@@ -1,0 +1,26 @@
+.job-card {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    /* margin-bottom: 10px; */
+    cursor: pointer;
+  }
+  
+  .job-card:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .job-post-header {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+
+  .job-post-header > img{
+    height: 50px;
+    width: 50px;
+    border-radius: 5px;
+  }
+
+  .job-card.selected {
+    background-color: rgb(215, 237, 244);
+  }

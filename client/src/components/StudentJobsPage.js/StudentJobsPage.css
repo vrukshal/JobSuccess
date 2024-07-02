@@ -1,0 +1,45 @@
+.jobs-search-filter {
+    padding: 20px;
+    display: flex;
+    gap: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+.student-jobs-page{
+    margin-left: 240px;
+    background-color: white;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    padding: 5px;  /* Adjust padding for a smaller size */
+    border-radius: 25px;
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    width: 20px; /* Adjust width to match filter button size */
+    /* height: 10px; */
+  }
+  
+  .search-bar input {
+    border: none;
+    background: none;
+    outline: none;
+    flex: 1;
+    padding: 5px;  /* Adjust padding for a smaller size */
+    font-size: 14px;  /* Adjust font size for a smaller size */
+    /* width: 10px;
+    height: 10px; */
+  }
+  
+  .search-bar button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 5px;  /* Adjust padding for a smaller size */
+  }
+  
+  .search-bar button img {
+    width: 16px;  /* Adjust icon size */
+    height: 16px; /* Adjust icon size */
+  }
