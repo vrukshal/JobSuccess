@@ -18,7 +18,7 @@
     background-color: #f1f1f1;
     border: 1px solid #ddd;
     width: 20px; /* Adjust width to match filter button size */
-    /* height: 10px; */
+    height: 70px;
   }
   
   .search-bar input {
@@ -42,4 +42,18 @@
   .search-bar button img {
     width: 16px;  /* Adjust icon size */
     height: 16px; /* Adjust icon size */
+  }
+
+  .jobs-search-filter > button{
+    cursor: pointer;
+    color: black;
+    background-color: white;
+    border-radius: 15px;
+    border: 1px solid rgb(107, 107, 107)
+  }
+
+  .jobs-search-filter > button:hover{
+    border: 1px solid purple;
+    color: purple;
+    font-weight: bold;
   }

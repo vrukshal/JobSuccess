@@ -25,3 +25,7 @@
     margin-left: 10px;
   }
   
+  .profile-icon, .notification-icon{
+    margin-bottom: 5px;
+    margin-right: 10px;
+  }
