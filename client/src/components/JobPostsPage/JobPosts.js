@@ -4,36 +4,55 @@ import { IoPerson } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+
 const JobPosts = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('All');
   const [jobs, setJobs] = useState([]);
   const navigate = useNavigate();
   const recruiterCookie = JSON.parse(Cookies.get('recruiter'));
+
+  const getApplicants = async (jobId) => {
+    console.log("Finding number of applicants...");
+    const response = await axios.get(`http://localhost:3001/api/application?jobId=${jobId}`);
+    return response.data.count;
+  }
+
   useEffect(() => {
-    axios.get(`http://localhost:3001/api/jobs?recruiterUid=${recruiterCookie.uid}`)
-      .then(response => {
-        const fetchedJobs = response.data.map(job => ({
-          id: job.id,
-          job: job.jobTitle,
-          applicants: job.recruiterInfo.files?.length, // Assuming the number of files is the number of applicants
-          schools: 1, // This information is not available in the API response, setting a default value
-          created: new Date(job.posted_at).toLocaleDateString(),
-          type: job.jobType.charAt(0).toUpperCase() + job.jobType.slice(1),
-          status: 'Active' // Default status as 'Active', modify based on your logic
-        }));
-        setJobs(fetchedJobs);
-      })
-      .catch(error => {
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/api/jobs?recruiterUid=${recruiterCookie.uid}`);
+        const jobsWithApplicants = await Promise.all(
+          response.data.map(async (job) => {
+            const applicantsCount = await getApplicants(job.id);
+            return {
+              id: job.id,
+              job: job.jobTitle,
+              applicants: applicantsCount,
+              schools: 1, // Default value for schools
+              created: new Date(job.posted_at).toLocaleDateString(),
+              type: job.jobType.charAt(0).toUpperCase() + job.jobType.slice(1),
+              status: 'Active' // Default status as 'Active', modify based on your logic
+            };
+          })
+        );
+        setJobs(jobsWithApplicants);
+      } catch (error) {
         console.error('Error fetching jobs:', error);
-      });
-      console.log(jobs);
-  }, []);
+      }
+    };
+
+    fetchJobs();
+  }, [recruiterCookie.uid]);
 
   const filteredJobs = jobs.filter(job =>
     (activeTab === 'All' || job.status === activeTab) &&
     job.job.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  function redirectToApplicants(job) {
+    navigate(`/rec/postings/${job.id}`)
+  }
 
   return (
     <div className="job-posts-container">
@@ -62,10 +81,10 @@ const JobPosts = () => {
           </button>
         ))}
       </div>
-      <table className="table table-striped">
+      <table className="table">
         <thead>
           <tr>
-            <th>ID</th>
+            {/* <th>ID</th> */}
             <th>Job</th>
             <th>Applicants</th>
             <th>Schools</th>
@@ -77,8 +96,8 @@ const JobPosts = () => {
         <tbody>
           {filteredJobs.map((job) => (
             <tr key={job.id}>
-              <td>{job.id}</td>
-              <td>{job.job}</td>
+              {/* <td>{job.id}</td> */}
+              <td onClick={() => redirectToApplicants(job)}>{job.job}</td>
               <td><IoPerson /> {job.applicants}</td>
               <td>{job.schools}</td>
               <td>{job.created}</td>

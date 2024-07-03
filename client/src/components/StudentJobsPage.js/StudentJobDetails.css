@@ -1,5 +1,45 @@
 .job-details-content {
     padding: 20px;
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
   }
-  
+  .company-info{
+    display: flex;
+    align-items: center;
+  }
+  .company-info > img{
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        margin-right: 10px;
+        border: 1px solid rgb(194, 194, 194)
+  }
+
+  .company-info h2{
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.company-info div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.apply-button{
+    background-color: blue;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 50px 0;
+}
+
+.job-details-content > p{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.job-description{
+    font-size: 24px;
+    margin-top: 40px;
+}

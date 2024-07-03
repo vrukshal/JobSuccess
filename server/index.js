@@ -9,6 +9,7 @@ const applicantRoutes = require('./routes/applicantRoutes');
 const recruiterRoutes = require('./routes/recruiterRoutes');
 const authRoutes = require('./routes/authRoutes');
 const jobRoutes = require('./routes/jobRoutes');
+const applicationRoutes = require('./routes/applicationsRoutes');
 
 const {db, auth} = require('./config/firebase');
 
@@ -52,7 +53,7 @@ app.use('/',authRoutes);
 app.use('/',applicantRoutes);
 app.use('/',recruiterRoutes);
 app.use('/',jobRoutes);
-
+app.use('/',applicationRoutes);
 // Start the server
 const port = process.env.PORT || 3001;
 app.listen(port, () => {

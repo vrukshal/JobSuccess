@@ -1,0 +1,49 @@
+.applicants-container {
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .filter-options {
+    margin-bottom: 10px;
+  }
+  
+  .filter-options label {
+    margin-right: 15px;
+  }
+  
+  .select-all {
+    margin-left: 10px;
+    color: blue;
+    cursor: pointer;
+  }
+  
+  .btn-download {
+    margin-bottom: 10px;
+  }
+  
+  .table-striped {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table-striped th,
+  .table-striped td {
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  .table-striped th {
+    background-color: #f9f9f9;
+  }
+  
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
+  }
+  
+  .applicants-container{
+    margin-left: 240px;
+  }

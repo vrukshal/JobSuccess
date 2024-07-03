@@ -19,6 +19,7 @@ import NewJobPost from './components/JobPostsPage/NewJobPost';
 import StudentProfilePage from './components/StudentProfilePage/StudentProfilePage';
 import StudentJobsPage from './components/StudentJobsPage.js/StudentJobsPage';
 import StudentHomePage from './components/StudentHomePage/StudentHomePage';
+import JobApplicantsPage from './components/JobApplicantsPage/JobApplicantsPage';
 export default function App() {
   return (
     <Provider store={store}>
@@ -39,6 +40,7 @@ export default function App() {
           <Route path="/rec/files" element={<RecruiterFiles />} />
           <Route path="/rec/postings" element={<JobPostsMainPage /> } />
           <Route path="/rec/postings/newjobpost" element={<NewJobPost /> } />
+          <Route path="/rec/postings/:jobId" element={<JobApplicantsPage /> } />
           {/* <Route path="/messaging" element={<Messaging />} />
           <Route path="/messaging/:receiverId" element={<Messaging />} /> */}
         </Routes>
