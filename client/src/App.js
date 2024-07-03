@@ -31,7 +31,8 @@ export default function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/stu" element={<StudentHomePage />} />
           <Route path="/stu/jobs" element={<StudentJobsPage />} />
-          <Route path="/stu/profile" element={<StudentProfilePage />} />
+          {/* <Route path="/stu/profile" element={<StudentProfilePage />} /> */}
+          <Route path="/stu/:studentUid" element={<StudentProfilePage />} />
           <Route path="*" element={<NotFound />} />
 
           {/* <Route path="/stu" element={<StudentMainPage />} /> */}

@@ -21,7 +21,7 @@ async function createNewRecruiter(req, res) {
 }
 
 async function uploadNewFile(req, res) {
-    console.log(req.body);
+    // console.log(req.body);
     const filename = req.body.filename;
     const filetype = req.body.filetype;
     const folderName = req.body.folderName;
@@ -44,7 +44,7 @@ async function uploadNewFile(req, res) {
         Body: file.buffer // Use the file buffer here
     });
 
-    console.log(command);
+    // console.log(command);
 
     try {
         await s3client.send(command);
@@ -71,7 +71,7 @@ async function uploadNewFile(req, res) {
 
 async function getFiles(req,res){
     const recruiterUid = req.query.recruiterUid; 
-    console.log(recruiterUid);
+    // console.log(recruiterUid);
     try {
         const collectionRef = doc(db, "EmployerProfiles", recruiterUid);
         await getDoc(collectionRef)
@@ -92,7 +92,7 @@ async function getFiles(req,res){
 async function getFileDownloadUrl(req, res) {
     const { filename, folderName, recruiterUid } = req.query;
      // Get the filename from the query parameters
-    console.log(filename, folderName, recruiterUid);
+    // console.log(filename, folderName, recruiterUid);
 
     const s3client = new S3Client({
         region: "us-east-2",
@@ -109,7 +109,7 @@ async function getFileDownloadUrl(req, res) {
 
     try {
         const downloadUrl = await getSignedUrl(s3client, command, { expiresIn: 3600 }); // URL valid for 1 hour
-        console.log('Generated download URL:', downloadUrl);
+        // console.log('Generated download URL:', downloadUrl);
         res.status(200).json({ downloadUrl });
     } catch (error) {
         console.error('Error generating download URL:', error);
@@ -119,7 +119,7 @@ async function getFileDownloadUrl(req, res) {
 
 async function getFileViewUrl(req, res) {
     const { filename, folderName } = req.query; // Get the filename from the query parameters
-    console.log(filename);
+    // console.log(filename);
 
     const s3client = new S3Client({
         region: "us-east-2",
@@ -136,7 +136,7 @@ async function getFileViewUrl(req, res) {
 
     try {
         const viewUrl = await getSignedUrl(s3client, command, { expiresIn: 3600 }); // URL valid for 1 hour
-        console.log('Generated view URL:', viewUrl);
+        // console.log('Generated view URL:', viewUrl);
         res.status(200).json({ viewUrl });
     } catch (error) {
         console.error('Error generating view URL:', error);

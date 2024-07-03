@@ -3,6 +3,8 @@
     display: flex;
     gap: 10px;
     border-bottom: 1px solid #ddd;
+    align-items: center;
+    justify-content: center;
   }
   
 .student-jobs-page{

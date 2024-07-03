@@ -15,6 +15,7 @@ function Profile() {
   const [formVisible, setFormVisible] = useState(false);
   const [step, setStep] = useState(1);
   const [sizeVal, setSizeVal] = useState(1);
+  const userCookie = JSON.parse(Cookies.get('user'))
   const [studentFormData, setStudentFormData] = useState({
     firstName: '',
     lastName: '',
@@ -25,7 +26,8 @@ function Profile() {
     photoUrl: '',
     currentRole: '',
     currentCompany: '',
-    location: ''
+    location: '',
+    uid: user.uid
   });
 
   const [recruiterFormData, setRecruiterFormData] = useState({
@@ -199,7 +201,6 @@ function Profile() {
   const handleStudentSubmit = async (e) => {
     e.preventDefault();
     if (!user) return; // Ensure user is authenticated
-
     const formData = new FormData();
     formData.append('filename', studentFormData.photoUrl.name);
     formData.append('filetype', studentFormData.photoUrl.type);
@@ -249,7 +250,6 @@ function Profile() {
   const handleRecruiterSubmit = async (e) => {
     e.preventDefault();
     if (!user) return; // Ensure user is authenticated
-
     const formData = new FormData();
     formData.append('filename', recruiterFormData.logo.name);
     formData.append('filetype', recruiterFormData.logo.type);

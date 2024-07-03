@@ -9,16 +9,19 @@ import PersonIcon from '@mui/icons-material/Person';
 import EventIcon from '@mui/icons-material/Event';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { GrUserManager } from "react-icons/gr";
-
+import Cookies from 'js-cookie'
 import SidebarIcon from './SidebarIcon';
 import { useNavigate } from 'react-router-dom';
 
-const jobsUrl = "/stu/jobs";
-const profileUrl = "/stu/profile";
-const eventsUrl = "/stu/events";
-const employersUrl = "/stu/employers";
+
 const Sidebar = ({ currentPage, setCurrentPage }) => {
 
+  const studentCookie = JSON.parse(Cookies.get('user'))
+  const jobsUrl = "/stu/jobs";
+  // const profileUrl = "/stu/profile";
+  const profileUrl = `/stu/${studentCookie.uid}`
+  const eventsUrl = "/stu/events";
+  const employersUrl = "/stu/employers";
   const navigate = useNavigate();
     function NavigateToURL(url){
         console.log(url);

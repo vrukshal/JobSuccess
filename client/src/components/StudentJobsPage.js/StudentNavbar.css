@@ -9,11 +9,14 @@
   .navbar-left, .navbar-right {
     display: flex;
     align-items: center;
+    justify-content: center;
   }
   
-  .navbar-brand {
+  .navbar-brand p{
+    font-size: 30px;
     font-weight: bold;
     margin-right: 20px;
+    margin-bottom: 0px;
   }
   
   .navbar-links a {

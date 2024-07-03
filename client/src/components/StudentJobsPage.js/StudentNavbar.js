@@ -31,7 +31,7 @@ const StudentNavbar = () => {
     return (
   <nav className="student-navbar">
     <div className="navbar-left">
-      <div className="navbar-brand">Jobs</div>
+      <div className="navbar-brand"><p>Jobs</p></div>
       <div className="navbar-links">
         <a href="/search">Search</a>
         <a href="/saved">Saved</a>

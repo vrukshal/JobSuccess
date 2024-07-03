@@ -1,7 +1,7 @@
 const dotenv = require('dotenv');
 dotenv.config();
 const {auth, db} = require('../config/firebase');
-const { setDoc, doc } = require('firebase/firestore');
+const { getDoc, setDoc, doc, collection, updateDoc, arrayUnion } = require('firebase/firestore');
 const { S3Client, PutObjectCommand, GetObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 
@@ -77,11 +77,45 @@ async function getFileDownloadUrl(req, res) {
 
     try {
         const downloadUrl = await getSignedUrl(s3client, command, { expiresIn: 3600 }); // URL valid for 1 hour
-        console.log('Generated download URL:', downloadUrl);
+        // console.log('Generated download URL:', downloadUrl);
         res.status(200).json({ downloadUrl });
     } catch (error) {
         console.error('Error generating download URL:', error);
         res.status(500).json({ error: 'Error generating download URL.' });
     }
 }
-module.exports = {createNewApplicant, uploadNewFile, getFileDownloadUrl};
+
+async function updateApplicant(req, res){
+    const { studentUid } = req.params;
+  const { section, data } = req.body;
+
+  try {
+    const studentRef = doc(db, 'StudentProfiles', studentUid);
+    // await studentRef.update({
+    //   [section]: admin.firestore.FieldValue.arrayUnion(data)
+    // });
+
+    await updateDoc(studentRef,{
+        [section]: arrayUnion(data)
+    })
+
+    res.status(200).send({ message: 'Profile updated successfully' });
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    res.status(500).send({ error: 'Failed to update profile' });
+  }
+}
+
+async function getApplicant(req, res){
+    const { studentUid } = req.params; 
+    try {
+        const collectionRef = doc(db, "StudentProfiles", studentUid);
+        const docSnap = await getDoc(collectionRef)
+        res.status(200).json({ data: docSnap.data() });
+        // console.log(docSnap);
+    } catch (error) {
+        console.error('Error fetching student profile:', error);
+        res.status(500).json({ error: 'Error student profile.' });
+    }
+}
+module.exports = {createNewApplicant, uploadNewFile, getFileDownloadUrl, updateApplicant, getApplicant};
