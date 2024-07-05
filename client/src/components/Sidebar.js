@@ -10,23 +10,30 @@ import EventIcon from '@mui/icons-material/Event';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { GrUserManager } from "react-icons/gr";
 import Cookies from 'js-cookie'
-import SidebarIcon from './SidebarIcon';
 import { useNavigate } from 'react-router-dom';
 
-
 const Sidebar = ({ currentPage, setCurrentPage }) => {
+  const navigate = useNavigate();
+  const userCookie = Cookies.get('user');
+  let studentCookie = null;
 
-  const studentCookie = JSON.parse(Cookies.get('user'))
+  if (userCookie) {
+    try {
+      studentCookie = JSON.parse(userCookie);
+    } catch (error) {
+      console.error('Error parsing user cookie:', error);
+    }
+  }
+
   const jobsUrl = "/stu/jobs";
-  // const profileUrl = "/stu/profile";
-  const profileUrl = `/stu/${studentCookie.uid}`
+  const profileUrl = studentCookie ? `/stu/${studentCookie.uid}` : '/login'; // Redirect to login if studentCookie is null
   const eventsUrl = "/stu/events";
   const employersUrl = "/stu/employers";
-  const navigate = useNavigate();
-    function NavigateToURL(url){
-        console.log(url);
-        navigate(url);
-    }
+
+  function NavigateToURL(url) {
+    console.log(url);
+    navigate(url);
+  }
 
   return (
     <div className="sidebar">
@@ -35,8 +42,7 @@ const Sidebar = ({ currentPage, setCurrentPage }) => {
         onClick={() => NavigateToURL(jobsUrl)}
       >
         <WorkIcon />
-         <text>Jobs</text>
-         
+        <text>Jobs</text>
       </div>
       <div
         className={currentPage === 'Profile' ? 'active' : ''}
@@ -44,7 +50,6 @@ const Sidebar = ({ currentPage, setCurrentPage }) => {
       >
         <PersonIcon />
         <text>Profile</text>
-        
       </div>
       <div
         className={currentPage === 'Events' ? 'active' : ''}
@@ -52,9 +57,7 @@ const Sidebar = ({ currentPage, setCurrentPage }) => {
       >
         <EventIcon />
         <text>Events</text>
-        
       </div>
-
       <div
         className={currentPage === 'Employers' ? 'active' : ''}
         onClick={() => NavigateToURL(employersUrl)}
@@ -62,14 +65,12 @@ const Sidebar = ({ currentPage, setCurrentPage }) => {
         <GrUserManager />
         <text>Employers</text>
       </div>
-
       <div
         className={currentPage === 'Notifications' ? 'active' : ''}
         onClick={() => setCurrentPage('Notifications')}
       >
         <NotificationsIcon />
         <text>Notifications</text>
-        
       </div>
     </div>
   );

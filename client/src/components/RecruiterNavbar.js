@@ -18,7 +18,7 @@ const RecruiterNavbar = () => {
     const navigate = useNavigate();
     const recruiterCookie = JSON.parse(Cookies.get('recruiter'));
     const userCookie = JSON.parse(Cookies.get('user'));
-    console.log("USER:",userCookie.email);
+    // console.log("USER:",userCookie.email);
     const handleProfileClick = () => {
         document.getElementById('profileDropdown').classList.toggle('show');
     };

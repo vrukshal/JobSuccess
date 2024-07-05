@@ -13,7 +13,8 @@ async function createApplication(req, res){
             jobId: req.body.jobId,
             recruiterInfo: req.body.recruiterInfo,
             studentInfo: req.body.studentInfo,
-            appliedAt: new Date().toISOString()
+            appliedAt: new Date().toISOString(),
+            resumeUrl: req.body.resumeUrl
         }
         console.log(applicationData);
         const applicationsRef = collection(db, "Applications");
