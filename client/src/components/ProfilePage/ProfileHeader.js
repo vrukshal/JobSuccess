@@ -50,7 +50,7 @@ const ProfileHeader = (props) => {
                 <h1>{props.recruiter.name}</h1>
                 <p>{props.recruiter.address}</p>
                 <p>{props.recruiter.industry} | {props.recruiter.size} employees</p>
-                <button>Follow</button>
+                {/* <button>Follow</button> */}
             </div>
         </div>
     );

@@ -8,7 +8,7 @@
   }
   
 .student-jobs-page{
-    margin-left: 240px;
+    margin-left: 200px;
     background-color: white;
     padding: -5px;
 }
@@ -16,7 +16,7 @@
 .search-bar {
     display: flex;
     align-items: center;
-    padding: 5px;  /* Adjust padding for a smaller size */
+    padding: 15px;  /* Adjust padding for a smaller size */
     border-radius: 25px;
     background-color: #f1f1f1;
     border: 1px solid #ddd;

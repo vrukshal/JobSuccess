@@ -18,6 +18,8 @@
   .form-group label {
     display: block;
     margin-bottom: 5px;
+    font-size: 20px;
+    font-weight: 500;
   }
   
   .form-group input[type="text"], .form-group select, .form-group input[type="radio"] {
@@ -33,22 +35,23 @@
     width: auto;
     margin: 10px;
   }
-  
-  button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    border: none;
-    color: #fff;
-    border-radius: 4px;
-    cursor: pointer;
+  .form-group > textarea{
+    height: 200px;
+  }
+
+  .back-button{
     margin: 10px;
   }
   
-  button:hover {
-    background-color: #0056b3;
+  .submit-button, .back-button{
+    margin: 10px;
+    width: fit-content;
+    height: fit-content;
+    padding: 10px 20px;
+    font-size: large;
+    font-weight: 500;
   }
   
-
   .suggestions-list {
     border: 1px solid #ccc;
     border-top: none;

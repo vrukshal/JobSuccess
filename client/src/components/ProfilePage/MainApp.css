@@ -4,136 +4,46 @@
   /* width: 100%; */
   display: flex;
 }
-.container{
-  --dt-row-selected: 13, 110, 253;
-  --dt-row-selected-text: 255, 255, 255;
-  --dt-row-selected-link: 9, 10, 11;
-  --dt-row-stripe: 0, 0, 0;
-  --dt-row-hover: 0, 0, 0;
-  --dt-column-ordering: 0, 0, 0;
-  --dt-html-background: white;
-  --bs-blue: #0d6efd;
-  --bs-indigo: #6610f2;
-  --bs-purple: #6f42c1;
-  --bs-pink: #d63384;
-  --bs-red: #dc3545;
-  --bs-orange: #fd7e14;
-  --bs-yellow: #ffc107;
-  --bs-green: #198754;
-  --bs-teal: #20c997;
-  --bs-cyan: #0dcaf0;
-  --bs-white: #fff;
-  --bs-gray: #6c757d;
-  --bs-gray-dark: #343a40;
-  --bs-primary: #0d6efd;
-  --bs-secondary: #6c757d;
-  --bs-success: #198754;
-  --bs-info: #0dcaf0;
-  --bs-warning: #ffc107;
-  --bs-danger: #dc3545;
-  --bs-light: #f8f9fa;
-  --bs-dark: #212529;
-  --bs-font-sans-serif: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-  --bs-font-monospace: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
-  --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #212529;
-  -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color: transparent;
-  font-family: Arial, sans-serif;
-  box-sizing: border-box;
-  margin: 0 auto;
-  padding: 20px;
-  max-width: 600px;
-  background-color: #f7f7f7;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: all 0.15s ease 0s;
-  position: relative;
-  left: -441px;
-  top: -3px;
-  width: 597.744px;
-  transform: translate(-5.55556px, 0px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-}
 .profile-description{
-  /* margin-top: 40px; */
+  margin-left: 40px;
 }
 .mainapp-grid {
-  /* display: grid; */
-  /* grid-template-columns: 2fr 1fr; */
-  /* column-gap: 1px;  Reduced column gap */
-  width: 100%;
   padding: 0;
-  margin-top: 50px;
+  /* margin-top: 50px; */
   /* margin-top: 10px; */
   margin-left: 240px;
   align-items: center;
   /* justify-content: space-around; */
 }
-
-body {
-  /* background-color: rgba(238, 238, 238, 0.8); */
-}
 .profile-logo > img{
-  height: 100px;
+  height: 60px;
   width: auto;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #212529;
-  -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color: transparent;
-  font-family: Arial, sans-serif;
-  box-sizing: border-box;
-  vertical-align: middle;
-  height: 100px;
-  width: auto;
-  transition: all 0.15s ease 0s;
-  position: relative;
-  left: -7px;
-  top: -43px;
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 50%;
+  border: 1px solid rgb(214, 214, 214);
 }
 .profile-header {   
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #212529;
-  -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color: transparent;
-  font-family: Arial, sans-serif;
-  box-sizing: border-box;
-  align-items: center;
-  margin: 20px;
   display: flex;
-  justify-content: space-around;
-  width: 535.747px;
-  height: 171.093px;
-  transform: translate(-3.33335px, 4.44444px);
-  margin-left: 0px;
-  margin-right: 8px;
-  padding-right: 0px;
-  transition: none 0s ease 0s;
+  align-items: center;
+  /* height: 10px; */
+  font-size: 20px;
+  font-weight: 400;
+  font-family: Arial, sans-serif;
+  align-content: center;
 }
 
 .profile-header h1 {
-  font-size: 30;
-  font-weight: 700;
-  margin-left: -5px;
+  font-size: 30px;
+  font-weight: bold;
+  margin-left: auto;
+  /* margin-left: -5px; */
   /* width: 20px; */
-}
-
-.profile-header .info {
-  /* text-align: left; */
 }
 
 .profile-header p {
   /* margin: 0; */
+  margin: 1px;
   color: #5a5a5a; /* Lighter color shade */
 }
 
@@ -144,7 +54,6 @@ button {
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;
-  align-self: flex-start; /* Align the button with the start of the header */
 }
 
 button:hover {
@@ -152,14 +61,15 @@ button:hover {
 }
 
 .profile-overview, .contact-information, .jobs-section, .public-staff-list, .students-section {
+  border-top: 1px solid #ccc;
   height: auto;
   word-wrap: normal;
   width: 70%;
   margin-top: 10px;
   margin-bottom: 20px;
   padding: 20px;
-  border-radius: 10px;
-  background-color: rgb(250, 249, 249);
+  /* border-radius: 10px; */
+  /* background-color: rgb(250, 249, 249); */
 }
 
 .profile-overview h2, .contact-information h3, .jobs-section h3, .public-staff-list h3, .students-section h3 {
@@ -167,7 +77,7 @@ button:hover {
 }
 
 .student {
-  border-top: 1px solid #ccc;
+  /* border-top: 1px solid #ccc; */
   padding-top: 10px;
   margin-top: 10px;
 }

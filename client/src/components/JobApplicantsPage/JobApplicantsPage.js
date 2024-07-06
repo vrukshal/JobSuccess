@@ -62,7 +62,9 @@ const JobApplicantsPage = () => {
     try {
       const { key, recruiterUid, folderName, filename } = extractUrlParts(applicant?.resumeUrl);
       const response = await axios.get(`http://localhost:3001/api/recruiter/get-signed-url?filename=${filename}&folderName=${folderName}&recruiterUid=${recruiterUid}`);
+      console.log(response);
       const { downloadUrl } = response.data;
+
       window.open(downloadUrl, '_blank'); // Open the file in a new tab
     } catch (error) {
       console.error('Error fetching view URL:', error);

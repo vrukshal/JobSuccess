@@ -145,7 +145,7 @@ const NewJobPost = () => {
                 <input type="radio" name="workStudy" value="no" checked={formData.workStudy === 'no'} onChange={handleChange} /> No
               </div>
             </div>
-            <button type="button" onClick={nextStep}>Next</button>
+            <button className='submit-button' type="button" onClick={nextStep}>Next</button>
           </form>
         </div>
       )}
@@ -177,8 +177,8 @@ const NewJobPost = () => {
               <input type="link" className="form-control" name="applyLink" value={formData.applyLink} onChange={handleChange} />
             </div>
             {/* Add more fields here */}
-            <button type="button" onClick={prevStep}>Back</button>
-            <button type="button" onClick={createJobPost}>Create Job Post</button>
+            <button className="submit-button" type="button" onClick={prevStep}>Back</button>
+            <button className="submit-button" type="button" onClick={createJobPost}>Create Job Post</button>
           </form>
         </div>
       )}

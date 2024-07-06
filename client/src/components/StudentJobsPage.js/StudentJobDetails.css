@@ -11,7 +11,8 @@
         width: 50px;
         border-radius: 50%;
         margin-right: 10px;
-        border: 1px solid rgb(194, 194, 194)
+        border: 1px solid rgb(194, 194, 194);
+        padding: 10px;
   }
 
   .company-info h2{

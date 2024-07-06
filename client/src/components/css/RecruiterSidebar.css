@@ -1,11 +1,14 @@
 .recruiter-sidebar {
   width: 230px;
-  height: 100vh;
+  flex: 0.2 !important;
+  /* height: 100vh; */
+  top: 100px;
   background-color: #ffffff;
   padding: 20px;
   position: fixed;
-  z-index: 100;
-  border-right: 1px solid rgb(199, 199, 199);
+  /* border: 1px solid rgb(199, 199, 199); */
+  /* border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px; */
 }
 
 .recruiter-sidebar ul {
@@ -26,7 +29,7 @@
   background-color: whitesmoke;
 }
 .recruiter-sidebar-items{
-  margin-top: 70px;
+  /* margin-top: 70px; */
 }
 
 .sidebar li {

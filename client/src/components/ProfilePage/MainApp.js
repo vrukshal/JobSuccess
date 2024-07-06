@@ -37,12 +37,10 @@ function MainApp() {
     <div className="MainApp">
       {recruiterCookie && (
           <div>
-          <RecruiterSidebar />
           <RecruiterNavbar />
+          <RecruiterSidebar />
           <div className='mainapp-grid'> 
-            <div className='container'>
-              <ProfileHeader recruiter={recruiterCookie} />
-            </div>
+          <ProfileHeader recruiter={recruiterCookie} />
             <ProfileOverview recruiter={recruiterCookie} />
             <ContactInformation recruiter={recruiterCookie} />
             <JobsSection recruiter={recruiterCookie} />
