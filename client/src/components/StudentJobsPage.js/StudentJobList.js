@@ -3,6 +3,7 @@ import axios from 'axios';
 import JobCard from './StudentJobCard';
 import JobDetails from './StudentJobDetails';
 import './StudentJobList.css';
+import Cookies from 'js-cookie';
 
 const StudentJobList = ({ jobType }) => {
   const [jobs, setJobs] = useState([]);
@@ -12,8 +13,11 @@ const StudentJobList = ({ jobType }) => {
   };
   useEffect(() => {
     const fetchJobs = async () => {
+      const studentCookie = JSON.parse(Cookies.get('student'));
+
       try {
-        const response = await axios.get(`http://localhost:3001/api/jobs/${jobType === 'part-time' ? 'parttimejobs' : 'fulltimejobs'}`);
+        const response = await axios.get(`http://localhost:3001/api/jobs/${jobType === 'part-time' ? 'parttimejobs' : 'fulltimejobs'}/?userId=${studentCookie.uid}`);
+        console.log(response);
         setJobs(response.data);
       } catch (error) {
         console.error('Error fetching jobs:', error);

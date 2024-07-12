@@ -3,6 +3,11 @@ const { collection, getDocs, query, where, addDoc } = require('firebase/firestor
 
 async function getFullTimeJobs(req, res) {
     try {
+        const userId = req.query.userId;
+        if (!userId) {
+            return res.status(400).send("Missing userId in query parameters");
+        }
+
         const jobsCollection = collection(db, "Jobs");
 
         // Initialize query with full-time job type constraint
@@ -10,7 +15,7 @@ async function getFullTimeJobs(req, res) {
 
         // Loop through query parameters and add constraints
         for (const [key, value] of Object.entries(req.query)) {
-            if (key !== "employmentType") { // Ensure we don't overwrite the job_type constraint
+            if (key !== "employmentType" && key !== "userId") { // Ensure we don't overwrite the job_type and userId constraint
                 constraints.push(where(key, "==", value));
             }
         }
@@ -19,10 +24,18 @@ async function getFullTimeJobs(req, res) {
         const fullTimeQuery = query(jobsCollection, ...constraints);
         const jobsSnapshot = await getDocs(fullTimeQuery);
 
-        const jobsList = jobsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      //  console.log(jobsList);
+        const allJobs = jobsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-        res.status(200).json(jobsList);
+        // Retrieve Job IDs the user has applied for
+        const applicationsRef = collection(db, "Applications");
+        const appliedJobsQuery = query(applicationsRef, where("studentInfo.uid", "==", userId));
+        const appliedJobsSnapshot = await getDocs(appliedJobsQuery);
+        const appliedJobIds = new Set(appliedJobsSnapshot.docs.map(doc => doc.data().JobID));
+
+        // Filter out applied jobs from all jobs
+        const unappliedJobs = allJobs.filter(job => !appliedJobIds.has(job.id));
+
+        res.status(200).json(unappliedJobs);
     } catch (error) {
         console.log(error);
         res.status(500).send("Error retrieving full-time jobs");
@@ -45,20 +58,6 @@ async function getJobsByRecruiterUid(req,res){
     }
 }
 
-// async function getFullTimeJobs(req,res){
-//     try{
-//         const jobsCollection = collection(db, "Jobs");
-//         const fullTimeQuery = query(jobsCollection, where("job_type", "==", "full-time"));
-//         const jobsSnapshot = await getDocs(fullTimeQuery);
-//         const jobsList = jobsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-//         console.log(jobsList);
-//         return jobsList;
-//     }
-//     catch(error){
-//         console.log(error);
-//     }
-// }
-
 
 async function createNewJobPost(req, res){
     try {
@@ -76,46 +75,46 @@ async function createNewJobPost(req, res){
 
 
 async function getPartTimeJobs(req, res) {
-    try {
-        const jobsCollection = collection(db, "Jobs");
-
-        // Initialize query with full-time job type constraint
-        let constraints = [where("employmentType", "==", "part-time")];
-
-        // Loop through query parameters and add constraints
-        for (const [key, value] of Object.entries(req.query)) {
-            if (key !== "employmentType") { // Ensure we don't overwrite the job_type constraint
-                constraints.push(where(key, "==", value));
+        try {
+            const userId = req.query.userId;
+            if (!userId) {
+                return res.status(400).send("Missing userId in query parameters");
             }
+    
+            const jobsCollection = collection(db, "Jobs");
+    
+            // Initialize query with full-time job type constraint
+            let constraints = [where("employmentType", "==", "part-time")];
+    
+            // Loop through query parameters and add constraints
+            for (const [key, value] of Object.entries(req.query)) {
+                if (key !== "employmentType" && key !== "userId") { // Ensure we don't overwrite the job_type and userId constraint
+                    constraints.push(where(key, "==", value));
+                }
+            }
+    
+            // Build the final query with the constraints
+            const fullTimeQuery = query(jobsCollection, ...constraints);
+            const jobsSnapshot = await getDocs(fullTimeQuery);
+    
+            const allJobs = jobsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    
+            // Retrieve Job IDs the user has applied for
+            const applicationsRef = collection(db, "Applications");
+            const appliedJobsQuery = query(applicationsRef, where("studentInfo.uid", "==", userId));
+            const appliedJobsSnapshot = await getDocs(appliedJobsQuery);
+            const appliedJobIds = new Set(appliedJobsSnapshot.docs.map(doc => doc.data().JobID));
+    
+            // Filter out applied jobs from all jobs
+            const unappliedJobs = allJobs.filter(job => !appliedJobIds.has(job.id));
+    
+            res.status(200).json(unappliedJobs);
+        } catch (error) {
+            console.log(error);
+            res.status(500).send("Error retrieving full-time jobs");
         }
-
-        // Build the final query with the constraints
-        const fullTimeQuery = query(jobsCollection, ...constraints);
-        const jobsSnapshot = await getDocs(fullTimeQuery);
-
-        const jobsList = jobsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        //console.log(jobsList);
-
-        res.status(200).json(jobsList);
-    } catch (error) {
-        console.log(error);
-        res.status(500).send("Error retrieving part-time jobs");
-    }
 }
 
-// async function getPartTimeJobs(req,res) {
 
-//     try{
-//         const jobsCollection = collection(db, "Jobs");
-//         const partTimeQuery = query(jobsCollection, where("job_type", "==", 'part-time'));
-//         const jobsSnapshot = await getDocs(partTimeQuery);
-//         const jobsList = jobsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-//         console.log(jobsList);
-//         return jobsList;
-//     }
-//     catch(error){
-//         console.log(error);
-//     }
-// }
 
 module.exports = {getFullTimeJobs, getPartTimeJobs, createNewJobPost, getJobsByRecruiterUid}

@@ -40,7 +40,7 @@ const StudentNavbar = () => {
     </div>
     <div className="navbar-icons">
             <div className="notification-icon"><div className='icon-container'><NotificationsActiveIcon fontSize='large' style={{ color: 'black' }} /></div></div>
-            <div className="profile-icon" onClick={handleProfileClick}><div className='icon-container'><Avatar src={userCookie?.picture} fontSize='large' style={{ color: 'white' }}> {userCookie?.email[0].toUpperCase()}</Avatar></div></div>
+            <div className="profile-icon" onClick={handleProfileClick}><div className='icon-container'><Avatar src={userCookie?.picture} fontSize='large' style={{ color: 'white' }}> {'v'}</Avatar></div></div>
             <div id="profileDropdown" className="dropdown-content">
                 <a href="#notification-preferences">Notification Preferences</a>
                 <a href="#settings">Settings</a>
