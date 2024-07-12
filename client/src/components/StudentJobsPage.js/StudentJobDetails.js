@@ -114,6 +114,10 @@ const StudentJobDetails = ({ job }) => {
     const data = await response.json();
         const applicationInfo = {
             jobId: job.id,
+            jobTitle: job?.jobTitle,
+            jobType: job.jobType,
+            jobDescription: job.jobDescription,
+            salary: job.salary,
             recruiterInfo: job.recruiterInfo,
             studentInfo: studentCookie,
             resumeUrl: data.fileUrl, // Add resume to the application info

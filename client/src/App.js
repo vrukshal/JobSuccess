@@ -20,6 +20,7 @@ import StudentProfilePage from './components/StudentProfilePage/StudentProfilePa
 import StudentJobsPage from './components/StudentJobsPage.js/StudentJobsPage';
 import StudentHomePage from './components/StudentHomePage/StudentHomePage';
 import JobApplicantsPage from './components/JobApplicantsPage/JobApplicantsPage';
+import AppliedJobsPage from './components/AppliedJobsPage/AppliedJobsPage';
 export default function App() {
   return (
     <Provider store={store}>
@@ -31,6 +32,7 @@ export default function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/stu" element={<StudentHomePage />} />
           <Route path="/stu/jobs" element={<StudentJobsPage />} />
+          <Route path="/stu/jobs/applied" element={<AppliedJobsPage />} />
           {/* <Route path="/stu/profile" element={<StudentProfilePage />} /> */}
           <Route path="/stu/:studentUid" element={<StudentProfilePage />} />
           <Route path="*" element={<NotFound />} />

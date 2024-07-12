@@ -22,6 +22,7 @@ const StudentNavbar = () => {
                 Cookies.remove('user');
                 Cookies.remove('recruiter');
                 Cookies.remove('student');
+                localStorage.removeItem('appliedJobs');
                 navigate('/login');
             })
             .catch((err) => console.error(err));
@@ -33,7 +34,7 @@ const StudentNavbar = () => {
     <div className="navbar-left">
       <div className="navbar-brand"><p>Jobs</p></div>
       <div className="navbar-links">
-        <a href="/search">Search</a>
+        <a href="/jobs/applied">Applied</a>
         <a href="/saved">Saved</a>
       </div>
     </div>

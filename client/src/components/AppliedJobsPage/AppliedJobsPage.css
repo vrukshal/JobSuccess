@@ -1,0 +1,10 @@
+.applied-jobs-page {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+.job-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

@@ -33,7 +33,11 @@ async function getApplicants(req, res){
         let constraints = [];
 
         for (const [key, value] of Object.entries(req.query)) {
-            constraints.push(where(key, "==", value));
+            if (key === "studentUid") {
+                constraints.push(where("studentInfo.uid", "==", value));
+            } else {
+                constraints.push(where(key, "==", value));
+            }
         }
 
         const applicationsQuery = query(applicationsCollection, ...constraints);
