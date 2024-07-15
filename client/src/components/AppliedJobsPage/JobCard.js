@@ -22,7 +22,7 @@ const formatDays = (days) => {
     if (months > 0) {
         result += `${months} month${months > 1 ? 's' : ''} `;
     }
-    if (remainingDays > 0 || result === "") { // Add days if no other unit is added
+    if (remainingDays > 0 || result === "") {
         result += `${remainingDays} day${remainingDays > 1 ? 's' : ''}`;
     }
     return result.trim();
@@ -39,10 +39,10 @@ const extractUrlParts = (url) => {
 
     const recruiterUid = parts[0];
     const folderName = parts[1];
-    const filename = parts.slice(2).join('/'); // In case there are subfolders
+    const filename = parts.slice(2).join('/');
 
     return {
-        key: parts.slice(1).join('/'), // Exclude the recruiterUid from the key
+        key: parts.slice(1).join('/'),
         recruiterUid,
         folderName,
         filename,
@@ -50,8 +50,11 @@ const extractUrlParts = (url) => {
 };
 
 const JobCard = ({ application }) => {
-    const [logoUrl, setLogoUrl] = useState('');
 
+    const [logoUrl, setLogoUrl] = useState('');
+    const [jobTitle, SetJobTitle]   = useState('');
+    
+    const jobId = application.jobId;
     useEffect(() => {
         const fetchLogoURL = async () => {
             try {
@@ -59,10 +62,16 @@ const JobCard = ({ application }) => {
                 const response = await axios.get(`http://localhost:3001/api/recruiter/get-signed-url?filename=${filename}&folderName=${folderName}&recruiterUid=${recruiterUid}`);
                 const { downloadUrl } = response.data;
                 setLogoUrl(downloadUrl);
+                
+                const JobResponse = await axios.get(`http://localhost:3001/api/jobs/getJobdetails?jobId=${jobId}`);
+                console.log("got thr job tittltomott yeyyeyey ",JobResponse.data.jobTitle);
+                SetJobTitle(JobResponse.data.jobTitle);
+
             } catch (error) {
-                console.error('Error fetching image URL:', error);
+                console.error('Error fetching image URL or JobDetails:', error);
             }
         };
+
 
         if (application.recruiterInfo?.logo) {
             fetchLogoURL();
@@ -75,9 +84,13 @@ const JobCard = ({ application }) => {
                 {logoUrl && <img src={logoUrl} alt={`${application.recruiterInfo?.company} logo`} />}
             </div>
             <div className="job-details">
-                <p>{application.recruiterInfo?.company}</p>
-                <h4>{application.jobTitle}</h4>
-                <p>{application.location} • {daysSincePosted(application.appliedAt)} ago • {application.jobType}</p>
+                <p className="company-name">{application.recruiterInfo?.company}</p>
+               
+                <h4 className="job-title">{jobTitle}</h4>
+                <p className="applied-time">{daysSincePosted(application.appliedAt)} ago</p>
+            </div>
+            <div className="job-status">
+                <p>{application.hasOwnProperty("status")? application.status : "Pending" }</p>
             </div>
         </div>
     );

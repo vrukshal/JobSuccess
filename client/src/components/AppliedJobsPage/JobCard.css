@@ -30,22 +30,32 @@
 }
 
 .job-details {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
+    justify-content: center;
+    text-align: left;
 }
 
-.job-details p,
-.job-details h4 {
-    margin: 4px 0;
-}
-
-.job-details p {
+.company-name {
     color: #555;
+    font-size: 1.2em;
+    margin-bottom: 4px;
 }
 
-.job-details h4 {
+.job-title {
     color: #333;
-    font-size: 5em;
+    font-size: 1.5em;
     margin-bottom: 10px;
+}
+
+.applied-time {
+    color: #888;
+}
+
+.job-status {
+    margin-left: auto;
+    font-size: 1.2em;
+    color: #999;
+    text-align: right;
 }

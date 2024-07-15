@@ -1,5 +1,5 @@
 const { db } = require('../config/firebase');
-const { collection, getDocs, query, where, addDoc,orderBy } = require('firebase/firestore');
+const { collection, getDocs,getDoc, query, where, addDoc,orderBy,doc } = require('firebase/firestore');
 
 async function getFullTimeJobs(req, res) {
     try {
@@ -60,6 +60,26 @@ async function getJobsByRecruiterUid(req,res){
     }
 }
 
+async function getJobDetails(req, res) {
+    try {
+        const documentRef = doc(db, "Jobs", req.query.jobId);
+        const docSnapshot = await getDoc(documentRef);
+
+        if (docSnapshot.exists()) {
+            const docData = docSnapshot.data();
+            console.log("Document data:", docData);
+            res.status(200).json(docData);
+        } else {
+            console.log("Document not found.");
+            res.status(404).send("Job not found");
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Error retrieving Job Detail");
+    }
+}
+
+
 
 async function createNewJobPost(req, res){
     try {
@@ -119,4 +139,4 @@ async function getPartTimeJobs(req, res) {
 
 
 
-module.exports = {getFullTimeJobs, getPartTimeJobs, createNewJobPost, getJobsByRecruiterUid}
+module.exports = {getFullTimeJobs, getPartTimeJobs, createNewJobPost, getJobsByRecruiterUid, getJobDetails}

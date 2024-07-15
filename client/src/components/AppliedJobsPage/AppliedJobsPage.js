@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from 'react'
+// src/pages/AppliedJobsPage.js
+
+import React, { useEffect, useState } from 'react';
 import './AppliedJobsPage.css';
 import JobCard from './JobCard';
 import Cookies from 'js-cookie';
+import StudentNavbar from '../StudentJobsPage.js/StudentNavbar'; // Corrected import path
+import Sidebar from '../Sidebar';
 
 function AppliedJobsPage() {
     const [applications, setApplications] = useState([]);
     const [loading, setLoading] = useState(true);
-    const userCookie = JSON.parse(Cookies.get('student')? Cookies.get('student'): null);
-    const studentUid = userCookie.uid; // Replace with actual student UID
+    const userCookie = JSON.parse(Cookies.get('student') ? Cookies.get('student') : null);
+    const studentUid = userCookie ? userCookie.uid : null;
 
     useEffect(() => {
         const fetchApplications = async () => {
@@ -22,24 +26,29 @@ function AppliedJobsPage() {
             }
         };
 
-        fetchApplications();
+        if (studentUid) {
+            fetchApplications();
+        }
     }, [studentUid]);
 
-    console.log(applications.length);
     if (loading) {
         return <div>Loading...</div>;
     }
 
     return (
-        <div className="applied-jobs-page">
-            <h1>Applied Jobs</h1>
-            <div className="job-list">
-                {applications.map(application => (
-                    <JobCard application={application} />
-                ))}
+        <div>
+            <Sidebar />
+            <div className="applied-jobs-page">
+                <StudentNavbar />
+                <h1>Applied Jobs</h1>
+                <div className="job-list">
+                    {applications.map(application => (
+                        <JobCard key={application.id} application={application} />
+                    ))}
+                </div>
             </div>
         </div>
     );
 }
 
-export default AppliedJobsPage
+export default AppliedJobsPage;

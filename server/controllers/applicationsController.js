@@ -14,7 +14,8 @@ async function createApplication(req, res){
             recruiterInfo: req.body.recruiterInfo,
             studentInfo: req.body.studentInfo,
             appliedAt: new Date().toISOString(),
-            resumeUrl: req.body.resumeUrl
+            resumeUrl: req.body.resumeUrl,
+            status : 'Pending'
         }
         console.log(applicationData);
         const applicationsRef = collection(db, "Applications");
