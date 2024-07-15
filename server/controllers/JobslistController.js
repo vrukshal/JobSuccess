@@ -1,5 +1,5 @@
 const { db } = require('../config/firebase');
-const { collection, getDocs, query, where, addDoc } = require('firebase/firestore');
+const { collection, getDocs, query, where, addDoc,orderBy } = require('firebase/firestore');
 
 async function getFullTimeJobs(req, res) {
     try {
@@ -11,7 +11,7 @@ async function getFullTimeJobs(req, res) {
         const jobsCollection = collection(db, "Jobs");
 
         // Initialize query with full-time job type constraint
-        let constraints = [where("employmentType", "==", "full-time")];
+        let constraints = [where("employmentType", "==", "full-time"),orderBy("posted_at", "desc")];
 
         // Loop through query parameters and add constraints
         for (const [key, value] of Object.entries(req.query)) {
@@ -25,16 +25,18 @@ async function getFullTimeJobs(req, res) {
         const jobsSnapshot = await getDocs(fullTimeQuery);
 
         const allJobs = jobsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
+       // console.log(allJobs.map(job => job.id));
         // Retrieve Job IDs the user has applied for
         const applicationsRef = collection(db, "Applications");
         const appliedJobsQuery = query(applicationsRef, where("studentInfo.uid", "==", userId));
         const appliedJobsSnapshot = await getDocs(appliedJobsQuery);
-        const appliedJobIds = new Set(appliedJobsSnapshot.docs.map(doc => doc.data().JobID));
+       // console.log(appliedJobsSnapshot.docs.map(j => j.data()));
 
+        const appliedJobIds = new Set(appliedJobsSnapshot.docs.map(doc => doc.data().jobId));
         // Filter out applied jobs from all jobs
+        //console.log(appliedJobIds);
         const unappliedJobs = allJobs.filter(job => !appliedJobIds.has(job.id));
-
+        //console.log(unappliedJobs.length);
         res.status(200).json(unappliedJobs);
     } catch (error) {
         console.log(error);
@@ -84,7 +86,7 @@ async function getPartTimeJobs(req, res) {
             const jobsCollection = collection(db, "Jobs");
     
             // Initialize query with full-time job type constraint
-            let constraints = [where("employmentType", "==", "part-time")];
+            let constraints = [where("employmentType", "==", "part-time"),orderBy("posted_at", "desc")];
     
             // Loop through query parameters and add constraints
             for (const [key, value] of Object.entries(req.query)) {
@@ -103,7 +105,7 @@ async function getPartTimeJobs(req, res) {
             const applicationsRef = collection(db, "Applications");
             const appliedJobsQuery = query(applicationsRef, where("studentInfo.uid", "==", userId));
             const appliedJobsSnapshot = await getDocs(appliedJobsQuery);
-            const appliedJobIds = new Set(appliedJobsSnapshot.docs.map(doc => doc.data().JobID));
+            const appliedJobIds = new Set(appliedJobsSnapshot.docs.map(doc => doc.data().jobId));
     
             // Filter out applied jobs from all jobs
             const unappliedJobs = allJobs.filter(job => !appliedJobIds.has(job.id));

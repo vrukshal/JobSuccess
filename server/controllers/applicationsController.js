@@ -1,7 +1,7 @@
 const dotenv = require('dotenv');
 dotenv.config();
 const { auth, db } = require('../config/firebase');
-const { collection, addDoc, getDocs, query, where } = require('firebase/firestore');
+const { collection, addDoc, getDocs, query, where,orderBy } = require('firebase/firestore');
 const { S3Client, PutObjectCommand, GetObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 const { useDispatch, useSelector } = require('react-redux');
@@ -34,7 +34,7 @@ async function getApplicants(req, res){
 
         for (const [key, value] of Object.entries(req.query)) {
             if (key === "studentUid") {
-                constraints.push(where("studentInfo.uid", "==", value));
+                constraints.push(where("studentInfo.uid", "==", value),orderBy("appliedAt", "desc"));
             } else {
                 constraints.push(where(key, "==", value));
             }

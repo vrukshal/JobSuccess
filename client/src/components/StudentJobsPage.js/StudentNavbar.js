@@ -27,15 +27,20 @@ const StudentNavbar = () => {
             })
             .catch((err) => console.error(err));
     };
+    const changePage = (page) => {
+        navigate(`/stu/jobs/${page}`);
+    };
     
     const userCookie = JSON.parse(Cookies.get('student')? Cookies.get('student'): null);
+    console.log(userCookie.uid);
     return (
   <nav className="student-navbar">
     <div className="navbar-left">
       <div className="navbar-brand"><p>Jobs</p></div>
       <div className="navbar-links">
-        <a href="/jobs/applied">Applied</a>
-        <a href="/saved">Saved</a>
+      <button onClick={() => changePage('applied')}>Applied</button>
+      <button onClick={ () => changePage('saved')}>Saved</button>
+       
       </div>
     </div>
     <div className="navbar-icons">
@@ -46,7 +51,7 @@ const StudentNavbar = () => {
                 <a href="#settings">Settings</a>
                 <a href="#help">Help</a>
                 <a href="#terms-of-service">Terms of Service</a>
-                <a onClick={logoutUser}>Logout</a>
+                <a href="#logout" onClick={logoutUser}>Logout</a>
             </div>
         </div>
   </nav>
