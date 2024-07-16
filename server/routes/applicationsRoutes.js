@@ -7,6 +7,8 @@ const upload = multer();
 
 router.post('/api/application/', applicationsController.createApplication);
 router.get('/api/application/', applicationsController.getApplicants);
+router.patch('/api/application/:id', applicationsController.updateApplication);
+router.post('/api/application/notify-declined', applicationsController.notifyDeclinedApplicants);
 
 // router.post('/api/recruiter/fileupload',upload.single('file'),recruiterController.uploadNewFile);
 // router.get('/api/recruiter/files',recruiterController.getFiles);

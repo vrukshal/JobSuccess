@@ -25,16 +25,22 @@ const JobApplicantsPage = () => {
     fetchApplicants();
   }, [jobId]);
 
+  const handleUpdate = async (id, updates) => {
+    try {
+      await axios.patch(`http://localhost:3001/api/application/${id}`, updates);
+      setApplicants(prevApplicants =>
+        prevApplicants.map(applicant =>
+          applicant.id === id ? { ...applicant, ...updates } : applicant
+        )
+      );
+    } catch (error) {
+      console.error('Error updating application:', error);
+    }
+  };
+
+
   const handleStatusChange = (id, newStatus) => {
-    setApplicants(prevApplicants =>
-      prevApplicants.map(applicant =>
-        applicant.id === id ? { ...applicant, status: newStatus } : applicant
-      )
-    );
-    // Optionally, update the status in the backend
-    // TODO: Make API call to update status in the backend
-    // axios.patch(`http://localhost:3001/api/applicants/${id}`, { status: newStatus })
-    //   .catch(error => console.error('Error updating status:', error));
+    handleUpdate(id, { status: newStatus });
   };
 
   const extractUrlParts = (url) => {
@@ -71,6 +77,23 @@ const JobApplicantsPage = () => {
     }
   };
 
+
+  const handleNotifyAll = async () => {
+    const declinedApplicants = [];
+    applicants.map((applicant) => {
+      if(applicant.status === "Declined"){
+        declinedApplicants.push(applicant);
+      }
+    });
+    console.log(declinedApplicants);
+    try {
+      await axios.post('http://localhost:3001/api/application/notify-declined', { declinedApplicants, jobId });
+      alert('Notifications sent successfully');
+    } catch (error) {
+      console.error('Error sending notifications:', error);
+    }
+  };
+
   return (
     <>
       <RecruiterNavbar />
@@ -94,6 +117,8 @@ const JobApplicantsPage = () => {
           <a href="#" className="select-all">Select All</a>
         </div>
         <button className="btn-download">Download all</button>
+        <button className="btn-notify" onClick={handleNotifyAll}>Notify All</button>
+
         <table className="table">
           <thead>
             <tr>
@@ -114,9 +139,10 @@ const JobApplicantsPage = () => {
                   <select
                     value={applicant.status}
                     onChange={(e) => handleStatusChange(applicant.id, e.target.value)}
+                    
                   >
-                    <option value="Pending">Pending</option>
-                    <option value="Reviewed">Reviewed</option>
+                    <option value="Pending" onClick={() => console.log("Clicked")}>Pending</option>
+                    <option value="Reviewed" onClick={() => console.log("Clicked")}>Reviewed</option>
                     <option value="Declined">Declined</option>
                     <option value="Hired">Hired</option>
                   </select>

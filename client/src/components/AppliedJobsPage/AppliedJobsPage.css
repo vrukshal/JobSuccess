@@ -25,10 +25,10 @@
 }
 
 .navbar {
-    position: fixed;
-    top: 0;
-    left: 200px; /* Adjust based on Sidebar width */
-    width: calc(100% - 200px); /* Adjust based on Sidebar width */
-    background-color: #fff;
+    /* position: fixed; */
+    /* top: 0; */
+    /* left: 200px; Adjust based on Sidebar width */
+    /* width: calc(100% - 200px); Adjust based on Sidebar width */
+    /* background-color: #fff; */
     /* Add other styles for Navbar */
 }
