@@ -1,12 +1,12 @@
-/* AppliedJobsPage.css */
+.applied-jobs-page-container {
+    display: flex;
+}
+
 .applied-jobs-page {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
     margin-left: 200px; /* Adjust margin based on Sidebar width */
-}
-
-.applied-jobs-page .job-list {
-    margin-top: 20px;
 }
 
 .applied-jobs-page h1 {
@@ -14,21 +14,40 @@
     text-align: center;
 }
 
-.sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 200px; /* Adjust width based on your Sidebar width */
-    background-color: #f8f8f8;
-    /* Add other styles for Sidebar */
+.filters {
+    flex: 0 0 50px; /* Fixed width for the filters bar */
+    padding: 20px;
+    /* background-color: #f8f8f8; */
 }
 
-.navbar {
-    /* position: fixed; */
-    /* top: 0; */
-    /* left: 200px; Adjust based on Sidebar width */
-    /* width: calc(100% - 200px); Adjust based on Sidebar width */
-    /* background-color: #fff; */
-    /* Add other styles for Navbar */
+.applied-jobs-page-job-list {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.applied-job-card {
+    width: calc(50% - 20px); /* Two cards per row with 20px gap */
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    overflow: hidden;
+}
+
+.applied-job-card:hover {
+    transform: scale(1.02);
+}
+
+.filter-group{
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+    justify-content: center;
 }

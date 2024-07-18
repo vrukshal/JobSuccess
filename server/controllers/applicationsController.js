@@ -15,7 +15,8 @@ async function createApplication(req, res) {
             studentInfo: req.body.studentInfo,
             appliedAt: new Date().toISOString(),
             resumeUrl: req.body.resumeUrl,
-            status: 'Pending'
+            status: 'Pending',
+            applicationType : "Full-time"
         }
         console.log(applicationData);
         const applicationsRef = collection(db, "Applications");
@@ -36,14 +37,18 @@ async function getApplicants(req, res) {
         for (const [key, value] of Object.entries(req.query)) {
             if (key === "studentUid") {
                 constraints.push(where("studentInfo.uid", "==", value), orderBy("appliedAt", "desc"));
-            } else {
+            } else if(value!='') {
                 constraints.push(where(key, "==", value));
             }
         }
 
+
+
         const applicationsQuery = query(applicationsCollection, ...constraints);
         const applicationsSnapshot = await getDocs(applicationsQuery);
+     
         const listOfApplicants = applicationsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        console.log("retrieved application witht the constraints",listOfApplicants);
         const applicationsList = {
             count: applicationsSnapshot.size,
             data: listOfApplicants

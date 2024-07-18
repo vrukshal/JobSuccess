@@ -67,7 +67,7 @@ async function getJobDetails(req, res) {
 
         if (docSnapshot.exists()) {
             const docData = docSnapshot.data();
-            console.log("Document data:", docData);
+            
             res.status(200).json(docData);
         } else {
             console.log("Document not found.");
@@ -78,6 +78,7 @@ async function getJobDetails(req, res) {
         res.status(500).send("Error retrieving Job Detail");
     }
 }
+
 
 
 

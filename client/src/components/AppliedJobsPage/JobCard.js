@@ -58,13 +58,12 @@ const JobCard = ({ application }) => {
     useEffect(() => {
         const fetchLogoURL = async () => {
             try {
-                const { key, recruiterUid, folderName, filename } = extractUrlParts(application.recruiterInfo?.logo);
+                const {  recruiterUid, folderName, filename } = extractUrlParts(application.recruiterInfo?.logo);
                 const response = await axios.get(`http://localhost:3001/api/recruiter/get-signed-url?filename=${filename}&folderName=${folderName}&recruiterUid=${recruiterUid}`);
                 const { downloadUrl } = response.data;
                 setLogoUrl(downloadUrl);
                 
                 const JobResponse = await axios.get(`http://localhost:3001/api/jobs/getJobdetails?jobId=${jobId}`);
-                console.log("got thr job tittltomott yeyyeyey ",JobResponse.data.jobTitle);
                 SetJobTitle(JobResponse.data.jobTitle);
 
             } catch (error) {
@@ -76,17 +75,17 @@ const JobCard = ({ application }) => {
         if (application.recruiterInfo?.logo) {
             fetchLogoURL();
         }
-    }, [application.recruiterInfo?.logo]);
+    }, [application.recruiterInfo?.logo,jobId]);
 
     return (
-        <div className="job-card">
+        <div className="applied-job-card">
             <div className="company-logo">
                 {logoUrl && <img src={logoUrl} alt={`${application.recruiterInfo?.company} logo`} />}
             </div>
-            <div className="job-details">
+            <div className="applied-job-details">
                 <p className="company-name">{application.recruiterInfo?.company}</p>
                
-                <h4 className="job-title">{jobTitle}</h4>
+                <h4 className="applied-job-title ">{jobTitle}</h4>
                 <p className="applied-time">{daysSincePosted(application.appliedAt)} ago</p>
             </div>
             <div className="job-status">
