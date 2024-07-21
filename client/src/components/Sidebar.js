@@ -1,8 +1,5 @@
 import React from 'react';
-import EventNoteRoundedIcon from '@mui/icons-material/EventNoteRounded';
-import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
-import InboxIcon from '@mui/icons-material/Inbox';
-import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+
 import './css/Sidebar.css';
 import WorkIcon from '@mui/icons-material/Work';
 import PersonIcon from '@mui/icons-material/Person';
@@ -29,7 +26,7 @@ const Sidebar = ({ currentPage, setCurrentPage }) => {
   const profileUrl = studentCookie ? `/stu/${studentCookie.uid}` : '/login'; // Redirect to login if studentCookie is null
   const eventsUrl = "/stu/events";
   const employersUrl = "/stu/employers";
-
+  const NotificationsUrl = "/stu/notifications";
   function NavigateToURL(url) {
     console.log(url);
     navigate(url);
@@ -67,10 +64,10 @@ const Sidebar = ({ currentPage, setCurrentPage }) => {
       </div>
       <div
         className={currentPage === 'Notifications' ? 'active' : ''}
-        onClick={() => setCurrentPage('Notifications')}
+        onClick={() => NavigateToURL(NotificationsUrl)}
       >
         <NotificationsIcon />
-        <text>Notifications</text>
+        <text>Notification</text>
       </div>
     </div>
   );

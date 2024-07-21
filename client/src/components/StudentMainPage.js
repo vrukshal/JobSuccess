@@ -22,7 +22,7 @@ function MainPage() {
         <hr className="hr1" />
         <div className="filter-container">
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-          <LocationFilter setLocation={setLocation} />
+          <LocationFilter location = {location} setLocation={setLocation} />
           <JobTypeFilter jobType={jobType} setJobType={setJobType} />
         </div>
         <hr className="hr2" />
