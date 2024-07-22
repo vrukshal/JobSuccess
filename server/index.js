@@ -8,6 +8,8 @@ const cors = require("cors");
 const applicantRoutes = require('./routes/applicantRoutes');
 const recruiterRoutes = require('./routes/recruiterRoutes');
 const authRoutes = require('./routes/authRoutes');
+const NoteRoutes = require('./routes/notificationRoutes');
+
 const jobRoutes = require('./routes/jobRoutes');
 const applicationRoutes = require('./routes/applicationsRoutes');
 
@@ -49,11 +51,14 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 // Routes
 // app.use('/applicantRoutes', applicantRoutes);
 // app.use('/recruiterRoutes',recruiterRoutes);
+app.use('/',NoteRoutes);
 app.use('/',authRoutes);
 app.use('/',applicantRoutes);
 app.use('/',recruiterRoutes);
 app.use('/',jobRoutes);
 app.use('/',applicationRoutes);
+
+
 // Start the server
 const port = process.env.PORT || 3001;
 app.listen(port, () => {
