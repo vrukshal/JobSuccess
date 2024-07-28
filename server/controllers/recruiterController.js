@@ -1,11 +1,9 @@
 const dotenv = require('dotenv');
 dotenv.config();
 const { auth, db } = require('../config/firebase');
-const { setDoc, doc, updateDoc, arrayUnion, getDoc } = require('firebase/firestore');
+const { query, setDoc, doc, updateDoc, arrayUnion, getDoc, collection , getDocs} = require('firebase/firestore');
 const { S3Client, PutObjectCommand, GetObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
-const { useDispatch, useSelector } = require('react-redux');
-const { admin } = require('../config/firebase-admin');
 
 
 async function createNewRecruiter(req, res) {
@@ -145,4 +143,20 @@ async function getFileViewUrl(req, res) {
 }
 
 
-module.exports = { createNewRecruiter, uploadNewFile, getFiles, getFileDownloadUrl, getFileViewUrl };
+
+async function getRecruiterList(req,res){
+    try {
+        const q = query(collection(db, "EmployerProfiles"));
+
+        const querySnapshot = await getDocs(q);
+        const RecruiterList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+        res.status(200).json(RecruiterList);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Error retrieving notifications ");
+    }
+}
+
+
+module.exports = { createNewRecruiter, uploadNewFile, getFiles, getFileDownloadUrl, getFileViewUrl,getRecruiterList };

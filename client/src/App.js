@@ -20,6 +20,7 @@ import StudentJobsPage from './components/StudentJobsPage.js/StudentJobsPage';
 import StudentHomePage from './components/StudentHomePage/StudentHomePage';
 import JobApplicantsPage from './components/JobApplicantsPage/JobApplicantsPage';
 import AppliedJobsPage from './components/AppliedJobsPage/AppliedJobsPage';
+import StudentRecruiterListPage from "./components/StudentRecruiterPage/RecruiterList"
 import StudentNotificationPage from './components/StudentNotificationsPage/StudentNotiPage'
 export default function App() {
   return (
@@ -38,6 +39,7 @@ export default function App() {
           {/* <Route path="/stu/profile" element={<StudentProfilePage />} /> */}
           <Route path="/stu/:studentUid" element={<StudentProfilePage />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/stu/employers" element={<StudentRecruiterListPage />} />
 
           {/* <Route path="/stu" element={<StudentMainPage />} /> */}
           <Route path="/rec" element={<RecruiterMainPage />} />
