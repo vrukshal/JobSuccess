@@ -9,14 +9,11 @@ body {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    
 }
-
 
 .header {
     position: relative;
     height: 150px;
-    /* background-color: #8b8b8b; */
     background-image: url("https://images.unsplash.com/photo-1503924087716-07cbd5f49b21?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
     object-fit: fill;
 }
@@ -24,10 +21,8 @@ body {
 .background {
     width: 100%;
     height: 100%;
-    /* background: linear-gradient(90deg, #8b8b8b 0%, #dcdcdc 100%); */
     object-fit: cover;
 }
-
 
 .profile-picture {
     position: absolute;
@@ -45,21 +40,21 @@ body {
     margin: 20px 20px;
 }
 
-.img-cover{
+.img-cover {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
 }
 
-.img-cover > img{
+.img-cover > img {
     margin-left: -20px;
     width: 100%;
     height: 50%;
     border-radius: 10px;
     object-fit: cover;
-
 }
+
 .profile-info h1 {
     margin: 0;
     font-size: 35px;
@@ -96,38 +91,43 @@ body {
     margin: 0 5px;
 }
 
-.education h2, .work-experience h2{
+.education h2, .work-experience h2 {
     cursor: pointer;
     font-size: 24px;
     font-weight: bold;
 }
 
-.education-item{
+.education-item, .experience-item {
     display: flex;
     align-items: self-start;
-    /* border-radius: 10px; */
     margin: 10px;
     padding: 10px;
     border-top: 1px solid rgb(195, 195, 195);
 }
 
-.experience-item{
-    display: flex;
-    align-items: self-start;
-    /* border-radius: 10px; */
-    margin: 10px;
-    padding: 10px;
-    border-top: 1px solid rgb(195, 195, 195);
-}
-.education-item p, .experience-item p{
+.education-item p, .experience-item p {
     font-size: 18px;
     margin-left: 10px;
-    margin-top: -7px ;
+    margin-top: -7px;
 }
 
-.education-item strong, .experience-item strong{
+.education-item strong, .experience-item strong {
     font-size: 20px;
-    /* margin-left: 5px; */
     color: black;
     font-weight: 500;
+}
+
+.delete-button {
+    margin-left: auto;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.delete-button:hover {
+    background-color: #d32f2f;
 }

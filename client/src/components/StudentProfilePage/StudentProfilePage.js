@@ -118,6 +118,19 @@ function StudentProfilePage() {
       [name]: checked
     }));
   };
+  
+  const handleDelete = (type, index) => {
+    if (type === 'experience') {
+        const updatedExperiences = [...experiences];
+        updatedExperiences.splice(index, 1);
+        setExperiences(updatedExperiences);
+    } else if (type === 'education') {
+        const updatedEducations = [...educations];
+        updatedEducations.splice(index, 1);
+        setEducations(updatedEducations);
+    }
+};
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -146,7 +159,6 @@ function StudentProfilePage() {
 
   const years = Array.from(new Array(50), (val, index) => new Date().getFullYear() - index);
 
-
   return (
     <>
       <Sidebar />
@@ -171,6 +183,7 @@ function StudentProfilePage() {
                     <p>{experience.location}</p>
                     <p>{experience.description}</p>
                 </div>
+                <button className="delete-button" onClick={() => handleDelete('experience', index)}>Delete</button>
               </div>
             ))}
           </div>
@@ -187,6 +200,7 @@ function StudentProfilePage() {
                     <p>{education.location}</p>
                     <p>{education.description}</p>
                 </div>
+                <button className="delete-button" onClick={() => handleDelete('education', index)}>Delete</button>
               </div>
             ))}
           </div>
@@ -241,14 +255,14 @@ function StudentProfilePage() {
                       <select name="endDate.month" value={newEntry.endDate.month} onChange={handleDateChange}>
                         <option value="">Month</option>
                         {months.map((month, index) => (
-                      <option key={index} value={month}>{month}</option>
-                    ))}
+                          <option key={index} value={month}>{month}</option>
+                        ))}
                       </select>
                       <select name="endDate.year" value={newEntry.endDate.year} onChange={handleDateChange}>
                         <option value="">Year</option>
                         {years.map((year, index) => (
-                      <option key={index} value={year}>{year}</option>
-                    ))}
+                          <option key={index} value={year}>{year}</option>
+                        ))}
                       </select>
                     </div>
                   </>
@@ -315,6 +329,7 @@ function StudentProfilePage() {
       </Modal>
     </>
   );
-}
+
+  }
 
 export default StudentProfilePage;
