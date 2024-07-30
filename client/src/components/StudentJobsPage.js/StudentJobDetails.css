@@ -42,7 +42,7 @@
     font-weight: bold;
 }
 
-.job-description{
+.job-description, .job-skills{
     font-size: 24px;
     margin-top: 40px;
 }

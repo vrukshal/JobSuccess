@@ -174,7 +174,16 @@ const StudentJobDetails = ({ job }) => {
                     <p><IoLocation size={30} /> {job.location}</p>
                     <p><RiBuilding2Line size={30} /> {job.jobType.charAt(0).toUpperCase() + job.jobType.slice(1)}</p>
                     <p><FaMoneyBillWave size={30} /> {formatSalary(job.salary)}</p>
-                    <div className='job-description'>{job.jobDescription}</div>
+                    <div className='job-description'>Job Description <hr></hr>{job.jobDescription}</div>
+                    {job.skills && 
+                    <div className='job-skills'>
+                        Skills Required<hr></hr>
+                        {job.skills.map((skill) => (
+                            <ul>
+                                <li>{skill}</li>
+                            </ul>
+                            ))}
+                    </div>}
                 </>
             ) : (
                 <p>Select a job to see the details</p>

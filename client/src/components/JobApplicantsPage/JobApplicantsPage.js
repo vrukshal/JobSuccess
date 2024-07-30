@@ -10,7 +10,7 @@ import { BsFileEarmarkPdfFill } from "react-icons/bs";
 const JobApplicantsPage = () => {
   const [applicants, setApplicants] = useState([]);
   const { jobId } = useParams();
-
+  const [activeTab, setActiveTab] = useState('Pending');
   useEffect(() => {
     const fetchApplicants = async () => {
       try {
@@ -77,6 +77,9 @@ const JobApplicantsPage = () => {
     }
   };
 
+  const filteredApplicants = applicants.filter(applicant =>
+    (activeTab === 'All' || applicant.status === activeTab)
+  );
 
   const handleNotifyAll = async () => {
     const declinedApplicants = [];
@@ -116,9 +119,17 @@ const JobApplicantsPage = () => {
           </label>
           <a href="#" className="select-all">Select All</a>
         </div>
-        <button className="btn-download">Download all</button>
-        <button className="btn-notify" onClick={handleNotifyAll}>Notify All</button>
-
+        <div className="tabs">
+        {['Pending', 'Hired', 'All', 'Declined'].map(tab => (
+          <button
+            key={tab}
+            className={`btn ${activeTab === tab ? 'btn-primary' : 'btn-outline-primary'}`}
+            onClick={() => setActiveTab(tab)}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
         <table className="table">
           <thead>
             <tr>
@@ -131,7 +142,7 @@ const JobApplicantsPage = () => {
             </tr>
           </thead>
           <tbody>
-            {applicants.map((applicant) => (
+            {filteredApplicants.map((applicant) => (
               <tr key={applicant.id}>
                 <td>{applicant.studentInfo.firstName} {applicant.studentInfo.lastName}</td>
                 <td>{applicant.studentInfo.email}</td>
@@ -141,8 +152,8 @@ const JobApplicantsPage = () => {
                     onChange={(e) => handleStatusChange(applicant.id, e.target.value)}
                     
                   >
-                    <option value="Pending" onClick={() => console.log("Clicked")}>Pending</option>
-                    <option value="Reviewed" onClick={() => console.log("Clicked")}>Reviewed</option>
+                    <option value="Pending" >Pending</option>
+                    <option value="Reviewed" >Reviewed</option>
                     <option value="Declined">Declined</option>
                     <option value="Hired">Hired</option>
                   </select>
@@ -154,6 +165,7 @@ const JobApplicantsPage = () => {
             ))}
           </tbody>
         </table>
+        <button className="btn-notify" onClick={handleNotifyAll}>Notify Declined Students</button>
       </div>
     </>
   );

@@ -18,12 +18,18 @@ const NewJobPost = () => {
     salary: '',
     applyLink: '',
     recruiterUid: recruiterCookie.uid,
-    recruiterInfo: recruiterCookie
+    recruiterInfo: recruiterCookie,
+    skills: [] // Add skills to form data
   });
 
   const [countries, setCountries] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
+  const [skillSuggestions, setSkillSuggestions] = useState([]);
+  const [selectedSkills, setSelectedSkills] = useState([]);
   const navigate = useNavigate();
+
+  const myHeaders = new Headers();
+  myHeaders.append("apikey", "iAZx9KC8Gywc496eIwkImf9POXco1ccY");
 
   useEffect(() => {
     fetch('https://countriesnow.space/api/v0.1/countries')
@@ -49,11 +55,39 @@ const NewJobPost = () => {
       );
       setSuggestions(filteredSuggestions);
     }
+
+    if (name === 'skills') {
+      console.log(value);
+      fetch(`https://api.apilayer.com/skills?q=${value}`, { 
+        method: 'GET', 
+        headers: myHeaders 
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          setSkillSuggestions(data || []);
+        })
+        .catch(error => console.log('error', error));
+    }
   };
 
   const handleSuggestionClick = (suggestion) => {
     setFormData({ ...formData, jobTitle: suggestion });
     setSuggestions([]);
+  };
+
+  const handleSkillClick = (skill) => {
+    if (!selectedSkills.includes(skill)) {
+      setSelectedSkills([...selectedSkills, skill]);
+      setFormData({ ...formData, skills: [...selectedSkills, skill] });
+    }
+    setSkillSuggestions([]);
+  };
+
+  const handleSkillRemove = (skill) => {
+    const updatedSkills = selectedSkills.filter(s => s !== skill);
+    setSelectedSkills(updatedSkills);
+    setFormData({ ...formData, skills: updatedSkills });
   };
 
   const nextStep = () => {
@@ -65,7 +99,6 @@ const NewJobPost = () => {
   };
 
   const createJobPost = () => {
-    formData.posted_at = 
     fetch('http://localhost:3001/api/jobs/newjobpost', {
       method: 'POST',
       headers: {
@@ -78,7 +111,6 @@ const NewJobPost = () => {
         if (data.success) {
           console.log('Job post created successfully');
           navigate('/rec/postings');
-          // Redirect or reset form as needed
         } else {
           console.log('Error creating job post');
         }
@@ -87,6 +119,7 @@ const NewJobPost = () => {
         console.error('Error:', error);
       });
   };
+
 
   return (
     <div className="container">
@@ -176,6 +209,39 @@ const NewJobPost = () => {
               <label>Link to Apply</label>
               <input type="link" className="form-control" name="applyLink" value={formData.applyLink} onChange={handleChange} />
             </div>
+
+            <div className="form-group">
+              <label>Skills</label>
+              <input
+                type="text"
+                name="skills"
+                className="form-control"
+                onChange={handleChange}
+              />
+              {skillSuggestions.length > 0 && (
+                <ul className="suggestions-list">
+                  {skillSuggestions.map((skill, index) => (
+                    <li key={index} onClick={() => handleSkillClick(skill)}>
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            {selectedSkills.length > 0 && (
+              <div className="selected-skills">
+                <h4>Selected Skills:</h4>
+                <ul>
+                  {selectedSkills.map((skill, index) => (
+                    <li key={index} onClick={() => handleSkillRemove(skill)}>
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+
             {/* Add more fields here */}
             <button className="submit-button" type="button" onClick={prevStep}>Back</button>
             <button className="submit-button" type="button" onClick={createJobPost}>Create Job Post</button>

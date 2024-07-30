@@ -21,10 +21,21 @@
     cursor: pointer;
   }
   
-  .btn-download {
-    margin-bottom: 10px;
+  .btn-notify {
+    margin: 10px 0px;
+    width: fit-content;
+    height: fit-content;
+    padding: 10px 20px;
+    font-size: large;
+    font-weight: 500;
+    border-radius: 10px;
+    background-color: #19047b;
+    cursor: pointer;
   }
   
+  .btn-notify:hover{
+    background-color: #090031;
+  }
   .table-striped {
     width: 100%;
     border-collapse: collapse;
