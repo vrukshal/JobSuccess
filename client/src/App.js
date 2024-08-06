@@ -20,6 +20,8 @@ import StudentJobsPage from './components/StudentJobsPage.js/StudentJobsPage';
 import StudentHomePage from './components/StudentHomePage/StudentHomePage';
 import JobApplicantsPage from './components/JobApplicantsPage/JobApplicantsPage';
 import AppliedJobsPage from './components/AppliedJobsPage/AppliedJobsPage';
+import SavedJobsPage from './components/SavedJobsPage/SavedJobsPage';
+import JobDetailsPage from './components/SavedJobsPage/JobDetailsPage';
 import StudentRecruiterListPage from "./components/StudentRecruiterPage/RecruiterList"
 import StudentNotificationPage from './components/StudentNotificationsPage/StudentNotiPage'
 export default function App() {
@@ -36,6 +38,8 @@ export default function App() {
           <Route path="/stu/notifications" element={<StudentNotificationPage />} />
 
           <Route path="/stu/jobs/applied" element={<AppliedJobsPage />} />
+          <Route path="/stu/jobs/saved" element={<SavedJobsPage />} />
+          <Route path="/stu/job-details/:jobId" element={<JobDetailsPage />} />
           {/* <Route path="/stu/profile" element={<StudentProfilePage />} /> */}
           <Route path="/stu/:studentUid" element={<StudentProfilePage />} />
           <Route path="*" element={<NotFound />} />

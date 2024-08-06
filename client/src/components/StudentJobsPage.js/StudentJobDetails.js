@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import { IoLocation } from "react-icons/io5";
 import { RiBuilding2Line } from "react-icons/ri";
 import { FaMoneyBillWave } from "react-icons/fa6";
+import { FaRegBookmark, FaBookmark } from "react-icons/fa6";
 import { LuSend } from "react-icons/lu";
 import { FaCheck } from "react-icons/fa";
 import Cookies from 'js-cookie';
@@ -16,6 +17,13 @@ const StudentJobDetails = ({ job }) => {
         const storedAppliedJobs = localStorage.getItem('appliedJobs');
         return storedAppliedJobs ? JSON.parse(storedAppliedJobs) : [];
     });
+
+    const [savedJobs, setSavedJobs] = useState(() => {
+        const storedSavedJobs = localStorage.getItem('savedJobs');
+        return storedSavedJobs ? JSON.parse(storedSavedJobs) : [];
+    });
+
+
     const [showModal, setShowModal] = useState(false);
     const [resume, setResume] = useState(null);
 
@@ -150,6 +158,45 @@ const StudentJobDetails = ({ job }) => {
         }
     };
 
+    const saveApplication = async () => {
+        const studentCookie = JSON.parse(Cookies.get('student'));
+        console.log()
+        try {
+            // const response = await fetch('http://localhost:3001/api/jobs/savedJobs?StudentID=${studentCookie.uid}', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify(applicationInfo),
+            // });
+
+            const response = await axios.post(`http://localhost:3001/api/jobs/savedJobs?StudentID=${studentCookie.uid}&JobID=${job.id}`);
+            const { downloadUrl } = response.data;
+
+
+            setSavedJobs((prevSavedJobs) => {
+                const updatedSavedJobs = [...prevSavedJobs, job.id];
+                localStorage.setItem('savedJobs', JSON.stringify(updatedSavedJobs));
+                return updatedSavedJobs;
+            });
+            return downloadUrl;
+            // if (!response.ok) {
+            //     throw new Error('Network response was not ok');
+            // }
+
+            // const data = await response.json();
+            // console.log('Successfully Applied:', data);
+            // setAppliedJobs((prevAppliedJobs) => {
+            //     const updatedAppliedJobs = [...prevAppliedJobs, job.id];
+            //     localStorage.setItem('appliedJobs', JSON.stringify(updatedAppliedJobs));
+            //     return updatedAppliedJobs;
+            // });
+            // setShowModal(false); // Close the modal after application is submitted
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <div className="job-details-content">
             {job ? (
@@ -163,6 +210,15 @@ const StudentJobDetails = ({ job }) => {
                     </div>
                     <h2>{job.jobTitle}</h2>
                     <p>Posted {daysSincePosted(job.posted_at)} ago</p>
+                    <button 
+                        id='saved-jobs-button'
+                        className='saved-jobs-button'
+                        onClick={saveApplication}
+                        disabled={savedJobs.includes(job.id)}
+                    >
+                        {savedJobs.includes(job.id) ? "Saved" : "Save"} {savedJobs.includes(job.id) ? <FaBookmark /> : <FaRegBookmark />}
+                        {/* Save < FaRegBookmark /> */}
+                    </button>
                     <button
                         id='apply-button'
                         className='apply-button'

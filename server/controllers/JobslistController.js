@@ -138,6 +138,78 @@ async function getPartTimeJobs(req, res) {
         }
 }
 
+async function createSavedJobs(req, res){
+    try {
+        const { StudentID, JobID } = req.query;
+        // Query to check if a document with the given StudentID and JobID already exists
+
+        const savedJobsRef = collection(db, "Saved");
+        const q = query(savedJobsRef, where("StudentID", "==", StudentID), where("JobID", "==", JobID));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            // Document with the given StudentID and JobID already exists
+            return res.status(409).json({ success: false, error: 'Job already saved by this student' });
+        }
 
 
-module.exports = {getFullTimeJobs, getPartTimeJobs, createNewJobPost, getJobsByRecruiterUid, getJobDetails}
+        const jobData = req.query;
+        // console.log(jobData);
+        jobData.Time_Saved = new Date().toISOString();
+        const newJobRef = collection(db, "Saved");
+
+        await addDoc(newJobRef, jobData);
+        res.status(200).json({ success: true, id: newJobRef.id, jobData: jobData });
+      } catch (error) {
+        console.error('Error creating job post:', error);
+        res.status(500).json({ success: false, error: 'Failed to create job post' });
+      }
+}
+
+async function getSavedJobs(req, res){
+    try {
+        const studentID = req.query.StudentID;
+        const savedJobTypeFilter = req.query.savedJobType ? req.query.savedJobType.split(',') : [];
+        
+        const savedJobsQuery = query(collection(db, "Saved"), where("StudentID", "==", studentID));
+        const savedJobsSnapshot = await getDocs(savedJobsQuery);
+        const savedJobsList = savedJobsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+        const jobsCollection = collection(db, "Jobs");
+        
+        // Fetch job details for each saved job
+        const jobDetailsPromises = savedJobsList.map(async (savedJob) => {
+            const jobDoc = await getDoc(doc(jobsCollection, savedJob.JobID));
+            if (jobDoc.exists()) {
+                return {
+                    ...savedJob,
+                    jobDetails: jobDoc.data()
+                };
+            } else {
+                return {
+                    ...savedJob,
+                    jobDetails: null
+                };
+            }
+        });
+
+        const savedJobsWithDetails = await Promise.all(jobDetailsPromises);
+
+        // res.status(200).json(savedJobsWithDetails);
+        // res.status(200).json(savedJobsList);
+
+        // Filter based on application type
+        const filteredJobs = savedJobTypeFilter.length > 0 
+            ? savedJobsWithDetails.filter(job => savedJobTypeFilter.includes(job.jobDetails?.jobType))
+            : savedJobsWithDetails;
+
+        res.status(200).json(filteredJobs);
+
+      } catch (error) {
+        console.log(error);
+        res.status(500).send("Error retrieving Saved jobs");
+      }
+}
+
+
+module.exports = {getFullTimeJobs, getPartTimeJobs, createNewJobPost, getJobsByRecruiterUid, getJobDetails, createSavedJobs, getSavedJobs}

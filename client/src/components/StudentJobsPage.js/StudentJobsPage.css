@@ -24,39 +24,39 @@
     height: 70px;
   }
   
-  .search-bar input {
-    border: none;
-    background: none;
-    outline: none;
-    flex: 1;
-    padding: 5px;  /* Adjust padding for a smaller size */
-    font-size: 14px;  /* Adjust font size for a smaller size */
-    /* width: 10px;
-    height: 10px; */
-  }
+.search-bar input {
+  border: none;
+  background: none;
+  outline: none;
+  flex: 1;
+  padding: 5px;  /* Adjust padding for a smaller size */
+  font-size: 14px;  /* Adjust font size for a smaller size */
+  /* width: 10px;
+  height: 10px; */
+}
   
-  .search-bar button {
-    border: none;
-    background: none;
-    cursor: pointer;
-    padding: 5px;  /* Adjust padding for a smaller size */
-  }
-  
-  .search-bar button img {
-    width: 16px;  /* Adjust icon size */
-    height: 16px; /* Adjust icon size */
-  }
+.search-bar button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 5px;  /* Adjust padding for a smaller size */
+}
 
-  .jobs-search-filter > button{
-    cursor: pointer;
-    color: black;
-    background-color: white;
-    border-radius: 15px;
-    border: 1px solid rgb(107, 107, 107)
-  }
+.search-bar button img {
+  width: 16px;  /* Adjust icon size */
+  height: 16px; /* Adjust icon size */
+}
 
-  .jobs-search-filter > button:hover{
-    border: 1px solid purple;
-    color: purple;
-    font-weight: bold;
-  }
+.jobs-search-filter > button{
+  cursor: pointer;
+  color: black;
+  background-color: white;
+  border-radius: 15px;
+  border: 1px solid rgb(107, 107, 107)
+}
+
+.jobs-search-filter > button:hover{
+  border: 1px solid purple;
+  color: purple;
+  font-weight: bold;
+}

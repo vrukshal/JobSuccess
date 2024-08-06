@@ -1,0 +1,113 @@
+.saved-jobs-search-filter {
+    padding: 20px;
+    display: flex;
+    gap: 10px;
+    border-bottom: 1px solid #ddd;
+    align-items: center;
+    justify-content: center;
+}
+
+.saved-search-bar {
+    display: flex;
+    align-items: center;
+    padding: 15px;  
+    border-radius: 25px;
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    width: 100%; /* Make it take full width of the container */
+    max-width: 5000px; /* Optional max-width for better control */
+    height: 70px;
+  } 
+
+  .saved-search-bar input {
+    border: none;
+    background: none;
+    outline: none;
+    flex: 1;
+    padding: 5px;  /* Adjust padding for a smaller size */
+    font-size: 14px;  /* Adjust font size for a smaller size */
+    /* width: 10px;
+    height: 10px; */
+  }
+  
+  .saved-search-bar button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 5px;  /* Adjust padding for a smaller size */
+  }
+  
+  .saved-search-bar button img {
+    width: 16px;  /* Adjust icon size */
+    height: 16px; /* Adjust icon size */
+  }
+
+/* .saved-jobs-page-container {
+    display: flex;
+} */
+
+.saved-jobs-page {
+    margin-left: 200px;
+    background-color: white;
+    padding: -5px;
+} 
+
+
+.saved-jobs-page h1 {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.saved-filters {
+    flex: 0 0 50px; /* Fixed width for the filters bar */
+    padding: 20px;
+    /* background-color: #f8f8f8; */
+}
+
+.saved-jobs-page-job-list {
+    flex: 1;
+    align-items: center;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+    gap: 20px;
+}
+
+.saved-job-card {
+    width: calc(50% - 20px); /* Two cards per row with 20px gap */
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    overflow: hidden;
+}
+
+.saved-job-card:hover {
+    transform: scale(1.02);
+}
+
+.saved-filter-group{
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+    justify-content: center;
+}
+
+  .saved-jobs-search-filter > button{
+    cursor: pointer;
+    color: black;
+    background-color: white;
+    border-radius: 15px;
+    border: 1px solid rgb(107, 107, 107)
+  }
+
+  .saved-jobs-search-filter > button:hover{
+    border: 1px solid purple;
+    color: purple;
+    font-weight: bold;
+  }
