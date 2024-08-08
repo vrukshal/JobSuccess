@@ -9,12 +9,12 @@
     position: fixed; /* Fixes sidebar in place */
 }
 
-.content {
+ .content {
     margin-left: 20%; /* Offset by sidebar width */
     width: 85%; /* Remaining width */
     display: flex;
     flex-direction: column;
-}
+} 
 
 .navbar {
     width: 100%;

@@ -3,10 +3,8 @@
     height: 100vh;
 }
 
-.content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+.recruiter-list-content {
+    margin-left: 200px;
 }
 
 .recruiter-list {

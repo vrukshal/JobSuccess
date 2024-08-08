@@ -1,10 +1,13 @@
 body {
     font-family: Arial, sans-serif;
 }
-
+.profile-page-container{
+    display: flex;
+    height: 100vh;
+}
 .student-profile-container {
     max-width: 100%;
-    margin: 20px 240px;
+    margin-left: 200px;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -18,6 +21,7 @@ body {
     height: 150px;
     /* background-color: #8b8b8b; */
     background-image: url("https://images.unsplash.com/photo-1503924087716-07cbd5f49b21?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-repeat: repeat-x;
     object-fit: fill;
 }
 

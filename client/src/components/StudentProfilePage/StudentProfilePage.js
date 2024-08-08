@@ -149,6 +149,7 @@ function StudentProfilePage() {
 
   return (
     <>
+    <div classname="profile-page-container">
       <Sidebar />
       <div className="student-profile-container">
         <div className="header">
@@ -192,7 +193,7 @@ function StudentProfilePage() {
           </div>
         </div>
       </div>
-
+    </div>
       <Modal
         show={modalIsOpen}
         onHide={closeModal}
