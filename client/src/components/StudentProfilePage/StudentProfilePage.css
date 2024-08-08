@@ -11,7 +11,27 @@ body {
     overflow: hidden;
     
 }
-
+.resume-upload {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .resume-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  .resume-button[disabled] {
+    background-color: #6c757d;
+    cursor: not-allowed;
+  }
+  
 
 .header {
     position: relative;

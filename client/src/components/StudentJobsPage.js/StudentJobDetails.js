@@ -103,6 +103,7 @@ const StudentJobDetails = ({ job }) => {
         setResume(e.target.files[0]);
     };
 
+    
     const submitApplication = async () => {
       const studentCookie = JSON.parse(Cookies.get('student'));
 

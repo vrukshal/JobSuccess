@@ -5,8 +5,7 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import { FaPencilAlt } from 'react-icons/fa';
 import Modal from 'react-bootstrap/Modal';
-import { MdSchool } from "react-icons/md";
-import { MdWork } from "react-icons/md";
+import { MdSchool, MdWork } from "react-icons/md";
 
 function StudentProfilePage() {
   const studentCookie = JSON.parse(Cookies.get('student'));
@@ -15,6 +14,11 @@ function StudentProfilePage() {
   const [educations, setEducations] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentSection, setCurrentSection] = useState('');
+  const [resumeUploaded, setResumeUploaded] = useState(false);
+  const [resumeUrl, setResumeUrl] = useState('');
+  const [resume, setResume] = useState(null);
+
+   // New state for resume upload status
   const [newEntry, setNewEntry] = useState({
     employerName: '',
     jobTitle: '',
@@ -63,6 +67,9 @@ function StudentProfilePage() {
         const response = await axios.get(`http://localhost:3001/api/applicant/${studentCookie.uid}`);
         setExperiences(response.data.data.experiences || []);
         setEducations(response.data.data.educations || []);
+        setResumeUploaded(response.data.data.resumeUploaded || false);
+        setResumeUrl(response.data.data.resumeUrl || ''); // Assuming the resume URL is part of the profile data
+        // Update resume upload status
       } catch (error) {
         console.error('Error fetching profile data:', error);
       }
@@ -139,6 +146,40 @@ function StudentProfilePage() {
     }
   };
 
+ 
+  const handleResumeChange = async (e) => {
+    e.preventDefault();
+
+    setResume(e.target.files[0]);
+
+
+    // Logic  const studentCookie = JSON.parse(Cookies.get('student'));
+    const formData = new FormData();
+    formData.append('filename', resume.name);
+    formData.append('filetype', resume.type);
+    formData.append('folderName', "Resume");
+    formData.append('file', resume);
+    formData.append('uid', studentCookie.uid);
+
+    console.log(formData);
+    const response = await fetch('http://localhost:3001/api/applicant/fileupload', {
+        method: 'POST',
+        body: formData,
+    });
+    const data = await response.json();
+    setResumeUrl(data.fileUrl);
+   
+    try {
+    await axios.patch(`http://localhost:3001/api/applicant/uploadResume/${studentCookie.uid}`, {
+      resumeUrl : resumeUrl
+    });
+    } catch (error) {
+      console.error('Error saving entry:', error);
+    }
+    setResumeUploaded(true);
+
+  };
+
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June', 
     'July', 'August', 'September', 'October', 'November', 'December'
@@ -159,6 +200,14 @@ function StudentProfilePage() {
           <p>{studentCookie.currentRole} @ {studentCookie.currentCompany}</p>
           <p className="location">{studentCookie.location} • <a href={studentCookie.linkedInUrl}>{studentCookie.linkedInUrl}</a></p>
           <p className="connections">500+ connections</p>
+          <div className="resume-upload">
+            {resumeUploaded ? (
+              <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="resume-button">
+      View Uploaded Resume
+    </a>            ) : (
+              <input className="resume-button" placeholder='Upload resume' type='file' onChange={handleResumeChange} />
+            )}
+          </div>
           <div className="work-experience">
             <h2>Work Experience <FaPencilAlt onClick={() => openModal('experiences')} /></h2>
             {experiences.map((experience, index) => (
@@ -238,17 +287,17 @@ function StudentProfilePage() {
                   <>
                     <label>End date</label>
                     <div>
-                      <select name="endDate.month" value={newEntry.endDate.month} onChange={handleDateChange}>
+                      <select name="endDate.month" value={newEntry.endDate.month} onChange={handleDateChange} required>
                         <option value="">Month</option>
                         {months.map((month, index) => (
-                      <option key={index} value={month}>{month}</option>
-                    ))}
+                          <option key={index} value={month}>{month}</option>
+                        ))}
                       </select>
-                      <select name="endDate.year" value={newEntry.endDate.year} onChange={handleDateChange}>
+                      <select name="endDate.year" value={newEntry.endDate.year} onChange={handleDateChange} required>
                         <option value="">Year</option>
                         {years.map((year, index) => (
-                      <option key={index} value={year}>{year}</option>
-                    ))}
+                          <option key={index} value={year}>{year}</option>
+                        ))}
                       </select>
                     </div>
                   </>
@@ -259,10 +308,12 @@ function StudentProfilePage() {
 
                 <label>Description</label>
                 <textarea name="description" value={newEntry.description} onChange={handleInputChange} required></textarea>
+
+                <button type="submit">Save</button>
               </div>
             ) : (
-              <>
-                <label>School name</label>
+              <div id='education-div' className='education-div'>
+                <label>School</label>
                 <input type="text" name="school" value={newEntry.school} onChange={handleInputChange} required />
 
                 <label>Degree</label>
@@ -286,13 +337,13 @@ function StudentProfilePage() {
 
                 <label>End date</label>
                 <div>
-                  <select name="endDate.month" value={newEntry.endDate.month} onChange={handleDateChange}>
+                  <select name="endDate.month" value={newEntry.endDate.month} onChange={handleDateChange} required>
                     <option value="">Month</option>
                     {months.map((month, index) => (
                       <option key={index} value={month}>{month}</option>
                     ))}
                   </select>
-                  <select name="endDate.year" value={newEntry.endDate.year} onChange={handleDateChange}>
+                  <select name="endDate.year" value={newEntry.endDate.year} onChange={handleDateChange} required>
                     <option value="">Year</option>
                     {years.map((year, index) => (
                       <option key={index} value={year}>{year}</option>
@@ -305,11 +356,10 @@ function StudentProfilePage() {
 
                 <label>Description</label>
                 <textarea name="description" value={newEntry.description} onChange={handleInputChange} required></textarea>
-              </>
-            )}
 
-            <button type="submit">Save and close</button>
-            <button type="button" onClick={closeModal}>Cancel</button>
+                <button type="submit">Save</button>
+              </div>
+            )}
           </form>
         </Modal.Body>
       </Modal>

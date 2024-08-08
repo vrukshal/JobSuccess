@@ -22,6 +22,8 @@ function Profile() {
     date: '',
     email: '',
     phoneNumber: '',
+    resumeUploaded: false,
+    resumeUrl: '',
     linkedInUrl: '',
     photoUrl: '',
     currentRole: '',

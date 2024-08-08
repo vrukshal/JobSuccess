@@ -19,6 +19,8 @@ async function createNewApplicant(req,res){
 }
 
 
+
+
 async function uploadNewFile(req, res) {
     console.log(req.body);
     const filename = req.body.filename;
@@ -106,6 +108,28 @@ async function updateApplicant(req, res){
   }
 }
 
+async function updateApplicantResumeData(req, res){
+    const { studentUid } = req.params;
+  const { resumeUrl } = req.body;
+
+  try {
+    const studentRef = doc(db, 'StudentProfiles', studentUid);
+    // await studentRef.update({
+    //   [section]: admin.firestore.FieldValue.arrayUnion(data)
+    // });
+
+    await updateDoc(studentRef,{
+        resumeUrl: resumeUrl,
+        resumeUploaded:true
+    })
+
+    res.status(200).send({ message: 'Profile updated successfully' });
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    res.status(500).send({ error: 'Failed to update profile' });
+  }
+}
+
 async function getApplicant(req, res){
     const { studentUid } = req.params; 
     try {
@@ -118,4 +142,4 @@ async function getApplicant(req, res){
         res.status(500).json({ error: 'Error student profile.' });
     }
 }
-module.exports = {createNewApplicant, uploadNewFile, getFileDownloadUrl, updateApplicant, getApplicant};
+module.exports = {createNewApplicant, uploadNewFile, getFileDownloadUrl, updateApplicant, getApplicant,updateApplicantResumeData};
