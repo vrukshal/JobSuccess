@@ -8,6 +8,7 @@ import JobsSection from './JobsSection';
 import PublicStaffList from './PublicStaffList';
 import StudentsSection from './StudentsSection';
 import "./MainApp.css";
+// import "./MainAppUpdated.css";
 import { useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import RecruiterSidebar from '../RecruiterSidebar';
@@ -33,24 +34,24 @@ function MainApp() {
     return <div>Error: {recruiterError}</div>;
   }
   console.log(recruiter);
-  return (
-    <div className="MainApp">
-      {recruiterCookie && (
-          <div>
+  return recruiterCookie && (
+      <div className="recruiter-main-page">
+        <RecruiterSidebar />
+        <div className="main-section">
           <RecruiterNavbar />
-          <RecruiterSidebar />
-          <div className='mainapp-grid'> 
-          <ProfileHeader recruiter={recruiterCookie} />
-            <ProfileOverview recruiter={recruiterCookie} />
-            <ContactInformation recruiter={recruiterCookie} />
-            <JobsSection recruiter={recruiterCookie} />
-            <PublicStaffList recruiter={recruiterCookie} />
-            <StudentsSection recruiter={recruiterCookie} />
+          <div className="main-containter-to-fit-in-centre">
+            <div className="profile-page-content">
+              <ProfileHeader recruiter={recruiterCookie} />
+              <ProfileOverview recruiter={recruiterCookie} />
+              <ContactInformation recruiter={recruiterCookie} />
+              <JobsSection recruiter={recruiterCookie} />
+              <PublicStaffList recruiter={recruiterCookie} />
+              <StudentsSection recruiter={recruiterCookie} />
+            </div>
           </div>
-          </div>
-      )}
-    </div>
-  );
+        </div>
+      </div>
+    )
 }
 
 export default MainApp;

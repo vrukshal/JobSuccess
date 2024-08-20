@@ -1,11 +1,14 @@
 .recruiter-sidebar {
-  width: 230px;
-  flex: 0.2 !important;
+  width: auto;
+  /* display: flex; */
+  /* flex: 0.2 !important; */
   /* height: 100vh; */
   top: 100px;
-  background-color: #ffffff;
+  background-color: whitesmoke;
   padding: 20px;
-  position: fixed;
+  display: flex;
+  flex-direction: row;
+  /* position: fixed; */
   /* border: 1px solid rgb(199, 199, 199); */
   /* border-top-right-radius: 10px;
   border-bottom-right-radius: 10px; */
@@ -23,6 +26,7 @@
   margin-top: 10px;
   padding-right: 10px;
   border-radius: 5px;
+  white-space: nowrap; /* Prevent text from wrapping */
 }
 
 .sidebar-item:hover{
@@ -30,9 +34,10 @@
 }
 .recruiter-sidebar-items{
   /* margin-top: 70px; */
+  margin-right:20px;
 }
 
-.sidebar li {
+.recruiter-sidebar li {
   margin: 20px 0;
   height: 20px;
   padding: 10px;
