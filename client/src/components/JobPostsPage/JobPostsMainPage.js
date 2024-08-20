@@ -4,10 +4,12 @@ import RecruiterSidebar from '../RecruiterSidebar';
 import RecruiterNavbar from '../RecruiterNavbar';
 function JobPostsMainPage() {
   return (
-    <div>
-        <RecruiterNavbar />
-        <RecruiterSidebar />
-            <JobPosts />
+    <div className="recruiter-main-page">
+      <RecruiterSidebar />
+      <div className="main-section">
+          <RecruiterNavbar />
+          <JobPosts />
+      </div>
     </div>
   )
 }

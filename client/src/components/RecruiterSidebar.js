@@ -9,7 +9,7 @@ import SidebarIcon from './SidebarIcon';
 const RecruiterSidebar = () => {
   return (
     <div className="recruiter-sidebar">
-      <div class="recruiter-sidebar-items">
+      <div className="recruiter-sidebar-items">
         <SidebarIcon icon={EventNoteRoundedIcon} text="Events"/>
         <SidebarIcon icon={LocalLibraryIcon} text="Students"/>
         <SidebarIcon icon={InboxIcon} text="Inbox"/>
