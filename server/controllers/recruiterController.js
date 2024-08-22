@@ -165,7 +165,7 @@ async function getRecruiterList(req,res){
 
 async function getResumeScore(req, res) {
     try {
-        console.log("GET RESUME SCORE---------------------------");
+        // console.log("GET RESUME SCORE---------------------------");
 
         const resumeUrl = req.query.downloadUrl;
         const jobId = req.query.jobId;
@@ -183,7 +183,7 @@ async function getResumeScore(req, res) {
         const data = await PDFParser(buffer);
         const parsedResume = data.text;
 
-        console.log("Parsed ----------------------", parsedResume);
+        // console.log("Parsed ----------------------", parsedResume);
 
         // Fetch job details from your local API
         const jobResponse = await fetch(`http://localhost:3001/api/jobs/getJobdetails?jobId=${jobId}`);
@@ -198,7 +198,7 @@ async function getResumeScore(req, res) {
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         const basePrompt = `Resume: ${parsedResume}. Here is the job title: ${jobTitle}, job description: ${jobDescription}, and skills: ${skills} for a particular job.`;
-        const prompt = basePrompt + ` Just give me a score out of 100 according to the resume given, matching it with the job title, job description, and the skills needed, and nothing else and be very strict in scoring.`;
+        const prompt = basePrompt + ` Just give me a score out of 100 according to the resume given, matching it with the job title, job description, and the skills needed, and nothing else.`;
         console.log(prompt);
 
         const result = await model.generateContent(prompt);

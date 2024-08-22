@@ -16,7 +16,14 @@ async function createApplication(req, res) {
             appliedAt: new Date().toISOString(),
             resumeUrl: req.body.resumeUrl,
             status: 'Pending',
-            applicationType : "Full-time"
+            applicationType : "Full-time",
+            score: req.body.score,
+            educationScore: req.body.educationScore,
+            educationSuggestions: req.body.educationSuggestions,
+            experienceScore: req.body.experienceScore,
+            experienceSuggestions: req.body.experienceSuggestions,
+            projectsScore: req.body.projectsScore,
+            projectsSuggestions: req.body.projectsSuggestions,
         }
         // console.log(applicationData);
         const applicationsRef = collection(db, "Applications");
