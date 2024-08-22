@@ -77,6 +77,8 @@ const JobApplicantsPage = () => {
     }
   };
 
+  
+
   const filteredApplicants = applicants.filter(applicant =>
     (activeTab === 'All' || applicant.status === activeTab)
   );
@@ -139,6 +141,7 @@ const JobApplicantsPage = () => {
               <th>LinkedIn</th>
               <th>Date</th>
               <th>Resume</th>
+              <th>Match %</th>
             </tr>
           </thead>
           <tbody>
@@ -161,6 +164,7 @@ const JobApplicantsPage = () => {
                 <td><a href={applicant.studentInfo.linkedInUrl}><FaLinkedin size={30} /></a></td>
                 <td>{new Date(applicant.studentInfo.date).toLocaleDateString()}</td>
                 <td onClick={() => openResume(applicant)} style={{ cursor: 'pointer' }}><BsFileEarmarkPdfFill /></td>
+                <td>{applicant.score? applicant.score : "0"}</td>
               </tr>
             ))}
           </tbody>

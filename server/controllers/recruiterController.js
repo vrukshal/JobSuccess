@@ -4,6 +4,10 @@ const { auth, db } = require('../config/firebase');
 const { query, setDoc, doc, updateDoc, arrayUnion, getDoc, collection , getDocs} = require('firebase/firestore');
 const { S3Client, PutObjectCommand, GetObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const PDFParser = require('pdf-parse');
+
+// const axios = require('axios');
 
 
 async function createNewRecruiter(req, res) {
@@ -47,7 +51,7 @@ async function uploadNewFile(req, res) {
     try {
         await s3client.send(command);
         const fileUrl = `https://${process.env.BUCKET_NAME}.s3.us-east-2.amazonaws.com/${recruiterUid}/${folderName}/${filename}`;
-        console.log('File uploaded successfully!');
+        // console.log('File uploaded successfully!');
         const collectionRef = doc(db, "EmployerProfiles", recruiterUid);
         if(folderName === "logo"){
             res.status(200).json({ message: 'File uploaded successfully!', fileUrl });
@@ -159,4 +163,94 @@ async function getRecruiterList(req,res){
 }
 
 
-module.exports = { createNewRecruiter, uploadNewFile, getFiles, getFileDownloadUrl, getFileViewUrl,getRecruiterList };
+async function getResumeScore(req, res) {
+    try {
+        console.log("GET RESUME SCORE---------------------------");
+
+        const resumeUrl = req.query.downloadUrl;
+        const jobId = req.query.jobId;
+        console.log(resumeUrl);
+        console.log(jobId);
+
+        // Dynamically import fetch
+        const { default: fetch } = await import('node-fetch');
+
+        // Fetch the resume PDF from the URL
+        const resumeResponse = await fetch(resumeUrl);
+        const buffer = await resumeResponse.arrayBuffer();
+
+        // Parse the PDF to extract text
+        const data = await PDFParser(buffer);
+        const parsedResume = data.text;
+
+        console.log("Parsed ----------------------", parsedResume);
+
+        // Fetch job details from your local API
+        const jobResponse = await fetch(`http://localhost:3001/api/jobs/getJobdetails?jobId=${jobId}`);
+        const jobData = await jobResponse.json();
+
+        const jobTitle = jobData.jobTitle || "";
+        const jobDescription = jobData.jobDescription || "";
+        const skills = jobData.skills || "";
+
+        // Access your API key as an environment variable
+        const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+        const basePrompt = `Resume: ${parsedResume}. Here is the job title: ${jobTitle}, job description: ${jobDescription}, and skills: ${skills} for a particular job.`;
+        const prompt = basePrompt + ` Just give me a score out of 100 according to the resume given, matching it with the job title, job description, and the skills needed, and nothing else and be very strict in scoring.`;
+        console.log(prompt);
+
+        const result = await model.generateContent(prompt);
+        const geminiResponse = await result.response;
+        const score = (await geminiResponse.text()).trim();
+
+        console.log(score);
+        const educationPrompt = basePrompt + " Just give me a score of education out of 10 based on the requirements for the job role, reputation of the university, placement rate, student's GPA, etc. And just give me a score, no explanation.";
+        
+        const education = await model.generateContent(educationPrompt);
+        const educationGeminiResponse = await education.response;
+        const educationScore = (await educationGeminiResponse.text()).trim();
+
+        const educationSuggestionsPrompt = basePrompt + " Just give me comments on the education listed in the resume with less than 25 words.";
+        
+        const educationSuggestion = await model.generateContent(educationSuggestionsPrompt);
+        const educationSuggestionGeminiResponse = await educationSuggestion.response;
+        const educationSuggestions = (await educationSuggestionGeminiResponse.text()).trim();
+
+        const experiencePrompt = basePrompt + " Just give me a score of experience out of 10 based on the duration of experience gained, work done during the experience, position of the role, and match the work done with the requirements our role needs. And just give me a score, no explanation, nothing else.";
+        
+        const experience = await model.generateContent(experiencePrompt);
+        const experienceGeminiResponse = await experience.response;
+        const experienceScore = (await experienceGeminiResponse.text()).trim();
+
+        const experienceSuggestionsPrompt = basePrompt + " Just give me comments on the experience listed on the resume with less than 25 words.";
+        
+        const experienceSuggestion = await model.generateContent(experienceSuggestionsPrompt);
+        const experienceSuggestionGeminiResponse = await experienceSuggestion.response;
+        const experienceSuggestions = (await experienceSuggestionGeminiResponse.text()).trim();
+        
+        const projectsPrompt = basePrompt + " Just give me a score of projects listed in the resume out of 10 based on the duration of project, work done during the project, technologies used in the project, and match the work done with the requirements of our role. And just give me a score, no explanation, nothing else.";
+        
+        const projects = await model.generateContent(projectsPrompt);
+        const projectsGeminiResponse = await projects.response;
+        const projectsScore = (await projectsGeminiResponse.text()).trim();
+
+        const projectsSuggestionsPrompt = basePrompt + " Just give me overall comments on the overall projects listed on the resume with less than 25 words and no bullet points.";
+        
+        const projectsSuggestion = await model.generateContent(projectsSuggestionsPrompt);
+        const projectsSuggestionGeminiResponse = await projectsSuggestion.response;
+        const projectsSuggestions = (await projectsSuggestionGeminiResponse.text()).trim();
+       
+
+        res.status(200).json({ score, educationScore, educationSuggestions, experienceScore, experienceSuggestions, projectsScore, projectsSuggestions });
+
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).send("An error occurred while processing the resume.");
+    }
+}
+
+
+
+module.exports = { createNewRecruiter, uploadNewFile, getFiles, getFileDownloadUrl, getFileViewUrl,getRecruiterList, getResumeScore };

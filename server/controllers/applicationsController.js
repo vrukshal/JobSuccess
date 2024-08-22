@@ -18,7 +18,7 @@ async function createApplication(req, res) {
             status: 'Pending',
             applicationType : "Full-time"
         }
-        console.log(applicationData);
+        // console.log(applicationData);
         const applicationsRef = collection(db, "Applications");
         const docRef = await addDoc(applicationsRef, applicationData);
         res.status(200).json({ success: true, id: docRef.id, applicationData: applicationData });
@@ -89,7 +89,7 @@ async function notifyDeclinedApplicants(req, res) {
         const jobId = req.body.jobId;
         const response = await fetch(`http://localhost:3001/api/jobs/getJobdetails?jobId=${jobId}`);
         const JobResponse = await response.json();
-        console.log("JOBRES",JobResponse);
+        // console.log("JOBRES",JobResponse);
         declinedApplicants.forEach(async (applicant) => {
             // Send email
             const emailMessage = `

@@ -10,6 +10,7 @@ import { LuSend } from "react-icons/lu";
 import { FaCheck } from "react-icons/fa";
 import Cookies from 'js-cookie';
 import './StudentJobDetails.css';
+import { ListBucketInventoryConfigurationsOutputFilterSensitiveLog } from '@aws-sdk/client-s3';
 
 const StudentJobDetails = ({ job }) => {
     const [logoUrl, setLogoUrl] = useState('');
@@ -118,8 +119,41 @@ const StudentJobDetails = ({ job }) => {
           method: 'POST',
           body: formData,
       });
-
+      
     const data = await response.json();
+    const getResumeScore = async () => {
+        try {
+            const jobId = job.id;
+            const { key, recruiterUid, folderName, filename } = extractUrlParts(data.fileUrl);
+            const response = await axios.get(`http://localhost:3001/api/recruiter/get-signed-url?filename=${filename}&folderName=${folderName}&recruiterUid=${recruiterUid}`);
+            const { downloadUrl } = response.data;
+    
+            // Construct the query string
+            const queryParams = new URLSearchParams({
+                downloadUrl,
+                jobId
+            }).toString();
+    
+            // Fetch the resume score using GET with query parameters
+            const resumeScoreResponse = await fetch(`http://localhost:3001/api/recruiter/resumescore?${queryParams}`);
+    
+    
+            // Log the raw response text for debugging
+            const rawText = await resumeScoreResponse.text();
+    
+            // Try to parse the JSON
+            const geminiResponse = JSON.parse(rawText);
+    
+            return geminiResponse;
+        } catch (error) {
+            console.error('Error fetching resume score:', error);
+            return {}; // Return an empty object or handle as needed
+        }
+    };
+    
+    const geminiResponse = await getResumeScore();
+    // console.log('Gemini Response:', geminiResponse);
+    
         const applicationInfo = {
             jobId: job.id,
             jobTitle: job?.jobTitle,
@@ -128,7 +162,8 @@ const StudentJobDetails = ({ job }) => {
             salary: job.salary,
             recruiterInfo: job.recruiterInfo,
             studentInfo: studentCookie,
-            resumeUrl: data.fileUrl, // Add resume to the application info
+            resumeUrl: data.fileUrl, 
+            ...geminiResponse
         };
         
         console.log("Resume uploaded : ",applicationInfo);
