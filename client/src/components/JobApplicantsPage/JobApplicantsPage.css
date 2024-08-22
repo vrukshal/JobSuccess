@@ -1,10 +1,13 @@
 .applicants-container {
-    padding: 20px;
+  margin: 0px 20px 20px;
+  padding: 20px;
+  width: 80%;
   }
   
-  h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
+  .header-that-matches-h1 {
+    font-size: 38px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
   }
   
   .filter-options {
@@ -55,6 +58,6 @@
     background-color: #f9f9f9;
   }
   
-  .applicants-container{
-    margin-left: 240px;
-  }
+  /* .applicants-container{
+    margin-left: 100px;
+  } */

@@ -101,75 +101,81 @@ const JobApplicantsPage = () => {
 
   return (
     <>
-      <RecruiterNavbar />
-      <RecruiterSidebar />
-
-      <div className="applicants-container">
-        <h1>Applicants ({applicants.length})</h1>
-        <div className="filter-options">
-          <label>
-            <input type="checkbox" /> Graduation Date / School Years
-          </label>
-          <label>
-            <input type="checkbox" /> GPA
-          </label>
-          <label>
-            <input type="checkbox" /> Majors
-          </label>
-          <label>
-            <input type="checkbox" /> Work Authorization
-          </label>
-          <a href="#" className="select-all">Select All</a>
+      
+      <div className="recruiter-main-page">
+        <RecruiterSidebar />
+        <div className="main-section">
+          <RecruiterNavbar /> 
+          <div className="main-containter-to-fit-in-centre">
+            <div className="applicants-container">
+              <div className="header-that-matches-h1">
+                Applicants({applicants.length})
+              </div>
+              <div className="filter-options">
+                <label>
+                  <input type="checkbox" /> Graduation Date / School Years
+                </label>
+                <label>
+                  <input type="checkbox" /> GPA
+                </label>
+                <label>
+                  <input type="checkbox" /> Majors
+                </label>
+                <label>
+                  <input type="checkbox" /> Work Authorization
+                </label>
+                <a href="#" className="select-all">Select All</a>
+              </div>
+              <div className="tabs">
+              {['Pending', 'Hired', 'All', 'Declined'].map(tab => (
+                <button
+                  key={tab}
+                  className={`btn ${activeTab === tab ? 'btn-primary' : 'btn-outline-primary'}`}
+                  onClick={() => setActiveTab(tab)}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>LinkedIn</th>
+                    <th>Date</th>
+                    <th>Resume</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredApplicants.map((applicant) => (
+                    <tr key={applicant.id}>
+                      <td>{applicant.studentInfo.firstName} {applicant.studentInfo.lastName}</td>
+                      <td>{applicant.studentInfo.email}</td>
+                      <td>
+                        <select
+                          value={applicant.status}
+                          onChange={(e) => handleStatusChange(applicant.id, e.target.value)}
+                          
+                        >
+                          <option value="Pending" >Pending</option>
+                          <option value="Reviewed" >Reviewed</option>
+                          <option value="Declined">Declined</option>
+                          <option value="Hired">Hired</option>
+                        </select>
+                      </td>
+                      <td><a href={applicant.studentInfo.linkedInUrl}><FaLinkedin size={30} /></a></td>
+                      <td>{new Date(applicant.studentInfo.date).toLocaleDateString()}</td>
+                      <td onClick={() => openResume(applicant)} style={{ cursor: 'pointer' }}><BsFileEarmarkPdfFill /></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <button className="btn-notify" onClick={handleNotifyAll}>Notify Declined Students</button>
+            </div>
+          </div>
         </div>
-        <div className="tabs">
-        {['Pending', 'Hired', 'All', 'Declined'].map(tab => (
-          <button
-            key={tab}
-            className={`btn ${activeTab === tab ? 'btn-primary' : 'btn-outline-primary'}`}
-            onClick={() => setActiveTab(tab)}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Status</th>
-              <th>LinkedIn</th>
-              <th>Date</th>
-              <th>Resume</th>
-              <th>Match %</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredApplicants.map((applicant) => (
-              <tr key={applicant.id}>
-                <td>{applicant.studentInfo.firstName} {applicant.studentInfo.lastName}</td>
-                <td>{applicant.studentInfo.email}</td>
-                <td>
-                  <select
-                    value={applicant.status}
-                    onChange={(e) => handleStatusChange(applicant.id, e.target.value)}
-                    
-                  >
-                    <option value="Pending" >Pending</option>
-                    <option value="Reviewed" >Reviewed</option>
-                    <option value="Declined">Declined</option>
-                    <option value="Hired">Hired</option>
-                  </select>
-                </td>
-                <td><a href={applicant.studentInfo.linkedInUrl}><FaLinkedin size={30} /></a></td>
-                <td>{new Date(applicant.studentInfo.date).toLocaleDateString()}</td>
-                <td onClick={() => openResume(applicant)} style={{ cursor: 'pointer' }}><BsFileEarmarkPdfFill /></td>
-                <td>{applicant.score? applicant.score : "0"}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <button className="btn-notify" onClick={handleNotifyAll}>Notify Declined Students</button>
       </div>
     </>
   );

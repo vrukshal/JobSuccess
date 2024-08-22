@@ -8,5 +8,6 @@ router.post('/api/jobs/newjobpost', JobsController.createNewJobPost);
 router.get('/api/jobs/getJobdetails', JobsController.getJobDetails);
 router.post('/api/jobs/savedJobs', JobsController.createSavedJobs);
 router.get('/api/jobs/getSavedJobs', JobsController.getSavedJobs);
+router.post('/api/jobs/unsaveJob', JobsController.unsaveJob);
 
 module.exports = router;

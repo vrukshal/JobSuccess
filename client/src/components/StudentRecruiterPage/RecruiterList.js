@@ -24,7 +24,7 @@ const RecruiterList = () => {
     return (
         <div className="page-container">
             <Sidebar />
-            <div className="content">
+            <div className="recruiter-list-content">
                 <StudentNavbar />
                 <div className="recruiter-list">
                     {recruiters.map(recruiter => (

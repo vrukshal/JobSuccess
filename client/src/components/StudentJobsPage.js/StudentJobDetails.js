@@ -12,7 +12,7 @@ import Cookies from 'js-cookie';
 import './StudentJobDetails.css';
 import { ListBucketInventoryConfigurationsOutputFilterSensitiveLog } from '@aws-sdk/client-s3';
 
-const StudentJobDetails = ({ job }) => {
+const StudentJobDetails = ({ job, isSaved }) => {
     const [logoUrl, setLogoUrl] = useState('');
     const [appliedJobs, setAppliedJobs] = useState(() => {
         const storedAppliedJobs = localStorage.getItem('appliedJobs');
@@ -24,6 +24,18 @@ const StudentJobDetails = ({ job }) => {
         return storedSavedJobs ? JSON.parse(storedSavedJobs) : [];
     });
 
+    // State to store the initial saved status
+    console.log("Saved: "+isSaved);
+    const [initialIsSaved, setInitialIsSaved] = useState(isSaved);
+    // console.log("setInitialSaved: "+initialIsSaved);
+
+    useEffect(() => {
+        setInitialIsSaved(isSaved);
+    }, [isSaved]);
+
+    // useEffect(() => {
+    //     console.log("Initial IsSaved: " + initialIsSaved);
+    // }, [initialIsSaved]);
 
     const [showModal, setShowModal] = useState(false);
     const [resume, setResume] = useState(null);
@@ -193,44 +205,42 @@ const StudentJobDetails = ({ job }) => {
         }
     };
 
-    const saveApplication = async () => {
+    const toggleSaveApplication = async () => {
         const studentCookie = JSON.parse(Cookies.get('student'));
-        console.log()
-        try {
-            // const response = await fetch('http://localhost:3001/api/jobs/savedJobs?StudentID=${studentCookie.uid}', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     body: JSON.stringify(applicationInfo),
-            // });
+        console.log("isSaved: "+isSaved+  "   SavedJobs.includes: " +savedJobs.includes(job.id));
+        if (initialIsSaved || savedJobs.includes(job.id)) {
+            try {
+                await axios.post(`http://localhost:3001/api/jobs/unsaveJob?StudentID=${studentCookie.uid}&JobID=${job.id}`);
 
-            const response = await axios.post(`http://localhost:3001/api/jobs/savedJobs?StudentID=${studentCookie.uid}&JobID=${job.id}`);
-            const { downloadUrl } = response.data;
-
-
-            setSavedJobs((prevSavedJobs) => {
-                const updatedSavedJobs = [...prevSavedJobs, job.id];
-                localStorage.setItem('savedJobs', JSON.stringify(updatedSavedJobs));
-                return updatedSavedJobs;
-            });
-            return downloadUrl;
-            // if (!response.ok) {
-            //     throw new Error('Network response was not ok');
-            // }
-
-            // const data = await response.json();
-            // console.log('Successfully Applied:', data);
-            // setAppliedJobs((prevAppliedJobs) => {
-            //     const updatedAppliedJobs = [...prevAppliedJobs, job.id];
-            //     localStorage.setItem('appliedJobs', JSON.stringify(updatedAppliedJobs));
-            //     return updatedAppliedJobs;
-            // });
-            // setShowModal(false); // Close the modal after application is submitted
-        } catch (error) {
-            console.log(error);
+                setSavedJobs((prevSavedJobs) => {
+                    const updatedSavedJobs = prevSavedJobs.filter(savedJobId => savedJobId !== job.id);
+                    localStorage.setItem('savedJobs', JSON.stringify(updatedSavedJobs));
+                    return updatedSavedJobs;
+                });
+                setInitialIsSaved(false); // Ensure initialIsSaved is updated if the job is unsaved
+            } catch (error) {
+                console.error('Error unsaving job:', error);
+            }
+        } else {
+            try {
+                const response = await axios.post(`http://localhost:3001/api/jobs/savedJobs?StudentID=${studentCookie.uid}&JobID=${job.id}`);
+                const { downloadUrl } = response.data;
+                
+                setSavedJobs((prevSavedJobs) => {
+                    const updatedSavedJobs = [...prevSavedJobs, job.id];
+                    localStorage.setItem('savedJobs', JSON.stringify(updatedSavedJobs));
+                    return updatedSavedJobs;
+                });
+                return downloadUrl;
+            } catch (error) {
+                if (error.response && error.response.status === 409) {
+                    console.log('Job already saved by this student');
+                } else {
+                    console.error('Error saving job:', error);
+                }
+            }
         }
-    }
+    };
 
     return (
         <div className="job-details-content">
@@ -248,10 +258,13 @@ const StudentJobDetails = ({ job }) => {
                     <button 
                         id='saved-jobs-button'
                         className='saved-jobs-button'
-                        onClick={saveApplication}
-                        disabled={savedJobs.includes(job.id)}
-                    >
-                        {savedJobs.includes(job.id) ? "Saved" : "Save"} {savedJobs.includes(job.id) ? <FaBookmark /> : <FaRegBookmark />}
+                        onClick={toggleSaveApplication}
+                        // disabled={savedJobs.includes(job.id)}
+                    >   
+                        {/* isSaved is when someone deletes the cookies and logs out but if 
+                        we only take isSaved then it cannot find JobID and gives null that's 
+                        why we have to take care of it */}
+                        {initialIsSaved || savedJobs.includes(job.id) ? "Saved" : "Save"} {initialIsSaved || savedJobs.includes(job.id) ? <FaBookmark /> : <FaRegBookmark />}
                         {/* Save < FaRegBookmark /> */}
                     </button>
                     <button

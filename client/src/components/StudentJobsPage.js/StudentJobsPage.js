@@ -11,30 +11,30 @@ const StudentJobsPage = () => {
   const [jobType, setJobType] = useState('full-time');
   const [searchQuery, setSearchQuery] = useState('');
   return (
-    <div>   
+    <div>
         <Sidebar />
         <div className='student-jobs-page'>
             <StudentNavbar />
             
-        <div className="jobs-search-filter">
-            {/* <input type="text" placeholder="Search jobs" /> */}
-            <div className="search-bar">
-                <input 
-                type="text" 
-                placeholder="Search jobs" 
-                value={searchQuery} 
-                onChange={(e) => setSearchQuery(e.target.value)} 
-                />
-                <button type="submit">
-                    < IoIosSearch size={30} style={{ color: "black" }}/>
-                </button>
+            <div className="jobs-search-filter">
+                {/* <input type="text" placeholder="Search jobs" /> */}
+                <div className="search-bar">
+                    <input 
+                    type="text" 
+                    placeholder="Search jobs" 
+                    value={searchQuery} 
+                    onChange={(e) => setSearchQuery(e.target.value)} 
+                    />
+                    <button type="submit">
+                        < IoIosSearch size={30} style={{ color: "black" }}/>
+                    </button>
+                </div>
+                <button onClick={() => setJobType('full-time')}>Full-time</button>
+                <button onClick={() => setJobType('part-time')}>Part-time</button>
+                <button onClick={() => setJobType('internship')}>Internship</button>
+                <button onClick={() => setJobType('remote')}>Remote</button>
             </div>
-            <button onClick={() => setJobType('full-time')}>Full-time</button>
-            <button onClick={() => setJobType('part-time')}>Part-time</button>
-            <button onClick={() => setJobType('internship')}>Internship</button>
-            <button onClick={() => setJobType('remote')}>Remote</button>
-        </div>
-        <StudentJobList jobType={jobType} />
+            <StudentJobList jobType={jobType} />
         </div>
     </div>
   );

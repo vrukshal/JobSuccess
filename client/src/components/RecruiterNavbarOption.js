@@ -8,7 +8,7 @@ function RecruiterNavbarOption(props) {
         navigate(url);
     }
   return (
-    <div>
+    <div className='navbar-icons-interal-adjustment'>
       <li><div className='navbar-option' onClick={() => NavigateToURL(props.onClickUrl)}><div className='icon-container'><props.icon style={{ fontSize: 30 }}/></div> {props.text}</div></li>
     </div>
   )

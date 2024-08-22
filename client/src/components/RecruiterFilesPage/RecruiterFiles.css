@@ -1,6 +1,11 @@
 .recruiter-files-content{
-    margin-left: 240px;
-    z-index: 100;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 100; */
+    margin: 0px 20px 20px;
+    padding: 20px;
+    width: 80%;
 }
 
 .upload-file{
@@ -22,10 +27,6 @@
     margin: 12px;
     padding-bottom: auto;
     height: 40px;
-}
-
-.table-content{
-    margin: 30px;
 }
 
 .table-content table{

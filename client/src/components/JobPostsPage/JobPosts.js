@@ -55,58 +55,60 @@ const JobPosts = () => {
   }
 
   return (
-    <div className="job-posts-container">
-      <div className="job-posts-header">
-        <h1>Jobs</h1>
-        <div className='jobposts-search-bar'>
-          <input
-            type="text"
-            placeholder="Type to search..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="form-control"
-          />
-          <button className="btn btn-primary">Search</button>
-          <button className="btn btn-success" onClick={() => navigate('/rec/postings/newjobpost')}>Create Job</button>
+    <div className="main-containter-to-fit-in-centre">
+      <div className="job-posts-container">
+        <div className="job-posts-header">
+          <h1>Jobs</h1>
+          <div className='jobposts-search-bar'>
+            <input
+              type="text"
+              placeholder="Type to search..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="form-control"
+            />
+            <button className="btn btn-primary">Search</button>
+            <button className="btn btn-success" onClick={() => navigate('/rec/postings/newjobpost')}>Create Job</button>
+          </div>
         </div>
-      </div>
-      <div className="tabs">
-        {['Active', 'Expired', 'All', 'Declined', 'Not Posted'].map(tab => (
-          <button
-            key={tab}
-            className={`btn ${activeTab === tab ? 'btn-primary' : 'btn-outline-primary'}`}
-            onClick={() => setActiveTab(tab)}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
-      <table className="table">
-        <thead>
-          <tr>
-            {/* <th>ID</th> */}
-            <th>Job</th>
-            <th>Applicants</th>
-            <th>Schools</th>
-            <th>Created</th>
-            <th>Type</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredJobs.map((job) => (
-            <tr key={job.id}>
-              {/* <td>{job.id}</td> */}
-              <td onClick={() => redirectToApplicants(job)}>{job.job}</td>
-              <td><IoPerson /> {job.applicants}</td>
-              <td>{job.schools}</td>
-              <td>{job.created}</td>
-              <td>{job.type}</td>
-              <td>{job.status}</td>
-            </tr>
+        <div className="tabs">
+          {['Active', 'Expired', 'All', 'Declined', 'Not Posted'].map(tab => (
+            <button
+              key={tab}
+              className={`btn ${activeTab === tab ? 'btn-primary' : 'btn-outline-primary'}`}
+              onClick={() => setActiveTab(tab)}
+            >
+              {tab}
+            </button>
           ))}
-        </tbody>
-      </table>
+        </div>
+        <table className="table">
+          <thead>
+            <tr>
+              {/* <th>ID</th> */}
+              <th>Job</th>
+              <th>Applicants</th>
+              <th>Schools</th>
+              <th>Created</th>
+              <th>Type</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredJobs.map((job) => (
+              <tr key={job.id}>
+                {/* <td>{job.id}</td> */}
+                <td onClick={() => redirectToApplicants(job)}>{job.job}</td>
+                <td><IoPerson /> {job.applicants}</td>
+                <td>{job.schools}</td>
+                <td>{job.created}</td>
+                <td>{job.type}</td>
+                <td>{job.status}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

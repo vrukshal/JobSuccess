@@ -2,7 +2,20 @@
     display: flex;
 }
 
+/* 
+Width: 100%
+Defines a fixed width: Sets the element's width to 100% of its parent container's width.
+Ignores available space: Doesn't consider the available space within the container. If other elements are present, it will overflow or cause layout issues.
+Suitable for: Simple layouts where an element should always fill the entire width of its parent.
+
+
+Flex-Grow: 1
+Distributes available space: Tells the element to grow to fill any extra available space within the flex container.   
+Considers other flex items: Shares the remaining space proportionally with other flex items with the same or higher flex-grow value.
+Suitable for: Flexible layouts where elements should adapt to different screen sizes and content changes. */
+
 .main-section {
     flex-grow: 1;
+    /* width: 100%; */
 }
   

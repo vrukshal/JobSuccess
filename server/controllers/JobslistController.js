@@ -1,5 +1,5 @@
 const { db } = require('../config/firebase');
-const { collection, getDocs,getDoc, query, where, addDoc,orderBy,doc } = require('firebase/firestore');
+const { collection, getDocs, getDoc, query, where, addDoc, orderBy, doc, deleteDoc } = require('firebase/firestore');
 
 async function getFullTimeJobs(req, res) {
     try {
@@ -142,11 +142,11 @@ async function createSavedJobs(req, res){
     try {
         const { StudentID, JobID } = req.query;
         // Query to check if a document with the given StudentID and JobID already exists
-
+        console.log('Here');
         const savedJobsRef = collection(db, "Saved");
         const q = query(savedJobsRef, where("StudentID", "==", StudentID), where("JobID", "==", JobID));
         const querySnapshot = await getDocs(q);
-
+        
         if (!querySnapshot.empty) {
             // Document with the given StudentID and JobID already exists
             return res.status(409).json({ success: false, error: 'Job already saved by this student' });
@@ -211,5 +211,27 @@ async function getSavedJobs(req, res){
       }
 }
 
+async function unsaveJob(req, res){
+    try {
+        const { StudentID, JobID } = req.query;
+        const savedJobsRef = collection(db, "Saved");
+        const q = query(savedJobsRef, where("StudentID", "==", StudentID), where("JobID", "==", JobID));
+        const querySnapshot = await getDocs(q);
 
-module.exports = {getFullTimeJobs, getPartTimeJobs, createNewJobPost, getJobsByRecruiterUid, getJobDetails, createSavedJobs, getSavedJobs}
+        if (querySnapshot.empty) {
+            return res.status(404).json({ success: false, error: 'Saved job not found' });
+        }
+
+        // Assuming there's only one document that matches the criteria
+        const docId = querySnapshot.docs[0].id;
+        await deleteDoc(doc(savedJobsRef, docId));
+
+        res.status(200).json({ success: true, message: 'Job unsaved successfully' });
+    } catch (error) {
+        console.error('Error unsaving job:', error);
+        res.status(500).json({ success: false, error: 'Failed to unsave job' });
+    }
+}
+
+
+module.exports = {getFullTimeJobs, getPartTimeJobs, createNewJobPost, getJobsByRecruiterUid, getJobDetails, createSavedJobs, getSavedJobs, unsaveJob}

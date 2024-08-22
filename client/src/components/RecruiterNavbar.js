@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import WorkIcon from '@mui/icons-material/Work';
 import GroupsIcon from '@mui/icons-material/Groups';
@@ -16,11 +16,21 @@ import { useNavigate } from 'react-router-dom';
 
 const RecruiterNavbar = () => {
     const navigate = useNavigate();
+    const profileIconRef = useRef(null);
+    const dropdownRef = useRef(null);
+
     const recruiterCookie = JSON.parse(Cookies.get('recruiter'));
     const userCookie = JSON.parse(Cookies.get('user'));
     // console.log("USER:",userCookie.email);
-    const handleProfileClick = () => {
-        document.getElementById('profileDropdown').classList.toggle('show');
+    const handleProfileClick = () => {        
+        const dropdown = dropdownRef.current;
+        const profileIcon = profileIconRef.current;
+
+        const rect = profileIcon.getBoundingClientRect();
+        dropdown.style.top = `${rect.bottom}px`;
+        dropdown.style.left = `${rect.left-150}px`;
+        dropdown.classList.toggle('show');
+        // document.getElementById('profileDropdown').classList.toggle('show');
     };
 
     const profileURL = "/rec/" + recruiterCookie.uid;
@@ -42,18 +52,20 @@ const RecruiterNavbar = () => {
     };
 
     return (
-        <div className="navbar">
-            <ul>
-                <RecruiterNavbarOption icon={AccountBoxIcon} text='Profile' onClickUrl={profileURL} />
-                <RecruiterNavbarOption icon={WorkIcon} text='Job Posts' onClickUrl={jobPostingsURL} />
-                <RecruiterNavbarOption icon={GroupsIcon} text='Meetings' />
-                <RecruiterNavbarOption icon={InventoryIcon} text='Documents' onClickUrl={docURL} />
-                <RecruiterNavbarOption icon={ReviewsIcon} text='Reviews' />
-            </ul>
-            <div className="navbar-icons">
-                <div className="notification-icon"><div className='icon-container'><NotificationsActiveIcon fontSize='large' style={{ color: 'white' }} /></div></div>
-                <div className="profile-icon" onClick={handleProfileClick}><div className='icon-container'><Avatar src={userCookie.picture} fontSize='large' style={{ color: 'white' }}> {userCookie?.email[0].toUpperCase()}</Avatar></div></div>
-                <div id="profileDropdown" className="dropdown-content">
+        <div className="recruiter-navbar"> 
+            <div className="recruiter-navbar-left">
+                <ul>
+                    <RecruiterNavbarOption icon={AccountBoxIcon} text='Profile' onClickUrl={profileURL} />
+                    <RecruiterNavbarOption icon={WorkIcon} text='Job Posts' onClickUrl={jobPostingsURL} />
+                    <RecruiterNavbarOption icon={GroupsIcon} text='Meetings' />
+                    <RecruiterNavbarOption icon={InventoryIcon} text='Documents' onClickUrl={docURL} />
+                    <RecruiterNavbarOption icon={ReviewsIcon} text='Reviews' />
+                </ul>
+            </div>
+            <div className="recruiter-navbar-icons">
+                <div className="recruiter-notification-icon"><div className='recruiter-icon-container'><NotificationsActiveIcon fontSize='large' style={{ color: 'white' }} /></div></div>
+                <div className="recruiter-profile-icon" onClick={handleProfileClick} ref={profileIconRef}><div className='recruiter-icon-container'><Avatar src={userCookie.picture} fontSize='large' style={{ color: 'white' }}> {userCookie?.email[0].toUpperCase()}</Avatar></div></div>
+                <div id="profileDropdown" className="recruiter-dropdown-content" ref={dropdownRef}>
                     <a href="#notification-preferences">Notification Preferences</a>
                     <a href="#settings">Settings</a>
                     <a href="#help">Help</a>

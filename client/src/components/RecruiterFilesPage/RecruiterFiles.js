@@ -89,45 +89,50 @@ function RecruiterFiles() {
     };
 
     return (
-        <div className='recruiter-files-main'>
-            <RecruiterNavbar />
+        <div className="recruiter-main-page">
             <RecruiterSidebar />
-            <div className='recruiter-files-content'>
-                <div className='upload-file'>
-                    <input type='file' className="form-control" onChange={handleFileChange} />
-                    <button onClick={uploadFiletoS3} disabled={!file}>Upload</button>
-                </div>
-                <div className="table-content">
-                    <h2>Files</h2>
-                    <table id="myTable" className="table table-borderless">
-                        <thead>
-                            <tr>
-                                <th>File</th>
-                                <th>Filename</th>
-                                <th>Uploaded At</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {userFiles && userFiles.map((file, index) => (
-                                <tr key={index}>
-                                    <td>
-                                        <button onClick={() => handleView(file.bucketPath.split('/').pop())}>
-                                            View
-                                        </button>
-                                    </td>
-                                    <td>{file.bucketPath.split('/').pop()}</td>
-                                    <td>{new Date(file.uploadedAt).toLocaleString()}</td>
-                                    <td>
-                                        <button onClick={() => handleDownload(file.bucketPath.split('/').pop())}>
-                                            Download
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+            {/* <div className='recruiter-files-main'> */}
+            <div className="main-section">
+                <RecruiterNavbar />
+                <div className="main-containter-to-fit-in-centre">
+                    <div className='recruiter-files-content'>
+                        <div className='upload-file'>
+                            <input type='file' className="form-control" onChange={handleFileChange} />
+                            <button onClick={uploadFiletoS3} disabled={!file}>Upload</button>
+                        </div>
+                        <div className="table-content">
+                            <h2>Files</h2>
+                            <table id="myTable" className="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th>File</th>
+                                        <th>Filename</th>
+                                        <th>Uploaded At</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {userFiles && userFiles.map((file, index) => (
+                                        <tr key={index}>
+                                            <td>
+                                                <button onClick={() => handleView(file.bucketPath.split('/').pop())}>
+                                                    View
+                                                </button>
+                                            </td>
+                                            <td>{file.bucketPath.split('/').pop()}</td>
+                                            <td>{new Date(file.uploadedAt).toLocaleString()}</td>
+                                            <td>
+                                                <button onClick={() => handleDownload(file.bucketPath.split('/').pop())}>
+                                                    Download
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div> 
             </div>
         </div>
     );
