@@ -9,8 +9,11 @@ firebase-debug.*.log*
 
 # Firebase cache
 .firebase/
+.config/
 
 # Firebase config
+jobsuccess-98390-firebase-adminsdk-y9kut-abfb322ed7.json
+firebase-admin.js
 
 # Uncomment this if you'd like others to create their own Firebase project.
 # For a team working on the same Firebase project(s), it is recommended to leave
