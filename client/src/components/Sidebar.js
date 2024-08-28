@@ -33,7 +33,7 @@ const Sidebar = ({ currentPage, setCurrentPage }) => {
   }
 
   return (
-    <div className="sidebar">
+    <div className="student-sidebar">
       <div
         className={currentPage === 'Jobs' ? 'active' : ''}
         onClick={() => NavigateToURL(jobsUrl)}

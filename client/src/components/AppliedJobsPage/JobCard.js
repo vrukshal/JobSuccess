@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './JobCard.css';
 import axios from 'axios';
+// import SuggestionModal from './SuggestionModal';
 
 const daysSincePosted = (postedAt) => {
     const posted = new Date(postedAt);
@@ -49,11 +50,12 @@ const extractUrlParts = (url) => {
     };
 };
 
-const JobCard = ({ application }) => {
+const JobCard = ({ application, onViewDescription }) => {
 
     const [logoUrl, setLogoUrl] = useState('');
     const [jobTitle, SetJobTitle]   = useState('');
-    
+    const [isModalOpen, setModalOpen] = useState(false);
+    console.log(application);
     const jobId = application.jobId;
     useEffect(() => {
         const fetchLogoURL = async () => {
@@ -77,19 +79,46 @@ const JobCard = ({ application }) => {
         }
     }, [application.recruiterInfo?.logo,jobId]);
 
+    const toggleModal = () => {
+        setModalOpen(!isModalOpen);
+    };
+
     return (
+        // <div className="applied-job-card">
+        //     <div className="company-logo">
+        //         {logoUrl && <img src={logoUrl} alt={`${application.recruiterInfo?.company} logo`} />}
+        //     </div>
+        //     <div className="applied-job-details">
+        //         <p className="company-name">{application.recruiterInfo?.company}</p>
+               
+        //         <h4 className="applied-job-title ">{jobTitle}</h4>
+        //         <p className="applied-time">{daysSincePosted(application.appliedAt)} ago</p>
+        //         <div className="applied-job-score">Score: {application.score}</div>
+        //     </div>
+        //     <div className="job-status">
+        //         <br></br>
+        //         <p>{application.hasOwnProperty("status")? application.status : "Pending" }</p>
+        //         <br></br>
+        //         {/* <div> */}
+        //             <div className="view-description" onClick={onViewDescription}>View Details</div>
+        //         {/* </div> */}
+        //     </div>
+        // </div>
         <div className="applied-job-card">
             <div className="company-logo">
                 {logoUrl && <img src={logoUrl} alt={`${application.recruiterInfo?.company} logo`} />}
             </div>
+
             <div className="applied-job-details">
                 <p className="company-name">{application.recruiterInfo?.company}</p>
-               
-                <h4 className="applied-job-title ">{jobTitle}</h4>
+                <h4 className="applied-job-title">{jobTitle}</h4>
                 <p className="applied-time">{daysSincePosted(application.appliedAt)} ago</p>
             </div>
+
             <div className="job-status">
                 <p>{application.hasOwnProperty("status")? application.status : "Pending" }</p>
+                <p className="applied-job-score">Score: {application.score}</p>
+                <button className="view-description" onClick={onViewDescription}>View Details</button>
             </div>
         </div>
     );

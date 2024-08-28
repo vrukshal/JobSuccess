@@ -1,0 +1,8 @@
+.student-page-container {
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 0; /* Prevents shrinking */
+    min-width: 0; /* Ensures flexbox can handle content overflow properly */
+    flex-direction: row;
+    /* overflow: hidden; Prevents overflow from causing layout issues */
+}
