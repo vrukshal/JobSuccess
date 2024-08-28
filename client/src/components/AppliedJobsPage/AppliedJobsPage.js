@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './AppliedJobsPage.css';
 import JobCard from './JobCard';
+import SuggestionModal from './SuggestionModal';
+import ScoreChart from './ScoreChart';
 import Cookies from 'js-cookie';
 import StudentNavbar from '../StudentJobsPage.js/StudentNavbar';
 import Sidebar from '../Sidebar';
@@ -13,6 +15,10 @@ function AppliedJobsPage() {
         applicationType: [],
         status: []
     });
+
+    const [isModalOpen, setModalOpen] = useState(false);
+    const [selectedApplication, setSelectedApplication] = useState(null);
+
     const userCookie = JSON.parse(Cookies.get('student') ? Cookies.get('student') : null);
     const studentUid = userCookie ? userCookie.uid : null;
 
@@ -38,8 +44,7 @@ function AppliedJobsPage() {
         const fetchFilteredApplications = async () => {
             try {
                 const queryParams = new URLSearchParams({
-                    studentUid:studentUid,
-                    // keyword: filters.keyword,
+                    studentUid: studentUid,
                     applicationType: filters.applicationType.join(','),
                     status: filters.status.join(',')
                 }).toString();
@@ -70,12 +75,35 @@ function AppliedJobsPage() {
         });
     };
 
+    const openModal = (application) => {
+        setSelectedApplication(application);
+        setModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalOpen(false);
+        setSelectedApplication(null);
+    };
+
+    const formatText = (text) => {
+        if (!text) return '';
+
+        // Convert **bold** to <strong>bold</strong>
+        let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+        // Convert * bullet points to <li> items in <ul>
+        formattedText = formattedText.replace(/^\* (.*)$/gm, '<li>$1</li>');
+        formattedText = `<ul>${formattedText}</ul>`;
+
+        return formattedText;
+    };
+
     if (loading) {
         return <div>Loading...</div>;
     }
 
     return (
-        <div className="applied-jobs-page-container">
+        <div className="student-page-container">
             <Sidebar />
             <div className="applied-jobs-page">
                 <StudentNavbar />
@@ -83,7 +111,6 @@ function AppliedJobsPage() {
                 <div className="filters">
                     <div className="filter-section">
                         <div className="filter-group">
-                            
                             <div>
                                 <h4>Application Type</h4>
                                 <input
@@ -149,10 +176,36 @@ function AppliedJobsPage() {
                 </div>
                 <div className="applied-jobs-page-job-list">
                     {applications.map(application => (
-                        <JobCard key={application.id} application={application} />
+                        <JobCard key={application.id} application={application} onViewDescription={() => openModal(application)} />
                     ))}
                 </div>
             </div>
+            {/* Modal */}
+            {isModalOpen && (
+                <SuggestionModal onClose={closeModal}>
+                    <br></br>
+                    <br></br>
+                    <h3>Suggestions and Scores</h3>
+                    {/* <div className="score-chart"> */}
+                    <ScoreChart
+                        data={{
+                            educationScore: selectedApplication.educationScore,
+                            projectScore: selectedApplication.projectsScore,
+                            experienceScore: selectedApplication.experienceScore,
+                            educationSuggestions: `${formatText(selectedApplication.educationSuggestions)}`,
+                            projectsSuggestions: `${formatText(selectedApplication.projectsSuggestions)}`,
+                            experienceSuggestions: `${formatText(selectedApplication.experienceSuggestions)}`
+                        }}
+                    />
+                    {/* </div> */}
+                    {/* <p dangerouslySetInnerHTML={{ __html: `<strong>Projects Suggestions:</strong> ${formatText(selectedApplication.projectsSuggestions)}` }} />
+                    <p dangerouslySetInnerHTML={{ __html: `<strong>Projects Score:</strong> ${selectedApplication.projectsScore}` }} />
+                    <p dangerouslySetInnerHTML={{ __html: `<strong>Education Suggestions:</strong> ${formatText(selectedApplication.educationSuggestions)}` }} />
+                    <p dangerouslySetInnerHTML={{ __html: `<strong>Education Score:</strong> ${selectedApplication.educationScore}` }} />
+                    <p dangerouslySetInnerHTML={{ __html: `<strong>Experience Suggestions:</strong> ${formatText(selectedApplication.experienceSuggestions)}` }} />
+                    <p dangerouslySetInnerHTML={{ __html: `<strong>Experience Score:</strong> ${selectedApplication.experienceScore}` }} /> */}
+                </SuggestionModal>
+            )}
         </div>
     );
 }

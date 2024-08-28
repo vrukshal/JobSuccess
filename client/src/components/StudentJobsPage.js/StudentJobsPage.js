@@ -11,7 +11,7 @@ const StudentJobsPage = () => {
   const [jobType, setJobType] = useState('full-time');
   const [searchQuery, setSearchQuery] = useState('');
   return (
-    <div>
+    <div className="student-page-container">
         <Sidebar />
         <div className='student-jobs-page'>
             <StudentNavbar />

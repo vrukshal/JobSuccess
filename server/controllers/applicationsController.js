@@ -17,7 +17,7 @@ async function createApplication(req, res) {
             resumeUrl: req.body.resumeUrl,
             status: 'Pending',
             applicationType : "Full-time",
-            score: req.body.score,
+            score: req.body.score.length > 3? "20" : req.body.score,
             educationScore: req.body.educationScore,
             educationSuggestions: req.body.educationSuggestions,
             experienceScore: req.body.experienceScore,

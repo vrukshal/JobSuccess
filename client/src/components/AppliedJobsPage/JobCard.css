@@ -1,8 +1,9 @@
+/* Company Logo */
 .company-logo {
     width: 60px;
     height: 60px;
     margin-right: 20px;
-    flex-shrink: 0;
+    flex-shrink: 0; /* Prevents the logo from shrinking */
 }
 
 .company-logo img {
@@ -12,33 +13,77 @@
     border-radius: 50%;
 }
 
+/* Job Card Container */
+.applied-job-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    flex-wrap: nowrap; /* Prevent wrapping of child elements */
+    min-height: 100px; /* Ensures a consistent minimum height */
+    max-height: 150px; /* Prevents the card from getting too tall */
+}
+
+/* Job Details Section */
 .applied-job-details {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: left;
-}
-
-.company-name {
-    color: #555;
-    font-size: 1.2em;
-    margin-bottom: 4px;
+    min-width: 0; /* Allows flexbox to shrink the content if needed */
+    margin-right: 20px; /* Add some space between the details and the score/button section */
 }
 
 .applied-job-title {
-    color: #333;
-    font-size: 1.5em;
-    margin-bottom: 10px;
+    white-space: nowrap; /* Prevents title from wrapping */
+    overflow: hidden; /* Hides overflow content */
+    text-overflow: ellipsis; /* Adds "..." to indicate truncated text */
 }
 
-.applied-time {
-    color: #888;
-}
-
+/* Job Status Section */
 .job-status {
     margin-left: auto;
-    font-size: 1.2em;
+    font-size: 14px;
     color: #999;
     text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+/* Score Badge */
+.applied-job-score {
+    background-color: #f8f9fa;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-block;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+}
+
+/* View Details Button */
+.view-description {
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+}
+
+.view-description:hover {
+    background-color: #0056b3;
 }

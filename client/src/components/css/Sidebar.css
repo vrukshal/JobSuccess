@@ -1,14 +1,17 @@
-.sidebar {
+.student-sidebar {
   /* width: 0px; */
-  /* background-color: #0681fc; */
+  background-color: #d7e3ee;
   padding: 20px;
   display: flex;
   flex-direction: column;
+  width: fit-content;
+  height: 100%;
+  /* width: auto; */
   /* border-right: 1px solid #dee2e6; */
   transition: width 0.3s;
 }
 
-.sidebar button {
+.student-sidebar button {
   background-color: #ffffff;
   border: 1px solid #dee2e6;
   color: #495057;
@@ -21,167 +24,167 @@
   transition: background-color 0.3s, color 0.3s;
 }
 
-.sidebar button:hover {
+.student-sidebar button:hover {
   background-color: #e9ecef;
 }
 
-.sidebar button.active {
+.student-sidebar button.active {
   background-color: #007bff;
   color: #ffffff;
   border-color: #007bff;
 }
 
-.sidebar button.active:hover {
+.student-sidebar button.active:hover {
   background-color: #0056b3;
 }
 
-.sidebar div {
+.student-sidebar div {
   border-radius: 5px;
   padding: 10px;
   cursor: pointer;
   font-size: large;
 }
 
-.sidebar text {
+.student-sidebar text {
   margin-left: 10px;
   font-size: large;
   font-weight: bold;
 }
 
-.sidebar div:hover {
+.student-sidebar div:hover {
   background-color:rgba(230, 253, 253, 0.984);
   width: fit-content;
 }
 
 /* Media Queries */
 @media (max-width: 1200px) {
-  .sidebar {
+  .student-sidebar {
     width: 200px;
   }
 
-  .sidebar button {
+  .student-sidebar button {
     padding: 8px 16px;
     font-size: 14px;
   }
 
-  .sidebar text {
+  .student-sidebar text {
     font-size: medium;
   }
 }
 
 @media (max-width: 992px) {
-  .sidebar {
+  .student-sidebar {
     width: 150px;
     padding: 15px;
   }
 
-  .sidebar button {
+  .student-sidebar button {
     padding: 6px 12px;
     font-size: 12px;
   }
 
-  .sidebar text {
+  .student-sidebar text {
     font-size: small;
   }
 }
 
 @media (max-width: 768px) {
-  .sidebar {
+  .student-sidebar {
     width: 100px;
     padding: 10px;
   }
 
-  .sidebar button {
+  .student-sidebar button {
     padding: 4px 8px;
     font-size: 10px;
   }
 
-  .sidebar text {
+  .student-sidebar text {
     font-size: x-small;
   }
 }
 
 @media (max-width: 576px) {
-  .sidebar {
+  .student-sidebar {
     width: 80px;
     padding: 5px;
   }
 
-  .sidebar button {
+  .student-sidebar button {
     padding: 2px 4px;
     font-size: 8px;
   }
 
-  .sidebar text {
+  .student-sidebar text {
     font-size: xx-small;
   }
 }
 
 
-/* .sidebar-icon{
+/* .student-sidebar-icon{
   margin: 10px;
   padding: 5px;
 } */
 
 @media (max-width: 1200px) {
-  .sidebar {
+  .student-sidebar {
     width: 200px;
   }
 
-  .sidebar button {
+  .student-sidebar button {
     padding: 8px 16px;
     font-size: 14px;
   }
 
-  .sidebar text {
+  .student-sidebar text {
     font-size: medium;
   }
 }
 
 @media (max-width: 992px) {
-  .sidebar {
+  .student-sidebar {
     width: 150px;
     padding: 15px;
   }
 
-  .sidebar button {
+  .student-sidebar button {
     padding: 6px 12px;
     font-size: 12px;
   }
 
-  .sidebar text {
+  .student-sidebar text {
     font-size: small;
   }
 }
 
 @media (max-width: 768px) {
-  .sidebar {
+  .student-sidebar {
     width: 100px;
     padding: 10px;
   }
 
-  .sidebar button {
+  .student-sidebar button {
     padding: 4px 8px;
     font-size: 10px;
   }
 
-  .sidebar text {
+  .student-sidebar text {
     font-size: x-small;
   }
 }
 
 @media (max-width: 576px) {
-  .sidebar {
+  .student-sidebar {
     width: 80px;
     padding: 5px;
   }
 
-  .sidebar button {
+  .student-sidebar button {
     padding: 2px 4px;
     font-size: 8px;
   }
 
-  .sidebar text {
+  .student-sidebar text {
     font-size: xx-small;
   }
 }
