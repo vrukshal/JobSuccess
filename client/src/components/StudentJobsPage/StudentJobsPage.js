@@ -13,7 +13,7 @@ const StudentJobsPage = () => {
   return (
     <div className="student-page-container">
         <Sidebar />
-        <div className='student-jobs-page'>
+        <div className='student-main-section-page'>
             <StudentNavbar />
             
             <div className="jobs-search-filter">

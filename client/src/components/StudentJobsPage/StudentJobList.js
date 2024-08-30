@@ -57,27 +57,29 @@ const StudentJobList = ({ jobType }) => {
   };
 
   return (
-    <div className="job-list-container">
-      <div className="job-list-sidebar">
-        {jobs.map((job) => (
-          <JobCard 
-          key={job.id} 
-          job={job} 
-          onClick={() => handleJobClick(job)} 
-          isSelected={selectedJob && selectedJob.id === job.id} 
-        />
-        ))}
-      </div>
-      {/* Here the parameter isSaved is passed because we have to display 
-      the Saved button even if the cookies are removed and Student has log 
-      out and when we login again the button was not updated. So here we 
-      are checking from the databse firstly whether that Specific Job is saved or not*/}
-      <div className="job-details">
-        <JobDetails 
-          job={selectedJob}
-          isSaved={isSaved}
-          // savedJobs={savedJobs}
-         />
+    <div className="main-container-to-fit-in-centre">
+      <div className="job-list-container">
+        <div className="job-list-sidebar">
+          {jobs.map((job) => (
+            <JobCard 
+            key={job.id} 
+            job={job} 
+            onClick={() => handleJobClick(job)} 
+            isSelected={selectedJob && selectedJob.id === job.id} 
+          />
+          ))}
+        </div>
+        {/* Here the parameter isSaved is passed because we have to display 
+        the Saved button even if the cookies are removed and Student has log 
+        out and when we login again the button was not updated. So here we 
+        are checking from the databse firstly whether that Specific Job is saved or not*/}
+        <div className="job-details">
+          <JobDetails 
+            job={selectedJob}
+            isSaved={isSaved}
+            // savedJobs={savedJobs}
+          />
+        </div>
       </div>
     </div>
   );

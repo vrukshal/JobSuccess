@@ -55,7 +55,7 @@ const JobPosts = () => {
   }
 
   return (
-    <div className="main-containter-to-fit-in-centre">
+    <div className="main-container-to-fit-in-centre">
       <div className="job-posts-container">
         <div className="job-posts-header">
           <h1>Jobs</h1>

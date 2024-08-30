@@ -38,10 +38,11 @@
 
 /* Notifications container styles */
 .notipage-notifications-container {
-  padding: 20px;
+  /* padding: 20px; */
   padding-top: 20px; /* Reduced top padding to close the gap */
   margin-top: 40px; /* Reduced top margin to close the gap */
   overflow-y: auto;
+  width: 80%;
 }
 
 .notipage-notifications-container h1 {

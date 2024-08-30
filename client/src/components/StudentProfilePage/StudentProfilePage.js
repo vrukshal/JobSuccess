@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './StudentProfilePage.css';
 import Sidebar from '../Sidebar';
+import StudentNavbar from '../StudentJobsPage/StudentNavbar';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { FaPencilAlt } from 'react-icons/fa';
@@ -149,47 +150,52 @@ function StudentProfilePage() {
 
   return (
     <>
-    <div classname="profile-page-container">
+    <div className="student-page-container">
       <Sidebar />
-      <div className="student-profile-container">
-        <div className="header">
-          {imageUrl && <img className="profile-picture" src={imageUrl} alt="Profile" />}
-        </div>
-        <div className="profile-info">
-          <h1>{studentCookie.firstName} {studentCookie.lastName} <span className="pronouns">(He/Him)</span></h1>
-          <p>{studentCookie.currentRole} @ {studentCookie.currentCompany}</p>
-          <p className="location">{studentCookie.location} • <a href={studentCookie.linkedInUrl}>{studentCookie.linkedInUrl}</a></p>
-          <p className="connections">500+ connections</p>
-          <div className="work-experience">
-            <h2>Work Experience <FaPencilAlt onClick={() => openModal('experiences')} /></h2>
-            {experiences.map((experience, index) => (
-              <div key={index} className="experience-item">
-                <MdWork size={31}/>
-                <div className='experience-details'>
-                    <p><strong>{experience.jobTitle}</strong></p>
-                    <p>{experience.employerName}</p>
-                    <p>{experience.startDate.month} {experience.startDate.year} - {experience.current ? 'Present' : `${experience.endDate.month} ${experience.endDate.year}`}</p>
-                    <p>{experience.location}</p>
-                    <p>{experience.description}</p>
-                </div>
+      <div className="student-main-section-page">
+        <StudentNavbar />
+        <div className="main-container-to-fit-in-centre">
+          <div className="student-profile-container">
+            <div className="header">
+              {imageUrl && <img className="profile-picture" src={imageUrl} alt="Profile" />}
+            </div>
+            <div className="profile-info">
+              <h1>{studentCookie.firstName} {studentCookie.lastName} <span className="pronouns">(He/Him)</span></h1>
+              <p>{studentCookie.currentRole} @ {studentCookie.currentCompany}</p>
+              <p className="location">{studentCookie.location} • <a href={studentCookie.linkedInUrl}>{studentCookie.linkedInUrl}</a></p>
+              <p className="connections">500+ connections</p>
+              <div className="work-experience">
+                <h2>Work Experience <FaPencilAlt onClick={() => openModal('experiences')} /></h2>
+                {experiences.map((experience, index) => (
+                  <div key={index} className="experience-item">
+                    <MdWork size={31}/>
+                    <div className='experience-details'>
+                        <p><strong>{experience.jobTitle}</strong></p>
+                        <p>{experience.employerName}</p>
+                        <p>{experience.startDate.month} {experience.startDate.year} - {experience.current ? 'Present' : `${experience.endDate.month} ${experience.endDate.year}`}</p>
+                        <p>{experience.location}</p>
+                        <p>{experience.description}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
 
-          <div className="education">
-            <h2>Education <FaPencilAlt size={20} onClick={() => openModal('educations')} /></h2>
-            {educations.map((education, index) => (
-              <div key={index} className="education-item">
-                < MdSchool size={31} />
-                <div className='school-details'>
-                    <p><strong>{education.school}</strong></p>
-                    <p>{education.degree}</p>
-                    <p>{education.startDate.month} {education.startDate.year} - {education.endDate.month} {education.endDate.year}</p>
-                    <p>{education.location}</p>
-                    <p>{education.description}</p>
-                </div>
+              <div className="education">
+                <h2>Education <FaPencilAlt size={20} onClick={() => openModal('educations')} /></h2>
+                {educations.map((education, index) => (
+                  <div key={index} className="education-item">
+                    < MdSchool size={31} />
+                    <div className='school-details'>
+                        <p><strong>{education.school}</strong></p>
+                        <p>{education.degree}</p>
+                        <p>{education.startDate.month} {education.startDate.year} - {education.endDate.month} {education.endDate.year}</p>
+                        <p>{education.location}</p>
+                        <p>{education.description}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </div>

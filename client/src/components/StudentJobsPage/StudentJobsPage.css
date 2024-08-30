@@ -7,10 +7,14 @@
     justify-content: center;
   }
   
-.student-jobs-page{
-    margin-left: 200px;
+.student-main-section-page{
+    /* display: flex; */
+    flex-grow: 1;
+    /* justify-content: center; */
+    /* width: 100%; */
+    /* margin-left: 200px; */
     background-color: white;
-    padding: -5px;
+    /* padding: -5px; */
 }
 
 .search-bar {

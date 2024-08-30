@@ -106,7 +106,7 @@ const JobApplicantsPage = () => {
         <RecruiterSidebar />
         <div className="main-section">
           <RecruiterNavbar /> 
-          <div className="main-containter-to-fit-in-centre">
+          <div className="main-container-to-fit-in-centre">
             <div className="applicants-container">
               <div className="header-that-matches-h1">
                 Applicants({applicants.length})

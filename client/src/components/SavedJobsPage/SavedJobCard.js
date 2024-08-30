@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './SavedJobCard.css';
-import JobDetails from '../StudentJobsPage.js/StudentJobDetails';
+import JobDetails from '../StudentJobsPage/StudentJobDetails';
 import axios from 'axios';
 
 const daysSincePosted = (postedAt) => {

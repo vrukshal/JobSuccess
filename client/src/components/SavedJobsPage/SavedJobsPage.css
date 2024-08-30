@@ -47,9 +47,7 @@
 } */
 
 .saved-jobs-page {
-    margin-left: 200px;
     background-color: white;
-    padding: -5px;
 } 
 
 
@@ -66,11 +64,9 @@
 
 .saved-jobs-page-job-list {
     flex: 1;
-    align-items: center;
     padding: 20px;
     display: flex;
-    flex-direction: column;
-    /* flex-wrap: wrap; */
+    flex-wrap: wrap;
     gap: 20px;
 }
 

@@ -35,9 +35,11 @@
   /* width:80%; */
 }
 
-.main-containter-to-fit-in-centre{
+.main-container-to-fit-in-centre{
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
   width: 100%;
   /* margin: 0 auto; */
   /* align-items: center; */

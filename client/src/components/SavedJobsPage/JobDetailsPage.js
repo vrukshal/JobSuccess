@@ -1,62 +1,53 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
-import StudentNavbar from '../StudentJobsPage.js/StudentNavbar';
+import StudentNavbar from '../StudentJobsPage/StudentNavbar';
 import Sidebar from '../Sidebar';
+import './JobDetailsPage.css';
 
 const JobDetailsPage = () => {
     const location = useLocation();
-    const { savedJob } = location.state || {};
-    console.log(savedJob);
-    if (!savedJob) {
+    const { application, savedJob } = location.state || {};
+
+    // Logging for debugging purposes
+    if (savedJob) {
+        console.log("Inside Saved Job Page:");
+        console.log(savedJob);
+    } else if (application) {
+        console.log("Inside Applied Jobs Page:");
+        console.log(application);
+    } else {
         return <div>No job details available.</div>;
     }
 
-    // const { jobId } = useParams();
-    // console.log(jobId);
-    // const [jobDetails, setJobDetails] = useState(null);
-    // const [loading, setLoading] = useState(true);
-
-    // useEffect(() => {
-    //     const fetchJobDetails = async () => {
-    //         try {
-    //             const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:3001/api/jobs/getJobdetails?jobId=${jobId}`);
-    //             console.log("Good");
-    //             console.log(response.data);
-    //             setJobDetails(response.data);
-    //         } catch (error) {
-    //             console.error('Error fetching job details:', error);
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     };
-
-    //     fetchJobDetails();
-    // }, [jobId]);
-
-    // if (loading) {
-    //     return <div>Loading...</div>;
-    // }
-
-    // if (!jobDetails) {
-    //     return <div>No job details found.</div>;
-    // }
-
     return (
-        <div className="saved-jobs-page-container">
+        <div className="student-page-container">
             <Sidebar />
-            <div className="saved-jobs-page">
+            <div className="student-main-section-page">
                 <StudentNavbar />
-            <div>
-                <h1>{savedJob.jobDetails?.jobTitle}</h1>
-                <p>{savedJob.jobDetails?.jobDescription}</p>
-                <p><strong>Company:</strong> {savedJob.jobDetails?.recruiterInfo.company}</p>
-                <p><strong>Location:</strong> {savedJob.jobDetails?.location}</p>
-                <p><strong>Employment Type:</strong> {savedJob.jobDetails?.employmentType}</p>
-                <p><strong>Duration:</strong> {savedJob.jobDetails?.duration}</p>
-                {/* <a href={jobDetails.applylink} target="_blank" rel="noopener noreferrer">Apply Here</a> */}
-            </div>
+                <div className="main-container-to-fit-in-centre">
+                    {savedJob ? (
+                        <div className="job-details-for-selected-job">
+                            <h1>{savedJob.jobDetails?.jobTitle}</h1>
+                            <p>{savedJob.jobDetails?.jobDescription}</p>
+                            <p><strong>Company:</strong> {savedJob.jobDetails?.recruiterInfo.company}</p>
+                            <p><strong>Location:</strong> {savedJob.jobDetails?.location}</p>
+                            <p><strong>Employment Type:</strong> {savedJob.jobDetails?.employmentType}</p>
+                            <p><strong>Duration:</strong> {savedJob.jobDetails?.duration}</p>
+                        </div>
+                    ) : application ? (
+                        <div className="job-details-for-selected-job">
+                            <h1>{application.recruiterInfo?.jobTitle}</h1>
+                            <p>{application.jobDetails?.jobDescription}</p>
+                            <p><strong>Company:</strong> {application.jobDetails?.recruiterInfo.company}</p>
+                            <p><strong>Location:</strong> {application.jobDetails?.location}</p>
+                            <p><strong>Employment Type:</strong> {application.jobDetails?.employmentType}</p>
+                            <p><strong>Duration:</strong> {application.jobDetails?.duration}</p>
+                            <p><strong>Status:</strong> {application.status}</p>
+                        </div>
+                    ) : (
+                        <div>No job details available.</div>
+                    )}
+                </div>
             </div>
         </div>
     );

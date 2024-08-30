@@ -1,5 +1,9 @@
 .job-list-container {
     display: flex;
+    justify-content: center;
+    width: 100%;
+    /* margin: 1%; */
+    padding: 20px;
     height: calc(100vh - 60px); /* Adjust based on navbar height */
   }
   

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './SavedJobsPage.css';
 import SavedJobCard from './SavedJobCard';
 import Cookies from 'js-cookie';
-import StudentNavbar from '../StudentJobsPage.js/StudentNavbar';
+import StudentNavbar from '../StudentJobsPage/StudentNavbar';
 import Sidebar from '../Sidebar';
 import { IoIosSearch } from "react-icons/io";
 
@@ -80,15 +80,15 @@ function SavedJobsPage() {
     console.log('Applications to be mapped:', applications);
 
     return (
-        <div className="saved-jobs-page-container">
+        <div className="student-page-container">
             <Sidebar />
-            <div className="saved-jobs-page">
+            <div className="student-section-main-page">
                 <StudentNavbar />
                 
             {/* </div> */}
-                <div className="saved-jobs-search-filter">
+                <div className="jobs-search-filter">
                     {/* <input type="text" placeholder="Search jobs" /> */}
-                    <div className="saved-search-bar">
+                    <div className="search-bar">
                         <input 
                         type="text" 
                         placeholder="Search jobs" 
@@ -105,49 +105,52 @@ function SavedJobsPage() {
                     <button onClick={() => setJobType('remote')}>Remote</button>
                 </div>
 
-
-                <h1>Saved Jobs</h1>
-                <div className="saved-filters">
-                    <div className="saved-filter-section">
-                        <div className="saved-filter-group">
-                            
-                            <div>
-                                <h4>Application Type</h4>
-                                {/* <input
-                                    type="checkbox"
-                                    id="full-time"
-                                    name="applicationType"
-                                    value="full-time"
-                                    checked={filters.applicationType.includes('full-time')}
-                                    onChange={handleFilterChange}
-                                /> */}
-                                {/* <label htmlFor="full-time"> Full-time</label>  */}
-                                <input
-                                    type="checkbox"
-                                    id="job"
-                                    name="applicationType"
-                                    value="job"
-                                    checked={filters.savedJobType.includes('job')}
-                                    onChange={handleFilterChange}
-                                />
-                                <label htmlFor="Job"> Job </label>
-                                <input
-                                    type="checkbox"
-                                    id="internship"
-                                    name="applicationType"
-                                    value="internship"
-                                    checked={filters.savedJobType.includes('internship')}
-                                    onChange={handleFilterChange}
-                                />
-                                <label htmlFor="internship"> Internship</label>
+                <div className="main-container-to-fit-in-centre">
+                    <div className="saved-jobs-page">
+                        <h1>Saved Jobs</h1>
+                        <div className="saved-filters">
+                            <div className="saved-filter-section">
+                                <div className="saved-filter-group">
+                                    
+                                    <div>
+                                        <h4>Application Type</h4>
+                                        {/* <input
+                                            type="checkbox"
+                                            id="full-time"
+                                            name="applicationType"
+                                            value="full-time"
+                                            checked={filters.applicationType.includes('full-time')}
+                                            onChange={handleFilterChange}
+                                        /> */}
+                                        {/* <label htmlFor="full-time"> Full-time</label>  */}
+                                        <input
+                                            type="checkbox"
+                                            id="job"
+                                            name="applicationType"
+                                            value="job"
+                                            checked={filters.savedJobType.includes('job')}
+                                            onChange={handleFilterChange}
+                                        />
+                                        <label htmlFor="Job"> Job </label>
+                                        <input
+                                            type="checkbox"
+                                            id="internship"
+                                            name="applicationType"
+                                            value="internship"
+                                            checked={filters.savedJobType.includes('internship')}
+                                            onChange={handleFilterChange}
+                                        />
+                                        <label htmlFor="internship"> Internship</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="saved-jobs-page-job-list">
-                    {applications.map(application => (
-                        <SavedJobCard key={application.id} savedJob={application} />
-                    ))}
+                    <div className="saved-jobs-page-job-list">
+                        {applications.map(application => (
+                            <SavedJobCard key={application.id} savedJob={application} />
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

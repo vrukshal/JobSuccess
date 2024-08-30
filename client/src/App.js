@@ -16,7 +16,7 @@ import RecruiterFiles from './components/RecruiterFilesPage/RecruiterFiles';
 import JobPostsMainPage from './components/JobPostsPage/JobPostsMainPage';
 import NewJobPost from './components/JobPostsPage/NewJobPost';
 import StudentProfilePage from './components/StudentProfilePage/StudentProfilePage';
-import StudentJobsPage from './components/StudentJobsPage.js/StudentJobsPage';
+import StudentJobsPage from './components/StudentJobsPage/StudentJobsPage';
 import StudentHomePage from './components/StudentHomePage/StudentHomePage';
 import JobApplicantsPage from './components/JobApplicantsPage/JobApplicantsPage';
 import AppliedJobsPage from './components/AppliedJobsPage/AppliedJobsPage';

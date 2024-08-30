@@ -1,0 +1,31 @@
+.job-details-for-selected-job {
+    background-color: #ffffff; /* White background for contrast */
+    padding: 20px; /* Add some padding for spacing */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    max-width: 80%; /* Limit the width of the details section */
+    margin: 20px auto; /* Center the div and add margin on top and bottom */
+
+    /* Typography */
+    font-family: 'Arial', sans-serif; /* Font style */
+    color: #333333; /* Darker text color for readability */
+    line-height: 1.6; /* Improve readability with line spacing */
+
+    /* Title Styling */
+    h1 {
+        text-align: center;
+        font-size: 24px; /* Larger font for the job title */
+        color: #2c3e50; /* A slightly darker color for the title */
+        margin-bottom: 10px; /* Space below the title */
+    }
+
+    /* Paragraph Styling */
+    p {
+        margin-bottom: 10px; /* Space between each paragraph */
+    }
+
+    /* Bold text for labels */
+    strong {
+        color: #2c3e50; /* Same color as title for consistency */
+    }
+}

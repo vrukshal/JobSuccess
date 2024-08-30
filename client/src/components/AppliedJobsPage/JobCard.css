@@ -42,6 +42,7 @@
     white-space: nowrap; /* Prevents title from wrapping */
     overflow: hidden; /* Hides overflow content */
     text-overflow: ellipsis; /* Adds "..." to indicate truncated text */
+    cursor: pointer;
 }
 
 /* Job Status Section */

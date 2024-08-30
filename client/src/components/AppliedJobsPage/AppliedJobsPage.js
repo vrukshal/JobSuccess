@@ -4,7 +4,7 @@ import JobCard from './JobCard';
 import SuggestionModal from './SuggestionModal';
 import ScoreChart from './ScoreChart';
 import Cookies from 'js-cookie';
-import StudentNavbar from '../StudentJobsPage.js/StudentNavbar';
+import StudentNavbar from '../StudentJobsPage/StudentNavbar';
 import Sidebar from '../Sidebar';
 
 function AppliedJobsPage() {
@@ -105,81 +105,85 @@ function AppliedJobsPage() {
     return (
         <div className="student-page-container">
             <Sidebar />
-            <div className="applied-jobs-page">
-                <StudentNavbar />
-                <h1>Applied Jobs</h1>
-                <div className="filters">
-                    <div className="filter-section">
-                        <div className="filter-group">
-                            <div>
-                                <h4>Application Type</h4>
-                                <input
-                                    type="checkbox"
-                                    id="full-time"
-                                    name="applicationType"
-                                    value="full-time"
-                                    checked={filters.applicationType.includes('full-time')}
-                                    onChange={handleFilterChange}
-                                />
-                                <label htmlFor="full-time"> Full-time</label>
-                                <input
-                                    type="checkbox"
-                                    id="part-time"
-                                    name="applicationType"
-                                    value="part-time"
-                                    checked={filters.applicationType.includes('part-time')}
-                                    onChange={handleFilterChange}
-                                />
-                                <label htmlFor="part-time"> Part-time</label>
-                                <input
-                                    type="checkbox"
-                                    id="internship"
-                                    name="applicationType"
-                                    value="internship"
-                                    checked={filters.applicationType.includes('internship')}
-                                    onChange={handleFilterChange}
-                                />
-                                <label htmlFor="internship"> Internship</label>
+                <div className="student-main-section-page">
+                    <StudentNavbar />
+                    <div className="main-container-to-fit-in-centre">
+                        <div className="applied-jobs-page">
+                            <h1>Applied Jobs</h1>
+                            <div className="filters">
+                                <div className="filter-section">
+                                    <div className="filter-group">
+                                        <div>
+                                            <h4>Application Type</h4>
+                                            <input
+                                                type="checkbox"
+                                                id="full-time"
+                                                name="applicationType"
+                                                value="full-time"
+                                                checked={filters.applicationType.includes('full-time')}
+                                                onChange={handleFilterChange}
+                                            />
+                                            <label htmlFor="full-time"> Full-time</label>
+                                            <input
+                                                type="checkbox"
+                                                id="part-time"
+                                                name="applicationType"
+                                                value="part-time"
+                                                checked={filters.applicationType.includes('part-time')}
+                                                onChange={handleFilterChange}
+                                            />
+                                            <label htmlFor="part-time"> Part-time</label>
+                                            <input
+                                                type="checkbox"
+                                                id="internship"
+                                                name="applicationType"
+                                                value="internship"
+                                                checked={filters.applicationType.includes('internship')}
+                                                onChange={handleFilterChange}
+                                            />
+                                            <label htmlFor="internship"> Internship</label>
+                                        </div>
+                                        <div>
+                                            <h4>Status</h4>
+                                            <input
+                                                type="checkbox"
+                                                id="pending"
+                                                name="status"
+                                                value="Pending"
+                                                checked={filters.status.includes('Pending')}
+                                                onChange={handleFilterChange}
+                                            />
+                                            <label htmlFor="pending"> Pending</label>
+                                            <input
+                                                type="checkbox"
+                                                id="reviewed"
+                                                name="status"
+                                                value="Reviewed"
+                                                checked={filters.status.includes('Reviewed')}
+                                                onChange={handleFilterChange}
+                                            />
+                                            <label htmlFor="reviewed"> Reviewed</label>
+                                            <input
+                                                type="checkbox"
+                                                id="declined"
+                                                name="status"
+                                                value="Declined"
+                                                checked={filters.status.includes('Declined')}
+                                                onChange={handleFilterChange}
+                                            />
+                                            <label htmlFor="declined"> Declined</label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <h4>Status</h4>
-                                <input
-                                    type="checkbox"
-                                    id="pending"
-                                    name="status"
-                                    value="Pending"
-                                    checked={filters.status.includes('Pending')}
-                                    onChange={handleFilterChange}
-                                />
-                                <label htmlFor="pending"> Pending</label>
-                                <input
-                                    type="checkbox"
-                                    id="reviewed"
-                                    name="status"
-                                    value="Reviewed"
-                                    checked={filters.status.includes('Reviewed')}
-                                    onChange={handleFilterChange}
-                                />
-                                <label htmlFor="reviewed"> Reviewed</label>
-                                <input
-                                    type="checkbox"
-                                    id="declined"
-                                    name="status"
-                                    value="Declined"
-                                    checked={filters.status.includes('Declined')}
-                                    onChange={handleFilterChange}
-                                />
-                                <label htmlFor="declined"> Declined</label>
+                            <div className="applied-jobs-page-job-list">
+                                {applications.map(application => (
+                                    <JobCard key={application.id} application={application} onViewDescription={() => openModal(application)} />
+                                ))}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="applied-jobs-page-job-list">
-                    {applications.map(application => (
-                        <JobCard key={application.id} application={application} onViewDescription={() => openModal(application)} />
-                    ))}
-                </div>
-            </div>
             {/* Modal */}
             {isModalOpen && (
                 <SuggestionModal onClose={closeModal}>

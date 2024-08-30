@@ -39,7 +39,7 @@ function MainApp() {
         <RecruiterSidebar />
         <div className="main-section">
           <RecruiterNavbar />
-          <div className="main-containter-to-fit-in-centre">
+          <div className="main-container-to-fit-in-centre">
             <div className="profile-page-content">
               <ProfileHeader recruiter={recruiterCookie} />
               <ProfileOverview recruiter={recruiterCookie} />

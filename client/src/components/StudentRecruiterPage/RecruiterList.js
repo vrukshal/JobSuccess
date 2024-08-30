@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import StudentNavbar from '../StudentJobsPage.js/StudentNavbar';
+import StudentNavbar from '../StudentJobsPage/StudentNavbar';
 import Sidebar from '../Sidebar';
 
 import './RecruiterList.css';
@@ -22,14 +22,16 @@ const RecruiterList = () => {
     }, []);
 
     return (
-        <div className="page-container">
+        <div className="student-page-container">
             <Sidebar />
-            <div className="recruiter-list-content">
+            <div className="student-main-section-page">
                 <StudentNavbar />
-                <div className="recruiter-list">
-                    {recruiters.map(recruiter => (
-                        <RecruiterCard key={recruiter.uid} recruiter={recruiter} />
-                    ))}
+                <div className="main-container-to-fit-in-centre">
+                    <div className="recruiter-list">
+                        {recruiters.map(recruiter => (
+                            <RecruiterCard key={recruiter.uid} recruiter={recruiter} />
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

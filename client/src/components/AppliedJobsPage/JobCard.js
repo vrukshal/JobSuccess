@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './JobCard.css';
 import axios from 'axios';
 // import SuggestionModal from './SuggestionModal';
@@ -52,10 +53,10 @@ const extractUrlParts = (url) => {
 
 const JobCard = ({ application, onViewDescription }) => {
 
+    const navigate = useNavigate();
     const [logoUrl, setLogoUrl] = useState('');
     const [jobTitle, SetJobTitle]   = useState('');
     const [isModalOpen, setModalOpen] = useState(false);
-    console.log(application);
     const jobId = application.jobId;
     useEffect(() => {
         const fetchLogoURL = async () => {
@@ -81,6 +82,11 @@ const JobCard = ({ application, onViewDescription }) => {
 
     const toggleModal = () => {
         setModalOpen(!isModalOpen);
+    };
+
+    const handleClick = () => {
+        console.log(application);
+        navigate(`/stu/job-details/${jobId}`, { state: { application } });
     };
 
     return (
@@ -111,7 +117,7 @@ const JobCard = ({ application, onViewDescription }) => {
 
             <div className="applied-job-details">
                 <p className="company-name">{application.recruiterInfo?.company}</p>
-                <h4 className="applied-job-title">{jobTitle}</h4>
+                <h4 className="applied-job-title" onClick={handleClick}>{jobTitle}</h4>
                 <p className="applied-time">{daysSincePosted(application.appliedAt)} ago</p>
             </div>
 

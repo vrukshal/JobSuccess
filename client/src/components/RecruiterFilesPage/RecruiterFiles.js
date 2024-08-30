@@ -94,7 +94,7 @@ function RecruiterFiles() {
             {/* <div className='recruiter-files-main'> */}
             <div className="main-section">
                 <RecruiterNavbar />
-                <div className="main-containter-to-fit-in-centre">
+                <div className="main-container-to-fit-in-centre">
                     <div className='recruiter-files-content'>
                         <div className='upload-file'>
                             <input type='file' className="form-control" onChange={handleFileChange} />

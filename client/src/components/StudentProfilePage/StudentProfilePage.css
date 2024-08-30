@@ -6,8 +6,7 @@ body {
     height: 100vh;
 }
 .student-profile-container {
-    max-width: 100%;
-    margin-left: 200px;
+    max-width: 80%;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
