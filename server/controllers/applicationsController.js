@@ -6,7 +6,7 @@ const { S3Client, PutObjectCommand, GetObjectCommand } = require('@aws-sdk/clien
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 const { useDispatch, useSelector } = require('react-redux');
 const { admin } = require('../config/firebase-admin');
-const { sendMail } = require('../sendEmails/gmail');
+const { sendMail } = require('../gmail');
 async function createApplication(req, res) {
     try {
         const applicationData = {
