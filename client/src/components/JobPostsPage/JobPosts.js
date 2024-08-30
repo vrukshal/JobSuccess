@@ -14,14 +14,14 @@ const JobPosts = () => {
 
   const getApplicants = async (jobId) => {
     console.log("Finding number of applicants...");
-    const response = await axios.get(`http://localhost:3001/api/application?jobId=${jobId}`);
+    const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:3001/api/application?jobId=${jobId}`);
     return response.data.count;
   }
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/jobs?recruiterUid=${recruiterCookie.uid}`);
+        const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:3001/api/jobs?recruiterUid=${recruiterCookie.uid}`);
         const jobsWithApplicants = await Promise.all(
           response.data.map(async (job) => {
             const applicantsCount = await getApplicants(job.id);

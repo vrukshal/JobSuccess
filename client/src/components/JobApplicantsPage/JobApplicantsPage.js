@@ -14,7 +14,7 @@ const JobApplicantsPage = () => {
   useEffect(() => {
     const fetchApplicants = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/application?jobId=${jobId}`); // Replace with your API endpoint
+        const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:3001/api/application?jobId=${jobId}`); // Replace with your API endpoint
         console.log("Applicant data:", response.data.data);
         setApplicants(response.data.data);
       } catch (error) {
@@ -27,7 +27,7 @@ const JobApplicantsPage = () => {
 
   const handleUpdate = async (id, updates) => {
     try {
-      await axios.patch(`http://localhost:3001/api/application/${id}`, updates);
+      await axios.patch(`http://${process.env.REACT_APP_API_URL}:3001/api/application/${id}`, updates);
       setApplicants(prevApplicants =>
         prevApplicants.map(applicant =>
           applicant.id === id ? { ...applicant, ...updates } : applicant
@@ -67,7 +67,7 @@ const JobApplicantsPage = () => {
   const openResume = async (applicant) => {
     try {
       const { key, recruiterUid, folderName, filename } = extractUrlParts(applicant?.resumeUrl);
-      const response = await axios.get(`http://localhost:3001/api/recruiter/get-signed-url?filename=${filename}&folderName=${folderName}&recruiterUid=${recruiterUid}`);
+      const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:3001/api/recruiter/get-signed-url?filename=${filename}&folderName=${folderName}&recruiterUid=${recruiterUid}`);
       console.log(response);
       const { downloadUrl } = response.data;
 
@@ -92,7 +92,7 @@ const JobApplicantsPage = () => {
     });
     console.log(declinedApplicants);
     try {
-      await axios.post('http://localhost:3001/api/application/notify-declined', { declinedApplicants, jobId });
+      await axios.post(`http://${process.env.REACT_APP_API_URL}:3001/api/application/notify-declined`, { declinedApplicants, jobId });
       alert('Notifications sent successfully');
     } catch (error) {
       console.error('Error sending notifications:', error);

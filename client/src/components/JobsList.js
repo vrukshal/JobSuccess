@@ -10,7 +10,7 @@ const JobsList = ({ jobType }) => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/jobs/${jobType === 'part-time' ? 'parttimejobs' : 'fulltimejobs'}`);
+        const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:3001/api/jobs/${jobType === 'part-time' ? 'parttimejobs' : 'fulltimejobs'}`);
         
         setJobs(response.data);
       } catch (error) {

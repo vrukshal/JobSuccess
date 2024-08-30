@@ -209,7 +209,7 @@ function Profile() {
     formData.append('uid', studentFormData.uid);
 
     console.log(formData);
-    const response = await fetch('http://localhost:3001/api/applicant/fileupload', {
+    const response = await fetch(`http://${process.env.REACT_APP_API_URL}:3001/api/applicant/fileupload`, {
         method: 'POST',
         body: formData,
     });
@@ -224,7 +224,7 @@ function Profile() {
 
     console.log(applicantInfo);
     try {
-      const response = await fetch('http://localhost:3001/api/applicant', {
+      const response = await fetch(`http://${process.env.REACT_APP_API_URL}:3001/api/applicant`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -258,7 +258,7 @@ function Profile() {
     formData.append('uid', recruiterFormData.uid);
 
     console.log(formData);
-    const response = await fetch('http://localhost:3001/api/recruiter/fileupload', {
+    const response = await fetch(`http://${process.env.REACT_APP_API_URL}:3001/api/recruiter/fileupload`, {
         method: 'POST',
         body: formData,
     });
@@ -273,7 +273,7 @@ function Profile() {
 
     console.log(recruiterInfo);
     try {
-      const response = await fetch('http://localhost:3001/api/recruiter', {
+      const response = await fetch(`http://${process.env.REACT_APP_API_URL}:3001/api/recruiter`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

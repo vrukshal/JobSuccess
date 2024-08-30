@@ -99,7 +99,7 @@ const NewJobPost = () => {
   };
 
   const createJobPost = () => {
-    fetch('http://localhost:3001/api/jobs/newjobpost', {
+    fetch(`http://${process.env.REACT_APP_API_URL}:3001/api/jobs/newjobpost`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

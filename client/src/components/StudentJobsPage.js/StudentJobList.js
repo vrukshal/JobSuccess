@@ -22,7 +22,7 @@ const StudentJobList = ({ jobType }) => {
       const studentCookie = JSON.parse(Cookies.get('student'));
 
       try {
-        const response = await axios.get(`http://localhost:3001/api/jobs/${jobType === 'part-time' ? 'parttimejobs' : 'fulltimejobs'}/?userId=${studentCookie.uid}`);
+        const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:3001/api/jobs/${jobType === 'part-time' ? 'parttimejobs' : 'fulltimejobs'}/?userId=${studentCookie.uid}`);
         console.log(response);
         setJobs(response.data);
       } catch (error) {
@@ -37,7 +37,7 @@ const StudentJobList = ({ jobType }) => {
     const fetchSavedJobs = async () => {
       const studentCookie = JSON.parse(Cookies.get('student'));
       try {
-        const response = await axios.get(`http://localhost:3001/api/jobs/getSavedJobs?StudentID=${studentCookie.uid}`);
+        const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:3001/api/jobs/getSavedJobs?StudentID=${studentCookie.uid}`);
         const savedJobIds = response.data.map(job => job.JobID);
         console.log("Good Nice:"+savedJobIds);
         setSavedJobs(savedJobIds);

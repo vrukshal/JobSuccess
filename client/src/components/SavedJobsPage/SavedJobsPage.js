@@ -23,7 +23,7 @@ function SavedJobsPage() {
     useEffect(() => {
         const fetchApplications = async () => {
             try {
-                const response = await fetch(`http://localhost:3001/api/jobs/getSavedJobs?StudentID=${studentUid}`);
+                const response = await fetch(`http://${process.env.REACT_APP_API_URL}:3001/api/jobs/getSavedJobs?StudentID=${studentUid}`);
                 const data = await response.json();
                 setApplications(data || []); // Ensure applications is an array
             } catch (error) {
@@ -47,7 +47,7 @@ function SavedJobsPage() {
                     savedJobType: filters.savedJobType.join(','),
                 }).toString();
                 console.log(queryParams);
-                const response = await fetch(`http://localhost:3001/api/jobs/getSavedJobs?${queryParams}`);
+                const response = await fetch(`http://${process.env.REACT_APP_API_URL}:3001/api/jobs/getSavedJobs?${queryParams}`);
                 const data = await response.json();
                 setApplications(data);
             } catch (error) {

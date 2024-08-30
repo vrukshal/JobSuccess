@@ -50,7 +50,7 @@ function StudentProfilePage() {
     const fetchImageUrl = async () => {
       try {
         const { key, studentUid, folderName, filename } = extractUrlParts(studentCookie.photoUrl);
-        const response = await axios.get(`http://localhost:3001/api/applicant/get-signed-url?filename=${filename}&folderName=${folderName}&studentUid=${studentUid}`);
+        const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:3001/api/applicant/get-signed-url?filename=${filename}&folderName=${folderName}&studentUid=${studentUid}`);
         const { downloadUrl } = response.data;
         setImageUrl(downloadUrl);
       } catch (error) {
@@ -60,7 +60,7 @@ function StudentProfilePage() {
 
     const fetchProfileData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/applicant/${studentCookie.uid}`);
+        const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:3001/api/applicant/${studentCookie.uid}`);
         setExperiences(response.data.data.experiences || []);
         setEducations(response.data.data.educations || []);
       } catch (error) {
@@ -122,7 +122,7 @@ function StudentProfilePage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:3001/api/applicant/${studentCookie.uid}`, {
+      await axios.patch(`http://${process.env.REACT_APP_API_URL}:3001/api/applicant/${studentCookie.uid}`, {
         section: currentSection,
         data: newEntry
       });

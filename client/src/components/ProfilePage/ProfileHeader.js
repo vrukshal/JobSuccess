@@ -30,7 +30,7 @@ const ProfileHeader = (props) => {
         const fetchImageUrl = async () => {
             try {
                 const { key, recruiterUid, folderName, filename } = extractUrlParts(props.recruiter.logo);
-                const response = await axios.get(`http://localhost:3001/api/recruiter/get-signed-url?filename=${filename}&folderName=${folderName}&recruiterUid=${recruiterUid}`);
+                const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:3001/api/recruiter/get-signed-url?filename=${filename}&folderName=${folderName}&recruiterUid=${recruiterUid}`);
                 const { downloadUrl } = response.data;
                 setImageUrl(downloadUrl);
             } catch (error) {

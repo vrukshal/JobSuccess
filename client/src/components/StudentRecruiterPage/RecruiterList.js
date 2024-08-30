@@ -11,7 +11,7 @@ const RecruiterList = () => {
     useEffect(() => {
         const fetchRecruiters = async () => {
             try {
-                const response = await axios.get('http://localhost:3001/api/recruiter/recruiterlist');
+                const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:3001/api/recruiter/recruiterlist`);
                 setRecruiters(response.data);
             } catch (error) {
                 console.error('Error fetching recruiters:', error);

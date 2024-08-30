@@ -34,7 +34,7 @@ function Signup() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:3001/api/auth/signup', {
+            const response = await fetch(`http://${process.env.REACT_APP_API_URL}:3001/api/auth/signup`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ function Signup() {
           const result = await signInWithPopup(auth, provider);
           const user = result.user;
           const idToken = await user.getIdToken();
-          const response = await fetch('http://localhost:3001/api/auth/google', {
+          const response = await fetch(`http://${process.env.REACT_APP_API_URL}:3001/api/auth/google`, {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',

@@ -95,7 +95,7 @@ const StudentJobDetails = ({ job, isSaved }) => {
         const fetchLogoURL = async () => {
             try {
                 const { key, recruiterUid, folderName, filename } = extractUrlParts(job.recruiterInfo?.logo);
-                const response = await axios.get(`http://localhost:3001/api/recruiter/get-signed-url?filename=${filename}&folderName=${folderName}&recruiterUid=${recruiterUid}`);
+                const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:3001/api/recruiter/get-signed-url?filename=${filename}&folderName=${folderName}&recruiterUid=${recruiterUid}`);
                 const { downloadUrl } = response.data;
                 setLogoUrl(downloadUrl);
             } catch (error) {
@@ -127,7 +127,7 @@ const StudentJobDetails = ({ job, isSaved }) => {
       formData.append('uid', studentCookie.uid);
 
       console.log(formData);
-      const response = await fetch('http://localhost:3001/api/applicant/fileupload', {
+      const response = await fetch('http://${process.env.REACT_APP_API_URL}:3001/api/applicant/fileupload', {
           method: 'POST',
           body: formData,
       });
@@ -137,7 +137,7 @@ const StudentJobDetails = ({ job, isSaved }) => {
         try {
             const jobId = job.id;
             const { key, recruiterUid, folderName, filename } = extractUrlParts(data.fileUrl);
-            const response = await axios.get(`http://localhost:3001/api/recruiter/get-signed-url?filename=${filename}&folderName=${folderName}&recruiterUid=${recruiterUid}`);
+            const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:3001/api/recruiter/get-signed-url?filename=${filename}&folderName=${folderName}&recruiterUid=${recruiterUid}`);
             const { downloadUrl } = response.data;
     
             // Construct the query string
@@ -147,7 +147,7 @@ const StudentJobDetails = ({ job, isSaved }) => {
             }).toString();
     
             // Fetch the resume score using GET with query parameters
-            const resumeScoreResponse = await fetch(`http://localhost:3001/api/recruiter/resumescore?${queryParams}`);
+            const resumeScoreResponse = await fetch(`http://${process.env.REACT_APP_API_URL}:3001/api/recruiter/resumescore?${queryParams}`);
     
     
             // Log the raw response text for debugging
@@ -180,7 +180,7 @@ const StudentJobDetails = ({ job, isSaved }) => {
         
         console.log("Resume uploaded : ",applicationInfo);
         try {
-            const response = await fetch('http://localhost:3001/api/application', {
+            const response = await fetch('http://${process.env.REACT_APP_API_URL}:3001/api/application', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -210,7 +210,7 @@ const StudentJobDetails = ({ job, isSaved }) => {
         console.log("isSaved: "+isSaved+  "   SavedJobs.includes: " +savedJobs.includes(job.id));
         if (initialIsSaved || savedJobs.includes(job.id)) {
             try {
-                await axios.post(`http://localhost:3001/api/jobs/unsaveJob?StudentID=${studentCookie.uid}&JobID=${job.id}`);
+                await axios.post(`http://${process.env.REACT_APP_API_URL}:3001/api/jobs/unsaveJob?StudentID=${studentCookie.uid}&JobID=${job.id}`);
 
                 setSavedJobs((prevSavedJobs) => {
                     const updatedSavedJobs = prevSavedJobs.filter(savedJobId => savedJobId !== job.id);
@@ -223,7 +223,7 @@ const StudentJobDetails = ({ job, isSaved }) => {
             }
         } else {
             try {
-                const response = await axios.post(`http://localhost:3001/api/jobs/savedJobs?StudentID=${studentCookie.uid}&JobID=${job.id}`);
+                const response = await axios.post(`http://${process.env.REACT_APP_API_URL}:3001/api/jobs/savedJobs?StudentID=${studentCookie.uid}&JobID=${job.id}`);
                 const { downloadUrl } = response.data;
                 
                 setSavedJobs((prevSavedJobs) => {

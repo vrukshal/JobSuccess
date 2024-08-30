@@ -16,7 +16,7 @@ function RecruiterFiles() {
     React.useEffect(() => {
         const fetchFiles = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/api/recruiter/files?recruiterUid=${recruiter.uid}`);
+                const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:3001/api/recruiter/files?recruiterUid=${recruiter.uid}`);
                 console.log(response);
                 setUserFiles(response.data);
             } catch (error) {
@@ -40,7 +40,7 @@ function RecruiterFiles() {
             formData.append('folderName', "files");
             formData.append('file', file);
             formData.append('uid', recruiter.uid);
-            const response = await fetch('http://localhost:3001/api/recruiter/fileupload', {
+            const response = await fetch(`http://${process.env.REACT_APP_API_URL}:3001/api/recruiter/fileupload`, {
                 method: 'POST',
                 body: formData,
             });
@@ -69,7 +69,7 @@ function RecruiterFiles() {
     const handleDownload = async (filename) => {
         try {
             const folderName = "files";
-            const response = await axios.get(`http://localhost:3001/api/recruiter/get-signed-url?filename=${filename}&folderName=${folderName}&recruiterUid=${recruiter.uid}`);
+            const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:3001/api/recruiter/get-signed-url?filename=${filename}&folderName=${folderName}&recruiterUid=${recruiter.uid}`);
             const { downloadUrl } = response.data;
             window.location.href = downloadUrl; // Trigger the download
         } catch (error) {
@@ -80,7 +80,7 @@ function RecruiterFiles() {
     const handleView = async (filename) => {
         try {
             const folderName = "files";
-            const response = await axios.get(`http://localhost:3001/api/recruiter/get-signed-url?filename=${filename}&folderName=${folderName}&recruiterUid=${recruiter.uid}`);
+            const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:3001/api/recruiter/get-signed-url?filename=${filename}&folderName=${folderName}&recruiterUid=${recruiter.uid}`);
             const { downloadUrl } = response.data;
             window.open(downloadUrl, '_blank'); // Open the file in a new tab
         } catch (error) {

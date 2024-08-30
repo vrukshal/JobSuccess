@@ -64,11 +64,11 @@ const JobCard = ({ savedJob }) => {
             try {
                 const {  recruiterUid, folderName, filename } = extractUrlParts(savedJob.jobDetails?.recruiterInfo?.logo);
                 // console.log('Recruiter '+recruiterUid);
-                const response = await axios.get(`http://localhost:3001/api/recruiter/get-signed-url?filename=${filename}&folderName=${folderName}&recruiterUid=${recruiterUid}`);
+                const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:3001/api/recruiter/get-signed-url?filename=${filename}&folderName=${folderName}&recruiterUid=${recruiterUid}`);
                 const { downloadUrl } = response.data;
                 setLogoUrl(downloadUrl);
                 
-                // const JobResponse = await axios.get(`http://localhost:3001/api/jobs/getJobdetails?jobId=${jobId}`);
+                // const JobResponse = await axios.get(`http://${process.env.REACT_APP_API_URL}:3001/api/jobs/getJobdetails?jobId=${jobId}`);
                 // console.log("Hello");
                 // console.log(savedJob.jobDetails?.jobTitle);
                 SetJobTitle(savedJob.jobDetails?.jobTitle);

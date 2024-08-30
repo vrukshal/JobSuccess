@@ -16,7 +16,7 @@ function StudentNotificationPage() {
     console.log("StudentNotificationPage im in you")
     const fetchNotifications = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/notifications?studentUid=${studentUid}`);
+        const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:3001/api/notifications?studentUid=${studentUid}`);
         setNotifications(response.data);
         setLoading(false);
       } catch (err) {

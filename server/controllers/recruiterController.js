@@ -186,7 +186,7 @@ async function getResumeScore(req, res) {
         // console.log("Parsed ----------------------", parsedResume);
 
         // Fetch job details from your local API
-        const jobResponse = await fetch(`http://localhost:3001/api/jobs/getJobdetails?jobId=${jobId}`);
+        const jobResponse = await fetch(`http://${process.env.REACT_APP_API_URL}:3001/api/jobs/getJobdetails?jobId=${jobId}`);
         const jobData = await jobResponse.json();
 
         const jobTitle = jobData.jobTitle || "";

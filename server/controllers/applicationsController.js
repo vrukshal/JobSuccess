@@ -94,7 +94,7 @@ async function notifyDeclinedApplicants(req, res) {
         console.log("In notify API");
         const declinedApplicants = req.body.declinedApplicants;
         const jobId = req.body.jobId;
-        const response = await fetch(`http://localhost:3001/api/jobs/getJobdetails?jobId=${jobId}`);
+        const response = await fetch(`http://${process.env.REACT_APP_API_URL}:3001/api/jobs/getJobdetails?jobId=${jobId}`);
         const JobResponse = await response.json();
         // console.log("JOBRES",JobResponse);
         declinedApplicants.forEach(async (applicant) => {

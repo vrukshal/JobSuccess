@@ -21,7 +21,7 @@ const JobDetailsPage = () => {
     // useEffect(() => {
     //     const fetchJobDetails = async () => {
     //         try {
-    //             const response = await axios.get(`http://localhost:3001/api/jobs/getJobdetails?jobId=${jobId}`);
+    //             const response = await axios.get(`http://${process.env.REACT_APP_API_URL}:3001/api/jobs/getJobdetails?jobId=${jobId}`);
     //             console.log("Good");
     //             console.log(response.data);
     //             setJobDetails(response.data);

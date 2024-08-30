@@ -25,7 +25,7 @@ function AppliedJobsPage() {
     useEffect(() => {
         const fetchApplications = async () => {
             try {
-                const response = await fetch(`http://localhost:3001/api/application?studentUid=${studentUid}`);
+                const response = await fetch(`http://${process.env.REACT_APP_API_URL}:3001/api/application?studentUid=${studentUid}`);
                 const data = await response.json();
                 setApplications(data.data);
             } catch (error) {
@@ -49,7 +49,7 @@ function AppliedJobsPage() {
                     status: filters.status.join(',')
                 }).toString();
                 console.log(queryParams);
-                const response = await fetch(`http://localhost:3001/api/application?${queryParams}`);
+                const response = await fetch(`http://${process.env.REACT_APP_API_URL}:3001/api/application?${queryParams}`);
                 const data = await response.json();
                 setApplications(data.data);
             } catch (error) {
