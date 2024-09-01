@@ -127,7 +127,7 @@ const StudentJobDetails = ({ job, isSaved }) => {
       formData.append('uid', studentCookie.uid);
 
       console.log(formData);
-      const response = await fetch('http://${process.env.REACT_APP_API_URL}:3001/api/applicant/fileupload', {
+      const response = await fetch(`http://${process.env.REACT_APP_API_URL}:3001/api/applicant/fileupload`, {
           method: 'POST',
           body: formData,
       });
@@ -180,7 +180,7 @@ const StudentJobDetails = ({ job, isSaved }) => {
         
         console.log("Resume uploaded : ",applicationInfo);
         try {
-            const response = await fetch('http://${process.env.REACT_APP_API_URL}:3001/api/application', {
+            const response = await fetch(`http://${process.env.REACT_APP_API_URL}:3001/api/application`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
