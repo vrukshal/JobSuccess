@@ -16,9 +16,10 @@ const applicationRoutes = require('./routes/applicationsRoutes');
 const {db, auth} = require('./config/firebase');
 
 const corsOptions ={
-  origin:`http://${process.env.REACT_APP_API_URL}:3000`, 
+  origin:`http://${process.env.REACT_APP_API_URL}`, 
   credentials:true,            //access-control-allow-credentials:true
   optionSuccessStatus:200,
+  // allowedHeaders: ['Content-Type', 'Authorization']
 }
 const app = express();
 app.use(cors(corsOptions));
