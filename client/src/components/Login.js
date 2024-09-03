@@ -27,6 +27,7 @@ function Login() {
     const loginUser = async (e) => {
         e.preventDefault();
         try {
+            console.log("Process env Confirmation: "+process.env.REACT_APP_API_URL);
             const response = await fetch(`http://${process.env.REACT_APP_API_URL}:3001/api/auth/login`, {
               method: 'POST',
               headers: {
