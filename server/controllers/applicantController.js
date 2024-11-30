@@ -29,7 +29,7 @@ async function uploadNewFile(req, res) {
     const file = req.file; // Use req.file for the uploaded file
 
     const s3client = new S3Client({
-        region: "us-east-2",
+        region: "us-east-1",
         credentials: {
             accessKeyId: process.env.ACCESS_KEY,
             secretAccessKey: process.env.SECRET_ACCESS_KEY
@@ -47,7 +47,7 @@ async function uploadNewFile(req, res) {
 
     try {
         await s3client.send(command);
-        const fileUrl = `https://${process.env.BUCKET_NAME}.s3.us-east-2.amazonaws.com/${studentUid}/${folderName}/${filename}`;
+        const fileUrl = `https://${process.env.BUCKET_NAME}.s3.us-east-1.amazonaws.com/${studentUid}/${folderName}/${filename}`;
         console.log('File uploaded successfully!');
         res.status(200).json({ message: 'File uploaded successfully!', fileUrl });
     } catch (error) {
@@ -63,7 +63,7 @@ async function getFileDownloadUrl(req, res) {
     console.log(filename, folderName, studentUid);
 
     const s3client = new S3Client({
-        region: "us-east-2",
+        region: "us-east-1",
         credentials: {
             accessKeyId: process.env.ACCESS_KEY,
             secretAccessKey: process.env.SECRET_ACCESS_KEY

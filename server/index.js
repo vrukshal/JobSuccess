@@ -15,12 +15,15 @@ const applicationRoutes = require('./routes/applicationsRoutes');
 
 const {db, auth} = require('./config/firebase');
 
-const corsOptions ={
-  origin:`http://${process.env.REACT_APP_API_URL}`, 
-  credentials:true,            //access-control-allow-credentials:true
-  optionSuccessStatus:200,
-  // allowedHeaders: ['Content-Type', 'Authorization']
-}
+const corsOptions = {
+  origin: [
+    `http://${process.env.REACT_APP_API_URL}`, // Dynamic origin from environment variable
+    'http://localhost:3000'                  // Allow requests from localhost:3000
+  ],
+  credentials: true, // access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
+
 const app = express();
 app.use(cors(corsOptions));
 app.use(bodyParser.json());

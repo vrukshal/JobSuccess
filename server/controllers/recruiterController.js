@@ -32,7 +32,7 @@ async function uploadNewFile(req, res) {
     const file = req.file; // Use req.file for the uploaded file
 
     const s3client = new S3Client({
-        region: "us-east-2",
+        region: "us-east-1",
         credentials: {
             accessKeyId: process.env.ACCESS_KEY,
             secretAccessKey: process.env.SECRET_ACCESS_KEY
@@ -50,7 +50,7 @@ async function uploadNewFile(req, res) {
 
     try {
         await s3client.send(command);
-        const fileUrl = `https://${process.env.BUCKET_NAME}.s3.us-east-2.amazonaws.com/${recruiterUid}/${folderName}/${filename}`;
+        const fileUrl = `https://${process.env.BUCKET_NAME}.s3.us-east-1.amazonaws.com/${recruiterUid}/${folderName}/${filename}`;
         // console.log('File uploaded successfully!');
         const collectionRef = doc(db, "EmployerProfiles", recruiterUid);
         if(folderName === "logo"){
@@ -97,7 +97,7 @@ async function getFileDownloadUrl(req, res) {
     // console.log(filename, folderName, recruiterUid);
 
     const s3client = new S3Client({
-        region: "us-east-2",
+        region: "us-east-1",
         credentials: {
             accessKeyId: process.env.ACCESS_KEY,
             secretAccessKey: process.env.SECRET_ACCESS_KEY
@@ -124,7 +124,7 @@ async function getFileViewUrl(req, res) {
     // console.log(filename);
 
     const s3client = new S3Client({
-        region: "us-east-2",
+        region: "us-east-1",
         credentials: {
             accessKeyId: process.env.ACCESS_KEY,
             secretAccessKey: process.env.SECRET_ACCESS_KEY
