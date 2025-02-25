@@ -1,70 +1,196 @@
-# Getting Started with Create React App
+<p align="center">
+    <img src="https://readme-typing-svg.demolab.com?font=Source+Code+Pro&weight=900&size=32&duration=4000&pause=500&color=F0C38E&background=181b28&center=true&vCenter=true&width=900&height=200&lines=JobSuccess+Platform;Job+Application+Management;CI/CD+with+Jenkins+and+Kubernetes" alt="Typing SVG" />
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<details open> 
+  <summary><h2>📚 About The Project</h2></summary>
+<p align="left">
+The **JobSuccess Platform** is a full-stack job application platform designed to help candidates and recruiters manage job listings, applications, and resumes seamlessly. Built with modern technologies such as **Firebase**, **Express**, **React**, **Jenkins**, **Kubernetes**, and deployed on **AWS EC2**, this platform allows users to apply for jobs, post job listings, and utilize AI-powered resume analysis tools.
 
-## Available Scripts
+**Key Features**:
+- **For Candidates**: 
+  - Browse job listings, apply for jobs, and track application status.
+  - Integrate Google Authentication for easy sign-up and login.
+  - Upload resumes with file storage powered by **AWS S3**.
+  - Get resume insights via **Gemini API** for automatic resume analysis.
+- **For Recruiters**:
+  - Post and manage job listings.
+  - Track job applications, review resumes, and shortlist candidates.
 
-In the project directory, you can run:
+The platform is designed to streamline the hiring process with a smooth user interface and robust backend.
 
-### `yarn start`
+💻 **Technologies Used**:
+- **Frontend**: React.js
+- **Backend**: Express.js, Firebase
+- **Authentication**: Google Auth
+- **File Storage**: AWS S3
+- **CI/CD**: Jenkins, Kubernetes
+- **Cloud Hosting**: AWS EC2
+- **APIs**: Gemini API (for resume analysis)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+</p>
+<!-- </details> -->
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#
 
-### `yarn test`
+<details open> 
+  <summary><h2>🔧 Tech Stack</h2></summary>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<div align="left">
+  <img alt="HTML5" src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white"/>
+  <img alt="CSS3" src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white"/> 
+  <img alt="JavaScript" src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/>
+  <img alt="ReactJS" src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB"/>
+  <img alt="NodeJS" src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white"/>
+  <img alt="ExpressJS" src="https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB"/>
+  <img alt="AWS" src="https://img.shields.io/badge/AWS-%234ea94b.svg?style=for-the-badge&logo=amazon-aws&logoColor=white"/>
+  <img alt="Firebase" src="https://img.shields.io/badge/Firebase-%234ea94b.svg?style=for-the-badge&logo=firebase&logoColor=white"/>
+  <img alt="Jenkins" src="https://img.shields.io/badge/Jenkins-%234ea94b.svg?style=for-the-badge&logo=jenkins&logoColor=white"/>
+  <img alt="Kubernetes" src="https://img.shields.io/badge/Kubernetes-%234ea94b.svg?style=for-the-badge&logo=kubernetes&logoColor=white"/>
+  <img alt="Gemini API" src="https://img.shields.io/badge/Gemini-API-%234ea94b.svg?style=for-the-badge&logo=api&logoColor=white"/>
+</div>
 
-### `yarn build`
+</details>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<details open> 
+  <summary><h2>🎨 Features</h2></summary>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **For Candidates**:
+  - Sign up and log in using **Google Auth** for easy authentication.
+  - Browse and apply for job listings.
+  - Upload resumes directly to **AWS S3** for file storage.
+  - Get automatic resume feedback using the **Gemini API**.
 
-### `yarn eject`
+- **For Recruiters**:
+  - Post job listings and manage available positions.
+  - View applications for posted jobs, review resumes, and make decisions.
+  - Manage candidates by tracking their application status.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **Backend and Deployment**:
+  - Continuous integration and deployment with **Jenkins** and **Kubernetes** for automated testing and deployment.
+  - Cloud hosting on **AWS EC2** for scalable and reliable performance.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+</details>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+#
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+<details open> 
+  <summary><h2>🏗️ Architecture</h2></summary>
 
-## Learn More
+The **JobSuccess Platform** architecture is built to be scalable and flexible, leveraging the following components:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **Frontend (React.js)**: A dynamic single-page application (SPA) allowing candidates and recruiters to interact with the platform.
+- **Backend (Express.js & Firebase)**: Handles authentication, API requests, job listings, and user data storage.
+- **File Storage (AWS S3)**: Secure storage of resumes uploaded by candidates.
+- **Resume Analysis (Gemini API)**: An API integration that provides insights into resumes submitted by candidates, helping recruiters make better hiring decisions.
+- **CI/CD Pipeline (Jenkins & Kubernetes)**: Automates the testing, deployment, and scaling processes, ensuring a smooth development lifecycle and continuous delivery to **AWS EC2**.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+</details>
 
-### Code Splitting
+#
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+<details open> 
+  <summary><h2>⚙️ Installation Steps</h2></summary>
 
-### Analyzing the Bundle Size
+To run this project locally, follow these steps:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Prerequisites:
+1. **Node.js** and **npm** installed.
+2. **AWS S3** setup for resume file storage.
+3. **Google API credentials** for authentication.
+4. **Gemini API** access for resume analysis.
+5. **Jenkins** and **Kubernetes** setup for CI/CD pipeline.
 
-### Making a Progressive Web App
+### Steps to Run:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. **Clone the repository**:
+    ```bash
+    git clone https://github.com/your-username/job-success-platform.git
+    cd job-success-platform
+    ```
 
-### Advanced Configuration
+2. **Install Backend Dependencies**:
+    Navigate to the backend folder and install dependencies:
+    ```bash
+    cd backend
+    npm install
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+3. **Install Frontend Dependencies**:
+    Navigate to the frontend folder and install dependencies:
+    ```bash
+    cd frontend
+    npm install
+    ```
 
-### Deployment
+4. **Set Up Environment Variables**:
+    - Create a `.env` file in the **backend** folder and add the following environment variables:
+      ```bash
+      GOOGLE_API_KEY=your_google_api_key
+      AWS_ACCESS_KEY_ID=your_aws_access_key_id
+      AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key
+      GEMINI_API_KEY=your_gemini_api_key
+      ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+5. **Run the Application**:
+    - Start the backend server:
+      ```bash
+      npm start
+      ```
+    - Start the frontend application:
+      ```bash
+      cd frontend
+      npm start
+      ```
 
-### `yarn build` fails to minify
+6. **Access the App**:
+    Open your browser and go to `http://localhost:3000` to access the app.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+</details>
+
+#
+
+<details open> 
+  <summary><h2>🌐 Live Demo</h2></summary>
+
+Check out the live version of the **JobSuccess Platform**:
+
+[JobSuccess Platform - Live Demo](#)
+
+</details>
+
+#
+
+<details open> 
+  <summary><h2>📸 Screenshots</h2></summary>
+
+Here are some screenshots of the platform:
+
+![Homepage](https://via.placeholder.com/600x400.png?text=Homepage)
+![Job Listings](https://via.placeholder.com/600x400.png?text=Job+Listings)
+![Resume Analysis](https://via.placeholder.com/600x400.png?text=Resume+Analysis)
+
+</details>
+
+#
+
+<details open> 
+  <summary><h2>🔮 Future Improvements</h2></summary>
+
+- **Job Recommendation System** based on user profiles and preferences.
+- **Real-time Notifications** for candidates and recruiters regarding application status.
+- **Advanced Analytics** for recruiters, including detailed reports on candidates' resumes and application trends.
+
+</details>
+
+#
+
+<details open> 
+  <summary><h2>📬 Contact</h2></summary>
+Feel free to reach out for any inquiries or suggestions related to the project!
+
+**LinkedIn**: [Your Name](https://www.linkedin.com/in/your-username)
+
+</details>
